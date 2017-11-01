@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Tela inicial onde irá mostrar a Agenda -->
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #fff; -fx-focus-traversable: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.main.ControllerMain">
+   <children>
+      <Pane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #f8f8f8;">
+         <children>
+            <MenuBar prefHeight="32.0" prefWidth="1300.0" style="">
+              <menus>
+                  <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Caixa">
+                     <items>
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Visualizar" />
+                     </items>
+                  </Menu>
+                <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Pedidos">
+                  <items>
+                    <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Criar Pedido" />
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Consultar Pedido" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Clientes">
+                     <items>
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Consultar Cliente" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Cadastros">
+                     <items>
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Categoria" />
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Subcategoria" />
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Produto" />
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Funcionario" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Relatórios">
+                     <items>
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Faturamento" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Configurações">
+                     <items>
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Usuários" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <Pane layoutX="-1.0" layoutY="32.0" prefHeight="65.0" prefWidth="1300.0">
+               <children>
+                  <Text fontSmoothingType="LCD" layoutX="476.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mari Ruas Cabeleireira" textOrigin="TOP" wrappingWidth="336.13671875">
+                     <font>
+                        <Font name="SansSerif Regular" size="30.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="59.0" fitWidth="57.0" layoutX="311.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/dryers/007-hair-dryer.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="59.0" fitWidth="57.0" layoutX="386.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/dryers/004-woman-with-long-hair.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="823.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/dryers/001-comb.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="896.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/dryers/005-scissor-and-comb.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutX="-7.0" layoutY="100.0" prefHeight="594.0" prefWidth="1315.0" style=": ; -fx-background-color: ; -fx-border-radius: ;">
+               <children>
+                  <DatePicker fx:id="textDate" focusTraversable="false" layoutX="560.0" layoutY="14.0" />
+                  <Button fx:id="buttonNext" layoutX="750.0" layoutY="14.0" mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/sets/001-arrows.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button focusTraversable="false" layoutX="514.0" layoutY="15.0" mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fx:id="buttonPrevious" fitHeight="16.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/sets/002-previous.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Pane layoutX="29.0" layoutY="47.0" prefHeight="546.0" prefWidth="1270.0" style="-fx-border-color: #C0C0C0; -fx-border-width: 2; -fx-border-radius: 4; -fx-background-color: #fff; -fx-background-radius: 4;">
+                     <children>
+                        <ScrollPane layoutX="3.0" layoutY="2.0" prefHeight="540.0" prefWidth="420.0" style="-fx-background-color: #fff;">
+                           <content>
+                              <AnchorPane fx:id="anchorPaneLeft" maxHeight="538.0" minHeight="538.0" minWidth="418.0" prefHeight="538.0" prefWidth="418.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <Pane fx:id="paneZero" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="00:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane layoutX="5.0" layoutY="19.0" prefHeight="45.0" prefWidth="100.0" style="-fx-border-color: blue; -fx-border-radius: 4;">
+                                             <children>
+                                                <Label layoutX="6.0" layoutY="5.0" text="00:15">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="6.0" layoutY="24.0" text="Luciana">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="105.0" layoutY="19.0" prefHeight="45.0" prefWidth="100.0" style="-fx-border-color: green; -fx-border-radius: 4;">
+                                             <children>
+                                                <Label layoutX="6.0" layoutY="5.0" text="00:35">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="6.0" layoutY="24.0" text="Vera">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="67.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneOne" layoutY="68.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="01:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="135.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTwo" layoutY="136.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="02:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="203.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneThree" layoutY="204.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="03:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="271.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneFour" layoutY="272.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="04:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="339.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneFive" layoutY="340.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="05:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutY="407.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneSix" layoutY="408.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="06:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="475.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneSeven" layoutY="476.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="07:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane layoutX="424.0" layoutY="2.0" prefHeight="540.0" prefWidth="420.0" style="-fx-background-color: #fff;">
+                           <content>
+                              <AnchorPane fx:id="anchorPaneCenter" maxHeight="538.0" minHeight="538.0" minWidth="418.0" prefHeight="538.0" prefWidth="418.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <Pane fx:id="paneEight" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="08:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane layoutX="5.0" layoutY="19.0" prefHeight="45.0" prefWidth="100.0" style="-fx-border-color: blue; -fx-border-radius: 4;">
+                                             <children>
+                                                <Label layoutX="6.0" layoutY="5.0" text="08:10">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="6.0" layoutY="24.0" text="Maria">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="105.0" layoutY="19.0" prefHeight="45.0" prefWidth="100.0" style="-fx-border-color: green; -fx-border-radius: 4;">
+                                             <children>
+                                                <Label layoutX="6.0" layoutY="5.0" text="16:25">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="6.0" layoutY="24.0" text="Giovana">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="67.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneNine" layoutY="68.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="09:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="135.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTen" layoutY="136.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="10:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="203.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneEleven" layoutY="204.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="11:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="271.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTwelve" layoutY="272.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="12:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="339.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneThirteen" layoutY="340.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="13:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutY="407.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneFourteen" layoutY="408.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="14:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="475.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneFifteen" layoutY="476.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="15:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane layoutX="847.0" layoutY="2.0" prefHeight="540.0" prefWidth="420.0" style="-fx-background-color: #fff;">
+                          <content>
+                            <AnchorPane fx:id="anchorPaneRight" maxHeight="538.0" minHeight="538.0" minWidth="418.0" prefHeight="538.0" prefWidth="418.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <Pane fx:id="paneSixteen" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="16:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane layoutX="5.0" layoutY="19.0" prefHeight="45.0" prefWidth="100.0" style="-fx-border-color: blue; -fx-border-radius: 4;">
+                                             <children>
+                                                <Label layoutX="6.0" layoutY="5.0" text="16:15">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="6.0" layoutY="24.0" text="Maria Alice">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane layoutX="105.0" layoutY="19.0" prefHeight="45.0" prefWidth="100.0" style="-fx-border-color: green; -fx-border-radius: 4;">
+                                             <children>
+                                                <Label layoutX="6.0" layoutY="5.0" text="16:25">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="6.0" layoutY="24.0" text="Feliciana">
+                                                   <font>
+                                                      <Font name="SansSerif Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="67.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneSeventeen" layoutY="68.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="17:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="135.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneEighteen" layoutY="136.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="18:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="203.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneNineteen" layoutY="204.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="19:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="271.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTwenty" layoutY="272.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="20:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="339.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTwenyOne" layoutY="340.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="21:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutY="407.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTwenyTwo" layoutY="408.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="22:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="5.0" layoutY="475.0" prefHeight="1.0" prefWidth="410.0" style="-fx-background-color: #C0C0C0;" />
+                                    <Pane fx:id="paneTwenyThree" layoutY="476.0" prefHeight="67.0" prefWidth="420.0">
+                                       <children>
+                                          <Label layoutX="5.0" text="23:00">
+                                             <font>
+                                                <Font name="SansSerif Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane layoutX="15.0" layoutY="99.0" prefHeight="1.0" prefWidth="1270.0" style="-fx-background-color: #bce8f1;" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

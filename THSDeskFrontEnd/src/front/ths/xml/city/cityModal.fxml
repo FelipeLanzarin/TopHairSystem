@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Tela para cadastrar e alterar a cidade -->
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
+	<!-- TODO Add Nodes -->
+</AnchorPane>
+
