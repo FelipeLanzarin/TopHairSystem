@@ -1,10 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Tela para cadastrar e alterar o produto -->
+<!-- Tela para cadastrar e alterar a categoria -->
 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="738.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.product.ControllerProductModal">
+   <children>
+      <Pane layoutX="30.0" layoutY="14.0" prefHeight="678.0" prefWidth="683.0" style="-fx-background-color: #d9edf7; -fx-border-color: #bce8f1; -fx-border-radius: 4; -fx-background-radius: 4;">
+         <children>
+            <Label fx:id="labelTitle" layoutX="22.0" layoutY="14.0" prefHeight="23.0" prefWidth="361.0" text="Produto" textFill="#31708f">
+               <font>
+                  <Font name="SansSerif Regular" size="16.0" />
+               </font>
+            </Label>
+            <Pane layoutX="1.0" layoutY="46.0" prefHeight="631.0" prefWidth="681.0" style="-fx-background-color: #fff; -fx-background-radius: 4;">
+               <children>
+                  <Label layoutX="46.0" layoutY="401.0" text="Descrição">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="35.0" layoutY="23.0" text="Categoria * ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboCategory" editable="true" layoutX="134.0" layoutY="16.0" prefHeight="34.0" prefWidth="514.0" promptText="Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
+                  <ComboBox fx:id="comboSubCategory" editable="true" layoutX="134.0" layoutY="67.0" prefHeight="34.0" prefWidth="514.0" promptText="Sub Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
+                  <TextField fx:id="textName" layoutX="134.0" layoutY="119.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="514.0" promptText="Nome">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="59.0" layoutY="128.0" text="Nome * ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="12.0" layoutY="74.0" text="SubCategoria * ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="72.0" layoutY="181.0" text="Tipo*">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="radioProduct" layoutX="134.0" layoutY="183.0" mnemonicParsing="false" text="Produto">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="radioService" layoutX="238.0" layoutY="183.0" mnemonicParsing="false" text="Serviço">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <Label layoutX="50.0" layoutY="233.0" text="Unidade">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="radioUn" layoutX="134.0" layoutY="235.0" mnemonicParsing="false" text="Un">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="radioMl" layoutX="238.0" layoutY="236.0" mnemonicParsing="false" text="ML">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="radioLt" layoutX="338.0" layoutY="236.0" mnemonicParsing="false" text="LT">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <Label layoutX="16.0" layoutY="289.0" text="Valor Unidade">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="64.0" layoutY="344.0" text="Preço*">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textUnitValue" layoutX="134.0" layoutY="282.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="225.0" promptText="Valor Unidade">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textPrice" layoutX="135.0" layoutY="337.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="225.0" promptText="Preço">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextArea fx:id="textDescription" layoutX="134.0" layoutY="394.0" prefHeight="179.0" prefWidth="514.0" promptText="Descrição">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font></TextArea>
+                  <Button layoutX="529.0" layoutY="582.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text=" Salvar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../../Google%20Drive/Ideias/Sistema%20Cadastro%20Convidas/Convidas/projeto/ConvidasFrontEnd/src/front/images/save/salvar_2_32x32.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="682.0" style="-fx-background-color: #d9edf7;" />
+            <ImageView fitHeight="45.0" fitWidth="49.0" layoutX="598.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/catalog/product.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>

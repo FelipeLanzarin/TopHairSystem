@@ -10,7 +10,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="675.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.branch.employee.ControllerEmployeeModal">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="675.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.category.ControllerCategoryModal">
    <children>
       <Pane layoutX="20.0" layoutY="14.0" prefHeight="479.0" prefWidth="632.0" style="-fx-background-color: #d9edf7; -fx-border-color: #bce8f1; -fx-border-radius: 4; -fx-background-radius: 4;">
          <children>
@@ -36,6 +36,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
+                  <TextArea fx:id="textDescription" layoutX="93.0" layoutY="80.0" prefHeight="179.0" prefWidth="514.0" promptText="Descrição">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font></TextArea>
                   <Button layoutX="488.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text=" Salvar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -51,7 +55,6 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextArea layoutX="93.0" layoutY="80.0" prefHeight="179.0" prefWidth="514.0" />
                </children>
             </Pane>
             <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="629.0" style="-fx-background-color: #d9edf7;" />

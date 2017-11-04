@@ -1,10 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Tela para cadastrar e alterar a subcategoria -->
+<!-- Tela para cadastrar e alterar a categoria -->
 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="675.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.subcategory.ControllerSubCategoryModal">
+   <children>
+      <Pane layoutX="20.0" layoutY="14.0" prefHeight="479.0" prefWidth="632.0" style="-fx-background-color: #d9edf7; -fx-border-color: #bce8f1; -fx-border-radius: 4; -fx-background-radius: 4;">
+         <children>
+            <Label fx:id="labelTitle" layoutX="22.0" layoutY="14.0" prefHeight="23.0" prefWidth="361.0" text="Sub Categoria" textFill="#31708f">
+               <font>
+                  <Font name="SansSerif Regular" size="16.0" />
+               </font>
+            </Label>
+            <Pane layoutX="1.0" layoutY="46.0" prefHeight="432.0" prefWidth="630.0" style="-fx-background-color: #fff; -fx-background-radius: 4;">
+               <children>
+                  <ComboBox fx:id="comboCategory" editable="true" layoutX="102.0" layoutY="44.0" prefHeight="34.0" prefWidth="514.0" promptText="Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
+                  <Label layoutX="14.0" layoutY="111.0" text="Nome * ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textName" layoutX="102.0" layoutY="104.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="514.0" promptText="Nome">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="14.0" layoutY="182.0" text="Descrição:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="textDescription" layoutX="102.0" layoutY="168.0" prefHeight="179.0" prefWidth="514.0" promptText="Descrição">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font></TextArea>
+                  <Label layoutX="14.0" layoutY="51.0" text="Categoria * ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="488.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text=" Salvar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../../Google%20Drive/Ideias/Sistema%20Cadastro%20Convidas/Convidas/projeto/ConvidasFrontEnd/src/front/images/save/salvar_2_32x32.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="629.0" style="-fx-background-color: #d9edf7;" />
+            <ImageView fitHeight="45.0" fitWidth="49.0" layoutX="563.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/catalog/category.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>

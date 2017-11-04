@@ -1,10 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Tela para listar as subategorias do sistema -->
+<!-- Tela para listar as categorias do sistema -->
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1300.0" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.subcategory.ControllerSubCategoryRelationManager">
+   <children>
+      <Pane prefHeight="100.0" prefWidth="1300.0">
+         <children>
+            <Label layoutX="128.0" layoutY="34.0" prefHeight="35.0" prefWidth="767.0" text="Sub Categorias" textFill="#615c5c">
+               <font>
+                  <Font name="SansSerif Regular" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="70.0" fitWidth="73.0" layoutX="35.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/catalog/category.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="15.0" layoutY="98.0" prefHeight="1.0" prefWidth="1270.0" style="-fx-background-color: #bce8f1;" />
+      <Pane layoutY="109.0" prefHeight="591.0" prefWidth="1300.0">
+         <children>
+            <Pane layoutX="14.0" layoutY="6.0" prefHeight="63.0" prefWidth="1270.0" style="-fx-border-color: #ddd; -fx-background-color: #f5f5f5; -fx-border-radius: 10; -fx-background-radius: 10;">
+               <children>
+                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="1078.0" layoutY="15.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNew" prefHeight="34.0" prefWidth="178.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Cadastrar Sub Categoria" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="39.0" layoutY="15.0" prefHeight="35.0" prefWidth="697.0" text="Relação de Sub Categorias" textFill="#403d3d">
+                     <font>
+                        <Font name="SansSerif Regular" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </Pane>
+            <Pane fx:id="paneList" layoutX="14.0" layoutY="60.0" prefHeight="525.0" prefWidth="1270.0" style="-fx-border-color: #ddd; -fx-background-color: #fff; -fx-opacity: 10000;">
+               <children>
+                  <Text layoutX="17.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consultar">
+                     <font>
+                        <Font name="SansSerif Regular" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="textName" focusTraversable="false" layoutX="17.0" layoutY="40.0" onKeyReleased="#filterByName" prefHeight="31.0" prefWidth="787.0" promptText="Nome">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font></TextField>
+                  <ScrollPane layoutX="17.0" layoutY="82.0" prefHeight="437.0" prefWidth="1240.0" style="-fx-background-color: #fff; -fx-border-color: gray;">
+                     <content>
+                        <AnchorPane fx:id="anchorPaneTable" maxWidth="1238.0" minHeight="433.0" minWidth="1236.0" prefHeight="433.0" prefWidth="1236.0" style="-fx-background-color: #fff;" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</Pane>

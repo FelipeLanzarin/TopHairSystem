@@ -1,4 +1,4 @@
-package br.ths.screens.branch.employee;
+package br.ths.screens.branch.catalog.product;
 
 import java.net.URL;
 
@@ -10,22 +10,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreeanEmployeeModal extends Application {
+public class ScreenProductRelationManager extends Application {
 	
 	@Override
 	public void start(Stage stage) {
 		try {
 			//TODO implementar conexão com o banco
-			URL arquivoFXML = getClass().getResource(XmlPathUtils.EMPLOYEE_MODAL);
+			URL arquivoFXML = getClass().getResource(XmlPathUtils.PRODUCT_MANAGER);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
 			stage.setResizable(false);
-			stage.setTitle("Funcionário");
+			stage.setTitle("Categoria");
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);
 		}
 	}
-	
 }

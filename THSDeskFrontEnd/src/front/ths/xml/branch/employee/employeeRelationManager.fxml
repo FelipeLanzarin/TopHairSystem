@@ -12,7 +12,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1300.0" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1300.0" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.branch.employee.ControllerEmployeeRelationManager">
    <children>
       <Pane prefHeight="100.0" prefWidth="1300.0">
          <children>
@@ -33,7 +33,7 @@
          <children>
             <Pane layoutX="14.0" layoutY="6.0" prefHeight="63.0" prefWidth="1270.0" style="-fx-border-color: #ddd; -fx-background-color: #f5f5f5; -fx-border-radius: 10; -fx-background-radius: 10;">
                <children>
-                  <Button fx:id="buttonNewEmployee" alignment="CENTER" contentDisplay="CENTER" layoutX="1094.0" layoutY="15.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNewPF" prefHeight="34.0" prefWidth="162.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Cadastrar Funcionário" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="1094.0" layoutY="15.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNew" prefHeight="34.0" prefWidth="162.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Cadastrar Funcionário" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -58,7 +58,10 @@
                         <Font name="SansSerif Regular" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="textName" focusTraversable="false" layoutX="17.0" layoutY="40.0" onKeyReleased="#filterByNamePF" prefHeight="31.0" prefWidth="787.0" promptText="Nome" />
+                  <TextField fx:id="textName" focusTraversable="false" layoutX="17.0" layoutY="40.0" onKeyReleased="#filterByName" prefHeight="31.0" prefWidth="787.0" promptText="Nome">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font></TextField>
                   <ScrollPane layoutX="17.0" layoutY="82.0" prefHeight="437.0" prefWidth="1240.0" style="-fx-background-color: #fff; -fx-border-color: gray;">
                     <content>
                       <AnchorPane fx:id="anchorPaneTable" maxWidth="1238.0" minHeight="433.0" minWidth="1236.0" prefHeight="433.0" prefWidth="1236.0" style="-fx-background-color: #fff;" />
