@@ -22,7 +22,7 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		try {
 			//TODO implementar conexão com o banco
-			URL arquivoFXML = getClass().getResource(XmlPathUtils.LOAD_BD);
+			URL arquivoFXML = getClass().getResource(XmlPathUtils.MAIN);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));

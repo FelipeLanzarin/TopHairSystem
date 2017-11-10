@@ -56,7 +56,7 @@
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../../../../Google%20Drive/Ideias/Sistema%20Cadastro%20Convidas/Convidas/projeto/ConvidasFrontEnd/src/front/images/save/salvar_2_32x32.png" />
+                              <Image url="@../../images/save/salvar_2_32x32.png" />
                            </image>
                         </ImageView>
                      </graphic>

@@ -3,7 +3,10 @@ package br.ths.controllers.main;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import br.ths.screens.branch.employee.ScreeanEmployeeRelationManager;
+import br.ths.tools.log.LogTools;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
 public class ControllerMain implements Initializable{
 
@@ -12,5 +15,14 @@ public class ControllerMain implements Initializable{
 		// TODO jogar todos os panes em um array para facilitar no moneto de preencher a agenda
 		
 	}
-
+	
+	
+	public void openEmployeeManager(){
+		try{
+			ScreeanEmployeeRelationManager scream = new ScreeanEmployeeRelationManager();
+			scream.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
 }

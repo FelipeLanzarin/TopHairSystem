@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #fff; -fx-focus-traversable: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.main.ControllerMain">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #f8f8f8;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.main.ControllerMain">
    <children>
       <Pane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #f8f8f8;">
          <children>
@@ -39,7 +39,7 @@
                         <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Categoria" />
                         <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Subcategoria" />
                         <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Produto" />
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Funcionario" />
+                        <MenuItem mnemonicParsing="false" onAction="#openEmployeeManager" style="-fx-font-family: SansSerif Regular;" text="Funcionario" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Relatórios">
@@ -83,7 +83,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="-7.0" layoutY="100.0" prefHeight="594.0" prefWidth="1315.0" style=": ; -fx-background-color: ; -fx-border-radius: ;">
+            <Pane layoutX="-7.0" layoutY="100.0" prefHeight="594.0" prefWidth="1315.0">
                <children>
                   <DatePicker fx:id="textDate" focusTraversable="false" layoutX="560.0" layoutY="14.0" />
                   <Button fx:id="buttonNext" layoutX="750.0" layoutY="14.0" mnemonicParsing="false">
