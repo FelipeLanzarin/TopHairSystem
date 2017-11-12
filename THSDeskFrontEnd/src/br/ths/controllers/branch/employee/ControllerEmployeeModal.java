@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import br.ths.beans.Employee;
 import br.ths.beans.manager.EmployeeManager;
 import fx.tools.controller.GenericController;
+import fx.tools.mask.MaskTelephone;
 import fx.tools.mask.MaskTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,7 +23,7 @@ public class ControllerEmployeeModal extends GenericController{
 	@FXML private TextField textName;
 	@FXML private TextField textEmail;
 	@FXML private MaskTextField textCpf;
-	@FXML private TextField textTelephone;
+	@FXML private MaskTelephone textTelephone;
 	@FXML private TextField textAddress;
 	@FXML private TextField textNumber;
 	@FXML private TextField textNeighborhood;
@@ -39,6 +40,7 @@ public class ControllerEmployeeModal extends GenericController{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		textCpf.setGenericController(this);
+		textTelephone.setGenericController(this);
 	}
 	
 	public void actionName(){

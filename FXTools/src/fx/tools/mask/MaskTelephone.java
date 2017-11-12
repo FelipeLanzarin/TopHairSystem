@@ -28,9 +28,11 @@ import javafx.scene.control.TextField;
  * 
  * 
  */
-public class MaskTextField extends TextField {
+public class MaskTelephone extends TextField {
 
 	private static final String CHARACTERS = "*SPMANLUl";
+	private static final String MASK_TELEPHONE = "(NN)NNNN-NNNNN";
+	private static final String NEW_MASK_TELEPHONE = "(NN)NNNNN-NNNN";
 	
 	private String mask;
 	private String originalMask;
@@ -38,12 +40,12 @@ public class MaskTextField extends TextField {
     private ArrayList<String> patterns;
     private GenericController genericController;
     
-    public MaskTextField() {
+    public MaskTelephone() {
         super();
         patterns = new ArrayList<String>();
     }
 
-    public MaskTextField(String text) {
+    public MaskTelephone(String text) {
         super(text);
         patterns = new ArrayList<String>();
     }
@@ -52,23 +54,47 @@ public class MaskTextField extends TextField {
     public void replaceText(int start, int end, String text) {
 
         String tempText = this.getText() + text;
+//        String originalText = text;
+        boolean executeMethodCrtlV = false;
+        if(MASK_TELEPHONE.equals(originalMask)){
+        	if(tempText.length() == 14){
+        		setMask(NEW_MASK_TELEPHONE);
+        		executeMethodCrtlV= true;
+        		//executar replace
+        	}
+        }else if(NEW_MASK_TELEPHONE.equals(originalMask)  && (tempText.length() < 14 || text.length() == 0)){
+        	setMask(MASK_TELEPHONE);
+        	executeMethodCrtlV= true;
+        	//executar replace
+        }
         if(mask == null || mask.length() == 0){
             super.replaceText(start, end, text);
-        }else if (tempText.matches(this.mask) || tempText.length() == 0 || text.length() == 0) {        //text.length == 0 representa o delete ou backspace
+        }else if (tempText.matches(this.mask) || tempText.length() == 0 || (text.length() == 0 && !executeMethodCrtlV)) {        //text.length == 0 representa o delete ou backspace
 
             super.replaceText(start, end, text);
 
         } else {
         	boolean isCrtlV = false;
-        	if(text.length() == 1){//nao eh ctrl+v
+        	
+        	if(text.length() == 1 && !executeMethodCrtlV){//nao eh ctrl+v
 	        	text = acresCaracter(tempText, this.getText(), text);
 	        	tempText = this.getText() + text;
         	}else{// eh ctrl+v
-        		isCrtlV = true;
-        		tempText = formatCrtlV(tempText);
-        		text = tempText.replace(this.getText(), "");
+        		if(!executeMethodCrtlV ){
+        			tempText = formatCrtlV(tempText);
+        			isCrtlV = true;
+        			text = tempText.replace(this.getText(), "");
+        		}else{
+        			String lastText = this.getText();
+        			lastText = lastText.replace("(", "");
+        			lastText = lastText.replace(")", "");
+        			lastText = lastText.replace("-", "");
+        			this.setText(formatCrtlV(lastText));
+        			tempText = this.getText() + text;
+        		}
+ 
         	}
-            String tempP = "^";
+            String tempP = "";
             
             boolean invalid = true;
             for (String patt : this.patterns) {
@@ -132,7 +158,7 @@ public class MaskTextField extends TextField {
     	
     	originalMask = mask;
         String tempMask = "^";
-
+        this.patterns.clear();
         for (int i = 0; i < mask.length(); ++i) {
 
             char temp = mask.charAt(i);

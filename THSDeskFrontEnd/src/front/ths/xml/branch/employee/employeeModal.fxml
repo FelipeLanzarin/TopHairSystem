@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <MaskTextField fx:id="textCpf" layoutX="80.0" layoutY="128.0" mask="NNN.NNN.NNN-NN" prefHeight="34.0" prefWidth="218.0" promptText="CPF">
+                  <MaskTextField fx:id="textCpf" layoutX="80.0" layoutY="128.0" componentName="CPF" mask="NNN.NNN.NNN-NN" prefHeight="34.0" prefWidth="218.0" promptText="CPF">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
@@ -58,11 +58,11 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textTelephone" layoutX="377.0" layoutY="128.0" prefHeight="34.0" prefWidth="228.0" promptText="Telefone">
+                  <MaskTelephone fx:id="textTelephone" mask="(NN)NNNN-NNNNN" componentName="Telefone" layoutX="377.0" layoutY="128.0" prefHeight="34.0" prefWidth="228.0" promptText="Telefone">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
-                  </TextField>
+                  </MaskTelephone>
                   <Label layoutX="13.0" layoutY="185.0" text="Rua">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -98,11 +98,11 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textCep" layoutX="80.0" layoutY="279.0" prefHeight="34.0" prefWidth="234.0" promptText="Cep">
+                  <MaskTextField fx:id="textCep" layoutX="80.0" mask="NNNNN-NNN" componentName="CEP" layoutY="279.0" prefHeight="34.0" prefWidth="234.0" promptText="Cep">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
-                  </TextField>
+                  </MaskTextField>
                   <Label layoutX="11.0" layoutY="341.0" text="Cidade">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -156,6 +156,5 @@
             </ImageView>
          </children>
       </Pane>
-      <MaskTextField />
    </children>
 </Pane>
