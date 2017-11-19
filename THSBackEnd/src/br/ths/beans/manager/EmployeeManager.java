@@ -1,5 +1,6 @@
 package br.ths.beans.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ths.beans.Employee;
@@ -24,9 +25,23 @@ public class EmployeeManager {
 	}
 	
 	
-	public static List<Employee> getEmployee() {
+	public static List<Employee> getEmployees() {
 //		return getCidadeDao().getCidades();
-		return null;
+		List<Employee> list = new ArrayList<>();
+		Employee c = null;
+		for(int i = 1; i<100 ; i++){
+			c = new Employee();
+			c.setId(i);
+			c.setName("e"+i);
+			c.setEmail("email"+i);
+			c.setCpf("cpf"+i);
+			c.setTelephone("telefone"+i);
+			c.setAddress("rua"+i);
+			c.setColor("#aaa");
+			list.add(c);
+		}
+		
+		return list;
 	}
 	
 //	private static EmployeeDao getEmployeeDao(){

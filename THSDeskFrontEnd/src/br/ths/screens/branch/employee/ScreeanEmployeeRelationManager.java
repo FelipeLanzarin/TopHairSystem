@@ -2,6 +2,7 @@ package br.ths.screens.branch.employee;
 
 import java.net.URL;
 
+import br.ths.controllers.branch.employee.ControllerEmployeeRelationManager;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
@@ -20,6 +21,9 @@ public class ScreeanEmployeeRelationManager extends Application {
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
+			ControllerEmployeeRelationManager control = (ControllerEmployeeRelationManager) loader.getController();
+			control.setStage(stage);
+			control.createTable();
 			stage.setResizable(false);
 			stage.setTitle("Top Hair System");
 			stage.show();

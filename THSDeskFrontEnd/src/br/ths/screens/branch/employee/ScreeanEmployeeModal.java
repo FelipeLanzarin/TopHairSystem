@@ -2,6 +2,7 @@ package br.ths.screens.branch.employee;
 
 import java.net.URL;
 
+import br.ths.beans.Employee;
 import br.ths.controllers.branch.employee.ControllerEmployeeModal;
 import br.ths.controllers.branch.employee.ControllerEmployeeRelationManager;
 import br.ths.tools.log.LogTools;
@@ -16,6 +17,7 @@ public class ScreeanEmployeeModal extends Application {
 	
 	public Boolean newEmployee;
 	public ControllerEmployeeRelationManager relation;
+	public Employee employee;
 	@Override
 	public void start(Stage stage) {
 		try {
@@ -29,6 +31,7 @@ public class ScreeanEmployeeModal extends Application {
 			ControllerEmployeeModal controllerEmployeeModal = (ControllerEmployeeModal) loader.getController();
 			controllerEmployeeModal.setNewEmployee(newEmployee);
 			controllerEmployeeModal.setRelation(relation);
+			controllerEmployeeModal.setEmployee(employee);
 			controllerEmployeeModal.setStage(stage);
 			stage.show();
 		} catch(Exception e) {
@@ -50,6 +53,14 @@ public class ScreeanEmployeeModal extends Application {
 
 	public void setRelation(ControllerEmployeeRelationManager relation) {
 		this.relation = relation;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	
 }

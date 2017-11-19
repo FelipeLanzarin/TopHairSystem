@@ -21,15 +21,16 @@ import javafx.scene.input.MouseEvent;
 public class MouseEntered implements EventHandler<Event>{
 	
 	private EventAction eventAction;
+	private Scene scene;
 	
-	public  MouseEntered(EventAction eventAction) {
+	public  MouseEntered(EventAction eventAction, Scene scene) {
 		this.eventAction = eventAction;
+		this.scene = scene;
 	}
 	
 	@Override
 	public void handle(Event event) {
 		if(event.getEventType().equals(MouseEvent.MOUSE_ENTERED)){
-			Scene scene = FXUtilsControl.getScene();
 			if(scene != null){
 				scene.setCursor(Cursor.HAND);
 				if(eventAction != null){

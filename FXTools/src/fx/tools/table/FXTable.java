@@ -1,6 +1,8 @@
 package fx.tools.table;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javafx.event.Event;
@@ -28,7 +30,7 @@ public class FXTable {
 	private String style;
 	private String font;
 	private Double sizeFont;
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	public FXTable() {
 		rowns = new ArrayList<>();
 	}
@@ -48,6 +50,7 @@ public class FXTable {
 			layoutY = layoutYInit;
 		}
 		Pane[] columnsPane = new Pane[columns.length];
+		System.out.println("Start for = " +  sdf.format(new Date()));
 		for(int i=0; i < columns.length; i++){
 			Pane pane= null;
 			if(i==0){
@@ -60,6 +63,7 @@ public class FXTable {
 			paneTable.getChildren().add(pane);
 			columnsPane[i] = pane;
 		}
+		System.out.println("Finshi for = " +  sdf.format(new Date()));
 		rowns.add(columnsPane);
 		paneTable.setPrefHeight(layoutY+sizeRowns+20.0);
 	}
@@ -77,6 +81,7 @@ public class FXTable {
 	 * @return
 	 */
 	private Pane newColumn(Object column, Double layoutX, Double layoutY, Double width){
+		System.out.println("Start newColumn = " +  sdf.format(new Date()));
 		Pane pane = new Pane();
 		pane.setLayoutX(layoutX);
 		pane.setLayoutY(layoutY);
@@ -109,6 +114,7 @@ public class FXTable {
 			img.setLayoutY(10.0);
 			pane.getChildren().add(img);
 		}
+		System.out.println("Finish newColumn = " + sdf.format(new Date()));
 		return pane;
 	}
 	

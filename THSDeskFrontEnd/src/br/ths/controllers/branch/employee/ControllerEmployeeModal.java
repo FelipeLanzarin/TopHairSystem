@@ -4,8 +4,11 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import br.ths.beans.City;
 import br.ths.beans.Employee;
 import br.ths.beans.manager.EmployeeManager;
+import br.ths.screens.city.ScreenCityRelation;
+import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskTelephone;
 import fx.tools.mask.MaskTextField;
@@ -14,10 +17,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ControllerEmployeeModal extends GenericController{
-	
 	
 	@FXML private Label labelTitle;
 	@FXML private TextField textName;
@@ -34,7 +37,7 @@ public class ControllerEmployeeModal extends GenericController{
 	public Boolean newEmployee;
 	public Employee employee;
 	public ControllerEmployeeRelationManager relation;
-	public Stage stage;
+	public City city;
 	
 	
 	@Override
@@ -47,7 +50,14 @@ public class ControllerEmployeeModal extends GenericController{
 	}
 	
 	public void openCities(){
-		
+		try{
+			ScreenCityRelation cityRelation = new ScreenCityRelation();
+			cityRelation.setLastController(this);
+			cityRelation.start(new Stage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("Erro ao abrir tela cidades = " + e);
+		}
 	}
 	
 	public boolean validateFiedls(){
@@ -71,13 +81,11 @@ public class ControllerEmployeeModal extends GenericController{
 		employee.setNumber(textNumber.getText());
 		employee.setNeighborhood(textNeighborhood.getText());
 		employee.setCep(textCep.getText());
-//		employee.setCity(textCity.getText());
 		employee.setColor("#"+ Integer.toHexString(color.getValue().hashCode()));
-		System.out.println(employee.getColor());
 		if(newEmployee){
 			employee.setCreationDate(new Date());
 			if(EmployeeManager.create(employee)){
-//				stage.close();
+				getStage().close();
 				relation.messageSucess("Funcionário cadastrada com sucesso!");
 			}else{
 				Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
@@ -87,7 +95,7 @@ public class ControllerEmployeeModal extends GenericController{
 			}
 		}else{
 			if(EmployeeManager.update(employee)){
-				stage.close();
+				getStage().close();
 				relation.messageSucess("Funcionário alterado com sucesso!");
 			}else{
 				Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
@@ -95,6 +103,32 @@ public class ControllerEmployeeModal extends GenericController{
 				dialogoInfo.setHeaderText("Erro ao alterar funcionário!");
 				dialogoInfo.showAndWait();
 			}
+		}
+	}
+	
+	private void populateTextFields(Employee employee){
+		if(employee == null){
+			return;
+		}
+		textName.setText(employee.getName());
+		textEmail.setText(employee.getEmail());
+		textCpf.setText(employee.getCpf());
+		textTelephone.setText(employee.getTelephone());
+		textAddress.setText(employee.getAddress());
+		textNumber.setText(employee.getNumber());
+		textNeighborhood.setText(employee.getNeighborhood());
+		textCep.setText(employee.getCep());
+		if(employee.getCity() != null){
+			textCity.setText(employee.getCity().getName());
+		}
+		color.setValue(Color.web(employee.getColor()));
+	}
+	
+	@Override
+	public void selectCity(Object obj) {
+		if(obj instanceof City){
+			this.city = (City) obj;
+			textCity.setText(city.getName());
 		}
 	}
 	
@@ -112,14 +146,9 @@ public class ControllerEmployeeModal extends GenericController{
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
+		if(employee != null){
+			populateTextFields(employee);
+		}
 	}
 
 	public ControllerEmployeeRelationManager getRelation() {

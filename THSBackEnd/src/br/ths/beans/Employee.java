@@ -14,7 +14,7 @@ public class Employee {
 	private String telephone;
 	private String cep;
 	private String email;
-//	private Cidade cidade;
+	private City city;
 	private String color;
 	private Company company;
 	private BranchCompany branchCompany;
@@ -97,6 +97,11 @@ public class Employee {
 	public void setBranchCompany(BranchCompany branchCompany) {
 		this.branchCompany = branchCompany;
 	}
-	
+	public City getCity() {
+		return city;
+	}
+	public void setCity(City city) {
+		this.city = city;
+	}
 
 }

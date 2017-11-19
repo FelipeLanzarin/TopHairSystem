@@ -11,15 +11,16 @@ import javafx.scene.input.MouseEvent;
 public class MouseExited implements EventHandler<Event>{
 	
 	private EventAction eventAction;
+	private Scene scene;
 	
-	public  MouseExited(EventAction eventAction) {
+	public  MouseExited(EventAction eventAction, Scene scene) {
 		this.eventAction = eventAction;
+		this.scene = scene;
 	}
 	
 	@Override
 	public void handle(Event event) {
 		if(event.getEventType().equals(MouseEvent.MOUSE_EXITED)){
-			Scene scene = FXUtilsControl.getScene();
 			if(scene != null){
 				scene.setCursor(Cursor.DEFAULT);
 				if(eventAction != null){

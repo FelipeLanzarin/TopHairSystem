@@ -3,6 +3,7 @@ package fx.tools.mouse.events;
 import fx.tools.action.EventAction;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
 public class MouseClicked implements EventHandler<Event>{

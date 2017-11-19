@@ -1,0 +1,22 @@
+.table-view {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #ddd;
+}
+
+.table-view .column-header{
+    -fx-background-color: #ffffff;
+	-fx-border-color:#f5f5f5;
+	-fx-pref-height: 30;	 
+}
+
+
+.table-view .column-header .label {
+    -fx-font-size: 14;
+    -fx-font-family: "SansSerif Bold";
+}
+
+.table-row-cell {
+    -fx-font-size: 14;
+    -fx-font-family: "SansSerif Bold";
+}
+

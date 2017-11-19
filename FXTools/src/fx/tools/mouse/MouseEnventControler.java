@@ -4,7 +4,7 @@ import fx.tools.action.EventAction;
 import fx.tools.mouse.events.MouseClicked;
 import fx.tools.mouse.events.MouseEntered;
 import fx.tools.mouse.events.MouseExited;
-import javafx.scene.Node;
+import javafx.scene.Scene;
 
 /**
  * 
@@ -23,8 +23,8 @@ public class MouseEnventControler{
 	 * @param eventAction - crie uma classe que implemente a classe {@link EventAction} e implemente a ação do evento no metodo action       
 	 * @return
 	 */
-	public static MouseEntered getMouseEntered(EventAction eventAction) {
-		return new MouseEntered(eventAction);
+	public static MouseEntered getMouseEntered(EventAction eventAction, Scene scene) {
+		return new MouseEntered(eventAction, scene);
 	}
 	
 	/**
@@ -35,8 +35,8 @@ public class MouseEnventControler{
 	 * @param eventAction - crie uma classe que implemente a classe {@link EventAction} e implemente a ação do evento no metodo action       
 	 * @return
 	 */
-	public static MouseExited getMouseExited(EventAction eventAction) {
-		return new MouseExited(eventAction);
+	public static MouseExited getMouseExited(EventAction eventAction, Scene scene) {
+		return new MouseExited(eventAction,  scene);
 	}
 	
 	/**
@@ -53,9 +53,9 @@ public class MouseEnventControler{
 	
 	
 	//usar como exemplo para cada tipo de item
-	public static void setEvents(Node node){
-		node.setOnMouseEntered(getMouseEntered(null));
-		node.setOnMouseExited(getMouseExited(null));
-	}
+//	public static void setEvents(Node node){
+//		node.setOnMouseEntered(getMouseEntered(null));
+//		node.setOnMouseExited(getMouseExited(null));
+//	}
 
 }

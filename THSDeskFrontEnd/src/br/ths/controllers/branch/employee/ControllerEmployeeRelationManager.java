@@ -2,13 +2,33 @@ package br.ths.controllers.branch.employee;
 
 import java.util.List;
 
-import br.ths.beans.Employee;
 import br.ths.screens.branch.employee.ScreeanEmployeeModal;
 import br.ths.tools.log.LogTools;
+import br.ths.utils.TableViewUtils;
+import br.ths.utils.beans.EmployeeManagerRown;
+import fx.tools.controller.GenericController;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class ControllerEmployeeRelationManager {
+public class ControllerEmployeeRelationManager extends GenericController{
+	
+	@FXML private TextField textNameFilter;
+	@FXML private TableView<EmployeeManagerRown> table;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnOne;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnTwo;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnThree;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnFour;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnFive;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnSix;
+	@FXML private TableColumn<EmployeeManagerRown, String> columnSeven;
+	
+	private List<EmployeeManagerRown> list;
 	
 	public void clickButtonNew(){
 		try{
@@ -25,6 +45,26 @@ public class ControllerEmployeeRelationManager {
 		
 	}
 	
+	public void updateTable(List<EmployeeManagerRown> listEmployees){
+		if(listEmployees== null){
+			listEmployees = this.list;
+		}
+		table.setItems(FXCollections.observableArrayList(listEmployees));
+
+	}
+	
+	public void createTable(){
+		list = TableViewUtils.getEmployeeManagers(getStage().getScene(), this);
+		columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnTwo.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		columnThree.setCellValueFactory(new PropertyValueFactory<>("email"));
+		columnFour.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+		columnFive.setCellValueFactory(new PropertyValueFactory<>("address"));
+		columnSix.setCellValueFactory(new PropertyValueFactory<>("edit"));
+		columnSeven.setCellValueFactory(new PropertyValueFactory<>("delete"));
+		updateTable(list);
+	}
+	
 	public void messageSucess(String message){
 		Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
 		dialogoInfo.setTitle("Sucesso");
@@ -32,8 +72,13 @@ public class ControllerEmployeeRelationManager {
 		dialogoInfo.showAndWait();
 		updateTable(null);
 	}
-	
-	public void updateTable(List<Employee> list){
-		
+
+	public List<EmployeeManagerRown> getList() {
+		return list;
 	}
+
+	public void setList(List<EmployeeManagerRown> list) {
+		this.list = list;
+	}
+	
 }

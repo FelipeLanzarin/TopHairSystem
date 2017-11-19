@@ -5,8 +5,11 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class GenericController implements Initializable{
+	
+	private Stage stage;
 	
 	public void alert(String message){
 		Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
@@ -18,6 +21,17 @@ public class GenericController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+	}
+	
+	public void selectCity(Object obj) {
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 	
 }
