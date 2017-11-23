@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+
+	<persistence-unit name="thsbd" transaction-type="RESOURCE_LOCAL">
+   		<provider>org.hibernate.ejb.HibernatePersistence</provider> <!-- provedor/implementacao do JPA -->  
+		<class> br.ths.beans.Account</class>
+		<class> br.ths.beans.Balance</class>
+		<class> br.ths.beans.BranchCompany</class>
+		<class> br.ths.beans.Cashier</class>
+		<class> br.ths.beans.Category</class>
+		<class> br.ths.beans.City</class>
+		<class> br.ths.beans.Client</class>
+		<class> br.ths.beans.CommerceItem</class>
+		<class> br.ths.beans.Company</class>
+		<class> br.ths.beans.Employee</class>
+		<class> br.ths.beans.Image</class>
+		<class> br.ths.beans.Installment</class>
+		<class> br.ths.beans.Order</class>
+		<class> br.ths.beans.Payment</class>
+		<class> br.ths.beans.Product</class>
+		<class> br.ths.beans.SubCategory</class>
+		<class> br.ths.beans.Transaction</class>
+		<properties>
+			<!-- dados da conexao -->
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://convidas.cbxmqyd20yi8.us-east-2.rds.amazonaws.com:5432/thsbd" />
+			<property name="javax.persistence.jdbc.user" value="thsadmin" />
+			<property name="javax.persistence.jdbc.password"  value="C0nnect123" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /><!--  propriedades do hibernate -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+ 			<property name="hibernate.hbm2ddl.auto" value="update" /> <!--atualiza o banco, gera as tabelas se for preciso -->
+		</properties>
+	</persistence-unit>
+</persistence>

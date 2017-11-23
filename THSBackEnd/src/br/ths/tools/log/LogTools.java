@@ -2,6 +2,7 @@ package br.ths.tools.log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,6 +20,7 @@ public class LogTools {
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private static final SimpleDateFormat sdfName = new SimpleDateFormat("dd-MM-yyyy");
+	private static final String ROOT_PATCH = "logs/";
 	
 	public static void logDebug(String log){
 		String debug = generateLog() + " Debug ** " + log;
@@ -53,7 +55,15 @@ public class LogTools {
 	
 	private static List<String>read(){
 		Date data = new Date();
-		String name= "logs/log " + sdfName.format(data)+".log";
+		
+		File files = new File(ROOT_PATCH);
+		if (!files.exists()) {
+			if (!files.mkdirs()) {
+				return null;
+			}
+		}
+		
+		String name= ROOT_PATCH+"log " + sdfName.format(data)+".log";
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(name), "UTF-8"));

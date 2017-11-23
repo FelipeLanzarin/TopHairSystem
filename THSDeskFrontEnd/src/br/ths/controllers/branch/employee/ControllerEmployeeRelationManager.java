@@ -1,7 +1,11 @@
 package br.ths.controllers.branch.employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.ths.beans.Employee;
+import br.ths.beans.manager.EmployeeManager;
+import br.ths.database.EmployeeDao;
 import br.ths.screens.branch.employee.ScreeanEmployeeModal;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.TableViewUtils;
@@ -10,25 +14,28 @@ import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class ControllerEmployeeRelationManager extends GenericController{
 	
 	@FXML private TextField textNameFilter;
-	@FXML private TableView<EmployeeManagerRown> table;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnOne;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnTwo;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnThree;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnFour;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnFive;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnSix;
-	@FXML private TableColumn<EmployeeManagerRown, String> columnSeven;
+	@FXML private TableView<Employee> table;
+	@FXML private TableColumn<Employee, String> columnOne;
+	@FXML private TableColumn<Employee, String> columnTwo;
+	@FXML private TableColumn<Employee, String> columnThree;
+	@FXML private TableColumn<Employee, String> columnFour;
+	@FXML private TableColumn<Employee, String> columnFive;
+	@FXML private Button buttonEdit;
+	@FXML private Button buttonDelete;
 	
-	private List<EmployeeManagerRown> list;
+	private List<Employee> list;
 	
 	public void clickButtonNew(){
 		try{
@@ -41,27 +48,94 @@ public class ControllerEmployeeRelationManager extends GenericController{
 		}
 	}
 	
-	public void filterByName(){
-		
+	public void clickButtonEdit(){
+		try{
+			Employee employee = table.getSelectionModel().getSelectedItem();
+			if(employee == null){
+				return;
+			}
+			ScreeanEmployeeModal scream = new ScreeanEmployeeModal();
+			scream.setNewEmployee(false);
+			scream.setRelation(this);
+			scream.setEmployee(employee);
+			scream.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
 	
-	public void updateTable(List<EmployeeManagerRown> listEmployees){
-		if(listEmployees== null){
-			listEmployees = this.list;
+	public void clickButtonDelete(){
+		try {
+			Employee employee = table.getSelectionModel().getSelectedItem();
+			if(employee == null){
+				return;
+			}
+			final ButtonType btnSim = new ButtonType("Sim");
+			final ButtonType btnNao = new ButtonType("Não");
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir o funcionário "+ employee.getName()+"?", btnSim, btnNao);
+			alert.showAndWait();
+
+			if (alert.getResult() == btnSim) {
+				if(EmployeeManager.delete(employee)){
+					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+					dialog.setTitle("Sucesso!");
+					dialog.setHeaderText("Funcionário excluído com sucesso");
+					dialog.showAndWait();
+					updateTable(null);
+				}else{
+					Alert dialog = new Alert(Alert.AlertType.ERROR);
+					dialog.setTitle("Erro!");
+					dialog.setHeaderText("Erro ao excluir Funcionário!");
+					dialog.showAndWait();
+				}
+			}
+		} catch (Exception e) {
+			LogTools.logError(e);
 		}
+	}
+	
+	public void clickTable(){
+		Employee employee = table.getSelectionModel().getSelectedItem();
+		if(employee != null){
+			disableButtons(false);
+		}
+	}
+	
+	private void disableButtons(Boolean disable){
+		buttonEdit.setDisable(disable);
+		buttonDelete.setDisable(disable);
+	}
+	
+	
+	public void filterByName(){
+		String employeeName = textNameFilter.getText().toLowerCase();
+		List<Employee> listEmployeesSelects = new ArrayList<>();
+		for (Employee employee : list) {
+			String name = employee.getName().toLowerCase();
+			if(name.contains(employeeName)){
+				listEmployeesSelects.add(employee);
+			}
+		}
+		updateTable(listEmployeesSelects);
+	}
+	
+	public void updateTable(List<Employee> listEmployees){
+		if(listEmployees== null){
+			listEmployees = EmployeeManager.getEmployees();
+		}
+		disableButtons(true);
 		table.setItems(FXCollections.observableArrayList(listEmployees));
 
 	}
 	
 	public void createTable(){
-		list = TableViewUtils.getEmployeeManagers(getStage().getScene(), this);
+		list = EmployeeManager.getEmployees();
 		columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnTwo.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		columnThree.setCellValueFactory(new PropertyValueFactory<>("email"));
 		columnFour.setCellValueFactory(new PropertyValueFactory<>("telephone"));
 		columnFive.setCellValueFactory(new PropertyValueFactory<>("address"));
-		columnSix.setCellValueFactory(new PropertyValueFactory<>("edit"));
-		columnSeven.setCellValueFactory(new PropertyValueFactory<>("delete"));
 		updateTable(list);
 	}
 	
@@ -73,12 +147,12 @@ public class ControllerEmployeeRelationManager extends GenericController{
 		updateTable(null);
 	}
 
-	public List<EmployeeManagerRown> getList() {
+	public List<Employee> getList() {
 		return list;
 	}
 
-	public void setList(List<EmployeeManagerRown> list) {
+	public void setList(List<Employee> list) {
 		this.list = list;
 	}
-	
+
 }

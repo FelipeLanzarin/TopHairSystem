@@ -2,8 +2,22 @@ package br.ths.beans;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee")
 public class Employee {
 	
+	@Id
+    @SequenceGenerator(name="SEQ_EMPLOYEE_ID", sequenceName="GEN_EMPLOYEE_ID", allocationSize=1, initialValue=1000)
+    @GeneratedValue(generator="SEQ_EMPLOYEE_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Date creationDate;
 	private String name;
@@ -14,9 +28,15 @@ public class Employee {
 	private String telephone;
 	private String cep;
 	private String email;
-	private City city;
 	private String color;
+	@ManyToOne
+	@JoinColumn(name="city_id", referencedColumnName="id")
+	private City city;
+	@ManyToOne
+	@JoinColumn(name="company_id", referencedColumnName="id")
 	private Company company;
+	@ManyToOne
+	@JoinColumn(name="branch_company_id", referencedColumnName="id")
 	private BranchCompany branchCompany;
 	
 	public Integer getId() {

@@ -1,53 +1,36 @@
 package br.ths.beans.manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.ths.beans.Employee;
+import br.ths.database.EmployeeDao;
 
 public class EmployeeManager {
 	
-//	private static EmployeeDao cd;
+	private static EmployeeDao dao;
 	
-	public static Boolean update(Employee employe) {
-//		return Boolean.valueOf(getCidadeDao().updateCidade(cidade));
-		return true;
+	public static Boolean update(Employee employee) {
+		return Boolean.valueOf(getEmployeeDao().updateEmployee(employee));
 	}
 
-	public static Boolean create(Employee employe) {
-//		return Boolean.valueOf(getCidadeDao().insereCidade(cidade));
-		return true;
+	public static Boolean create(Employee employee) {
+		return Boolean.valueOf(getEmployeeDao().createEmployee(employee));
 	}
 
-	public static Boolean delete(Employee employe) {
-//		return Boolean.valueOf(getCidadeDao().deleteCidade(cidade.getId()));
-		return false;
+	public static Boolean delete(Employee employee) {
+		return Boolean.valueOf(getEmployeeDao().deleteEmployee(employee.getId()));
 	}
-	
 	
 	public static List<Employee> getEmployees() {
-//		return getCidadeDao().getCidades();
-		List<Employee> list = new ArrayList<>();
-		Employee c = null;
-		for(int i = 1; i<100 ; i++){
-			c = new Employee();
-			c.setId(i);
-			c.setName("e"+i);
-			c.setEmail("email"+i);
-			c.setCpf("cpf"+i);
-			c.setTelephone("telefone"+i);
-			c.setAddress("rua"+i);
-			c.setColor("#aaa");
-			list.add(c);
-		}
+		return getEmployeeDao().getEmployees();
 		
-		return list;
 	}
 	
-//	private static EmployeeDao getEmployeeDao(){
-//		if(cd == null){
-//			cd = new CidadeDao();
-//		}
-//		return cd;
-//	}
+	private static EmployeeDao getEmployeeDao(){
+		if(dao == null){
+			dao = new EmployeeDao();
+		}	
+		return dao;
+	}
+
 }

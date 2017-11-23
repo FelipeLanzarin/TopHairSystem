@@ -1,53 +1,41 @@
 package br.ths.beans.manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.ths.beans.City;
+import br.ths.database.CityDao;
 
 public class CityManager {
 	
-//	private static CidadeDao cd;
+	private static CityDao cd;
 	
-	public static Boolean update(City cidade) {
-//		return Boolean.valueOf(getCidadeDao().updateCidade(cidade));
+	public static Boolean update(City city) {
+//		return Boolean.valueOf(getCityDao().updateCity(city));
 		return true;
 	}
 
-	public static Boolean create(City cidade) {
-//		return Boolean.valueOf(getCidadeDao().insereCidade(cidade));
+	public static Boolean create(City city) {
+//		return Boolean.valueOf(getCityDao().createCity(city));
 		return true;
 	}
 
-	public static Boolean delete(City cidade) {
-//		return Boolean.valueOf(getCidadeDao().deleteCidade(cidade.getId()));
+	public static Boolean delete(City city) {
+//		return Boolean.valueOf(getCityDao().deleteCity(city.getId()));
 		return true;
 	}
 	
 	
 	public static List<City> getCities() {
-//		return getCidadeDao().getCidades();
-		List<City> list = new ArrayList<>();
-		City c = null;
-		for(int i = 1; i<10 ; i++){
-			c = new City();
-			c.setId(i);
-			c.setName("cidade"+i);
-			c.setCountry("pais"+i);
-			c.setUf("UF"+i);
-			list.add(c);
-		}
-		
-		return list;
+		return getCityDao().getCities();
 	}
 	
 	
 	
-//	private static CidadeDao getCidadeDao(){
-//		if(cd == null){
-//			cd = new CidadeDao();
-//		}
-//		return cd;
-//	}
+	private static CityDao getCityDao(){
+		if(cd == null){
+			cd = new CityDao();
+		}
+		return cd;
+	}
 //	
 }

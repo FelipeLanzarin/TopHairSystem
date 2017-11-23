@@ -34,6 +34,8 @@ public class ControllerEmployeeModal extends GenericController{
 	@FXML private TextField textCity;
 	@FXML private ColorPicker color;
 	
+	private static final String STYLE_ERROR = "-fx-border-color:red; -fx-border-radius:4";
+	
 	public Boolean newEmployee;
 	public Employee employee;
 	public ControllerEmployeeRelationManager relation;
@@ -47,6 +49,7 @@ public class ControllerEmployeeModal extends GenericController{
 	}
 	
 	public void actionName(){
+		textName.setStyle("");
 	}
 	
 	public void openCities(){
@@ -61,7 +64,12 @@ public class ControllerEmployeeModal extends GenericController{
 	}
 	
 	public boolean validateFiedls(){
-		return true;
+		Boolean valid = true;
+		if(textName.getText().isEmpty()){
+			textName.setStyle(STYLE_ERROR);
+			valid = false;
+		}
+		return valid;
 	}
 	
 	//metodo chamado no botao salvar
@@ -81,6 +89,7 @@ public class ControllerEmployeeModal extends GenericController{
 		employee.setNumber(textNumber.getText());
 		employee.setNeighborhood(textNeighborhood.getText());
 		employee.setCep(textCep.getText());
+		employee.setCity(city);
 		employee.setColor("#"+ Integer.toHexString(color.getValue().hashCode()));
 		if(newEmployee){
 			employee.setCreationDate(new Date());
