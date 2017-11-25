@@ -14,11 +14,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="client")
-public class Client {
+@Table(name="profile")
+public class Profile {
 	@Id
-    @SequenceGenerator(name="SEQ_CLIENT_ID", sequenceName="GEN_CLIENT_ID", allocationSize=1, initialValue=1000)
-    @GeneratedValue(generator="SEQ_CLIENT_ID",strategy= GenerationType.SEQUENCE)
+    @SequenceGenerator(name="SEQ_PROFILE_ID", sequenceName="GEN_PROFILE_ID", allocationSize=1, initialValue=1000)
+    @GeneratedValue(generator="SEQ_PROFILE_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	@Column(name="creation_date")
 	private Date creationDate;

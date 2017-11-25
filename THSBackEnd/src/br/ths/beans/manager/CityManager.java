@@ -10,18 +10,15 @@ public class CityManager {
 	private static CityDao cd;
 	
 	public static Boolean update(City city) {
-//		return Boolean.valueOf(getCityDao().updateCity(city));
-		return true;
+		return Boolean.valueOf(getCityDao().updateCity(city));
 	}
 
 	public static Boolean create(City city) {
-//		return Boolean.valueOf(getCityDao().createCity(city));
-		return true;
+		return Boolean.valueOf(getCityDao().createCity(city));
 	}
 
 	public static Boolean delete(City city) {
-//		return Boolean.valueOf(getCityDao().deleteCity(city.getId()));
-		return true;
+		return Boolean.valueOf(getCityDao().deleteCity(city.getId()));
 	}
 	
 	

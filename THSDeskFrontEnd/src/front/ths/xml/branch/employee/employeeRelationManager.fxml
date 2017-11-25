@@ -115,7 +115,7 @@
             </TableView>
             <Pane layoutX="35.0" layoutY="145.0" prefHeight="4.0" prefWidth="1233.0" style="-fx-background-color: #fff;" />
             <Pane layoutX="33.0" layoutY="145.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
-            <Pane layoutX="1263.0" layoutY="145.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
+            <Pane layoutX="1247.0" layoutY="145.0" prefHeight="30.0" prefWidth="21.0" style="-fx-background-color: #fff;" />
          </children>
       </Pane>
    </children>

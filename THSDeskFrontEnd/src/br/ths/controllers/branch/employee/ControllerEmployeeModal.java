@@ -65,79 +65,95 @@ public class ControllerEmployeeModal extends GenericController{
 	
 	public boolean validateFiedls(){
 		Boolean valid = true;
-		if(textName.getText().isEmpty()){
-			textName.setStyle(STYLE_ERROR);
-			valid = false;
+		try {
+			if(textName.getText().isEmpty()){
+				textName.setStyle(STYLE_ERROR);
+				valid = false;
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
 		return valid;
 	}
 	
 	//metodo chamado no botao salvar
 	public void save(){
-		if(!validateFiedls()){
-			return;
-		}
-		if(employee == null){
-			employee = new Employee();
-		}
-		
-		employee.setName(textName.getText());
-		employee.setEmail(textEmail.getText());
-		employee.setCpf(textCpf.getText());
-		employee.setTelephone(textTelephone.getText());
-		employee.setAddress(textAddress.getText());
-		employee.setNumber(textNumber.getText());
-		employee.setNeighborhood(textNeighborhood.getText());
-		employee.setCep(textCep.getText());
-		employee.setCity(city);
-		employee.setColor("#"+ Integer.toHexString(color.getValue().hashCode()));
-		if(newEmployee){
-			employee.setCreationDate(new Date());
-			if(EmployeeManager.create(employee)){
-				getStage().close();
-				relation.messageSucess("Funcionário cadastrada com sucesso!");
-			}else{
-				Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
-				dialogoInfo.setTitle("Erro!");
-				dialogoInfo.setHeaderText("Erro ao cadastrar funcionário!");
-				dialogoInfo.showAndWait();
+		try {
+			if(!validateFiedls()){
+				return;
 			}
-		}else{
-			if(EmployeeManager.update(employee)){
-				getStage().close();
-				relation.messageSucess("Funcionário alterado com sucesso!");
-			}else{
-				Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
-				dialogoInfo.setTitle("Erro!");
-				dialogoInfo.setHeaderText("Erro ao alterar funcionário!");
-				dialogoInfo.showAndWait();
+			if(employee == null){
+				employee = new Employee();
 			}
+			
+			employee.setName(textName.getText());
+			employee.setEmail(textEmail.getText());
+			employee.setCpf(textCpf.getText());
+			employee.setTelephone(textTelephone.getText());
+			employee.setAddress(textAddress.getText());
+			employee.setNumber(textNumber.getText());
+			employee.setNeighborhood(textNeighborhood.getText());
+			employee.setCep(textCep.getText());
+			employee.setCity(city);
+			employee.setColor("#"+ Integer.toHexString(color.getValue().hashCode()));
+			if(newEmployee){
+				employee.setCreationDate(new Date());
+				if(EmployeeManager.create(employee)){
+					getStage().close();
+					relation.messageSucess("Funcionário cadastrado com sucesso!");
+				}else{
+					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+					dialogoInfo.setTitle("Erro!");
+					dialogoInfo.setHeaderText("Erro ao cadastrar funcionário!");
+					dialogoInfo.showAndWait();
+				}
+			}else{
+				if(EmployeeManager.update(employee)){
+					getStage().close();
+					relation.messageSucess("Funcionário alterado com sucesso!");
+				}else{
+					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+					dialogoInfo.setTitle("Erro!");
+					dialogoInfo.setHeaderText("Erro ao alterar funcionário!");
+					dialogoInfo.showAndWait();
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
 	}
 	
 	private void populateTextFields(Employee employee){
-		if(employee == null){
-			return;
+		try {
+			if(employee == null){
+				return;
+			}
+			textName.setText(employee.getName());
+			textEmail.setText(employee.getEmail());
+			textCpf.setText(employee.getCpf());
+			textTelephone.setText(employee.getTelephone());
+			textAddress.setText(employee.getAddress());
+			textNumber.setText(employee.getNumber());
+			textNeighborhood.setText(employee.getNeighborhood());
+			textCep.setText(employee.getCep());
+			if(employee.getCity() != null){
+				textCity.setText(employee.getCity().getName());
+			}
+			color.setValue(Color.web(employee.getColor()));
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
-		textName.setText(employee.getName());
-		textEmail.setText(employee.getEmail());
-		textCpf.setText(employee.getCpf());
-		textTelephone.setText(employee.getTelephone());
-		textAddress.setText(employee.getAddress());
-		textNumber.setText(employee.getNumber());
-		textNeighborhood.setText(employee.getNeighborhood());
-		textCep.setText(employee.getCep());
-		if(employee.getCity() != null){
-			textCity.setText(employee.getCity().getName());
-		}
-		color.setValue(Color.web(employee.getColor()));
 	}
 	
 	@Override
 	public void selectCity(Object obj) {
-		if(obj instanceof City){
-			this.city = (City) obj;
-			textCity.setText(city.getName());
+		try {
+			if(obj instanceof City){
+				this.city = (City) obj;
+				textCity.setText(city.getName());
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
 	}
 	
@@ -147,6 +163,11 @@ public class ControllerEmployeeModal extends GenericController{
 
 	public void setNewEmployee(Boolean newEmployee) {
 		this.newEmployee = newEmployee;
+		if(newEmployee){
+			labelTitle.setText("Cadastrar Funcionário");
+		}else{
+			labelTitle.setText("Alterar Funcionário");
+		}
 	}
 
 	public Employee getEmployee() {

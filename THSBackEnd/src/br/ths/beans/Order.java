@@ -31,8 +31,8 @@ public class Order {
 	@Column(name="payment_status")
 	private String paymentStatus;
 	@ManyToOne
-	@JoinColumn(name="client_id", referencedColumnName="id")
-	private Client client;
+	@JoinColumn(name="profile_id", referencedColumnName="id")
+	private Profile profile;
 	@ManyToOne
 	@JoinColumn(name="employee_id", referencedColumnName="id")
 	private Employee employee;
@@ -91,11 +91,11 @@ public class Order {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-	public Client getClient() {
-		return client;
+	public Profile getProfile() {
+		return profile;
 	}
-	public void setClient(Client client) {
-		this.client = client;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 	public Employee getEmployee() {
 		return employee;

@@ -37,9 +37,11 @@
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Cadastros">
                      <items>
                         <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Categoria" />
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Subcategoria" />
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Produto" />
+                        <MenuItem mnemonicParsing="false" onAction="#openCityManager" text="Cidade" />
+                        <MenuItem mnemonicParsing="false" onAction="#openProfileManager" text="Cliente" />
                         <MenuItem mnemonicParsing="false" onAction="#openEmployeeManager" style="-fx-font-family: SansSerif Regular;" text="Funcionario" />
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Produto" />
+                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Subcategoria" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Relatórios">

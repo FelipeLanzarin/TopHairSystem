@@ -5,21 +5,18 @@ import java.util.List;
 
 import br.ths.beans.Employee;
 import br.ths.beans.manager.EmployeeManager;
-import br.ths.database.EmployeeDao;
 import br.ths.screens.branch.employee.ScreeanEmployeeModal;
 import br.ths.tools.log.LogTools;
-import br.ths.utils.TableViewUtils;
-import br.ths.utils.beans.EmployeeManagerRown;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -96,9 +93,13 @@ public class ControllerEmployeeRelationManager extends GenericController{
 	}
 	
 	public void clickTable(){
-		Employee employee = table.getSelectionModel().getSelectedItem();
-		if(employee != null){
-			disableButtons(false);
+		try {
+			Employee employee = table.getSelectionModel().getSelectedItem();
+			if(employee != null){
+				disableButtons(false);
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
 	}
 	
@@ -109,34 +110,46 @@ public class ControllerEmployeeRelationManager extends GenericController{
 	
 	
 	public void filterByName(){
-		String employeeName = textNameFilter.getText().toLowerCase();
-		List<Employee> listEmployeesSelects = new ArrayList<>();
-		for (Employee employee : list) {
-			String name = employee.getName().toLowerCase();
-			if(name.contains(employeeName)){
-				listEmployeesSelects.add(employee);
+		try {
+			String employeeName = textNameFilter.getText().toLowerCase();
+			List<Employee> listEmployeesSelects = new ArrayList<>();
+			for (Employee employee : list) {
+				String name = employee.getName().toLowerCase();
+				if(name.contains(employeeName)){
+					listEmployeesSelects.add(employee);
+				}
 			}
+			updateTable(listEmployeesSelects);
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
-		updateTable(listEmployeesSelects);
 	}
 	
 	public void updateTable(List<Employee> listEmployees){
-		if(listEmployees== null){
-			listEmployees = EmployeeManager.getEmployees();
+		try {
+			if(listEmployees== null){
+				listEmployees = EmployeeManager.getEmployees();
+			}
+			disableButtons(true);
+			table.setItems(FXCollections.observableArrayList(listEmployees));
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
-		disableButtons(true);
-		table.setItems(FXCollections.observableArrayList(listEmployees));
 
 	}
 	
 	public void createTable(){
-		list = EmployeeManager.getEmployees();
-		columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
-		columnTwo.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-		columnThree.setCellValueFactory(new PropertyValueFactory<>("email"));
-		columnFour.setCellValueFactory(new PropertyValueFactory<>("telephone"));
-		columnFive.setCellValueFactory(new PropertyValueFactory<>("address"));
-		updateTable(list);
+		try {
+			list = EmployeeManager.getEmployees();
+			columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
+			columnTwo.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+			columnThree.setCellValueFactory(new PropertyValueFactory<>("email"));
+			columnFour.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+			columnFive.setCellValueFactory(new PropertyValueFactory<>("address"));
+			updateTable(list);
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
 	
 	public void messageSucess(String message){

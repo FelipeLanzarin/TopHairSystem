@@ -21,32 +21,50 @@
             </Label>
             <Pane layoutX="1.0" layoutY="46.0" prefHeight="623.0" prefWidth="707.0" style="-fx-background-color: #fff; -fx-background-radius: 4;">
                <children>
-                  <Label layoutX="35.0" layoutY="25.0" text="Filtrar">
+                  <Label layoutX="33.0" layoutY="74.0" text="Filtrar">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textNameFilter" layoutX="90.0" layoutY="20.0" onKeyReleased="#filterCities" prefHeight="30.0" prefWidth="586.0" promptText="Nome" />
-                  <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="67.0" maxWidth="661.0" pickOnBounds="false" prefHeight="547.0" prefWidth="645.0" stylesheets="@../../css/cityRelation.css">
+                  <TextField fx:id="textNameFilter" layoutX="88.0" layoutY="69.0" onKeyReleased="#filterCities" prefHeight="30.0" prefWidth="586.0" promptText="Nome" />
+                  <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="109.0" maxWidth="661.0" onMouseClicked="#clickTableItem" pickOnBounds="false" prefHeight="505.0" prefWidth="645.0" stylesheets="@../../css/cityRelation.css">
                     <columns>
-                      <TableColumn fx:id="columnOne" editable="false" maxWidth="281.0" minWidth="261.0" prefWidth="272.0" resizable="false" text="Nome" />
-                      <TableColumn fx:id="columnTwo" editable="false" maxWidth="176.0" minWidth="148.0" prefWidth="161.0" resizable="false" text="Estado" />
-                        <TableColumn fx:id="columnThree" editable="false" maxWidth="186.0" minWidth="139.0" prefWidth="156.0" resizable="false" text="Pais" />
-                        <TableColumn fx:id="columnFour" editable="false" maxWidth="53.0" minWidth="53.0" prefWidth="53.0" resizable="false">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" y="27.0">
-                                 <image>
-                                    <Image url="@../../images/manager/tick-inside-circle16.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></TableColumn>
+                      <TableColumn fx:id="columnOne" editable="false" maxWidth="272.0" minWidth="272.0" prefWidth="272.0" resizable="false" text="Nome" />
+                      <TableColumn fx:id="columnTwo" editable="false" maxWidth="190.0" minWidth="190.0" prefWidth="190.0" resizable="false" text="Estado" />
+                        <TableColumn fx:id="columnThree" editable="false" maxWidth="181.0" minWidth="181.0" prefWidth="181.0" resizable="false" text="Pais" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Pane layoutX="34.0" layoutY="68.0" prefHeight="4.0" prefWidth="640.0" style="-fx-background-color: #fff;" />
-                  <Pane layoutX="33.0" layoutY="68.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
+                  <Pane layoutX="34.0" layoutY="110.0" prefHeight="4.0" prefWidth="640.0" style="-fx-background-color: #fff;" />
+                  <Pane layoutX="33.0" layoutY="110.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
+                  <Label layoutX="31.0" layoutY="31.0" text="Cidade Selecionada:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="itemSelected" layoutX="175.0" layoutY="31.0" prefHeight="20.0" prefWidth="380.0" text="Nenhuma Cidade Selecionada">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="664.0" layoutY="110.0" prefHeight="30.0" prefWidth="11.0" style="-fx-background-color: #fff;" />
+                  <Button fx:id="selectItem" layoutX="562.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#selectItem" prefHeight="30.0" prefWidth="112.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Selectionar" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #50af49;">
+                           <image>
+                              <Image url="@../../images/manager/select.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="SansSerif Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </Pane>
             <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="709.0" style="-fx-background-color: #d9edf7;" />

@@ -1,11 +1,11 @@
-package br.ths.controllers.profile;
+package br.ths.controllers.city;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ths.beans.Profile;
-import br.ths.beans.manager.ProfileManager;
-import br.ths.screens.profile.ScreeanProfileModal;
+import br.ths.beans.City;
+import br.ths.beans.manager.CityManager;
+import br.ths.screens.city.ScreeanCityModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
@@ -20,24 +20,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class ControllerProfileRelationManager extends GenericController{
+public class ControllerCityRelationManager extends GenericController{
 	
 	@FXML private TextField textNameFilter;
-	@FXML private TableView<Profile> table;
-	@FXML private TableColumn<Profile, String> columnOne;
-	@FXML private TableColumn<Profile, String> columnTwo;
-	@FXML private TableColumn<Profile, String> columnThree;
-	@FXML private TableColumn<Profile, String> columnFour;
-	@FXML private TableColumn<Profile, String> columnFive;
+	@FXML private TableView<City> table;
+	@FXML private TableColumn<City, String> columnOne;
+	@FXML private TableColumn<City, String> columnTwo;
+	@FXML private TableColumn<City, String> columnThree;
 	@FXML private Button buttonEdit;
 	@FXML private Button buttonDelete;
 	
-	private List<Profile> list;
+	private List<City> list;
 	
 	public void clickButtonNew(){
 		try{
-			ScreeanProfileModal scream = new ScreeanProfileModal();
-			scream.setNewProfile(true);
+			ScreeanCityModal scream = new ScreeanCityModal();
+			scream.setNewCity(true);
 			scream.setRelation(this);
 			scream.start(new Stage());
 		}catch (Exception e) {
@@ -47,14 +45,14 @@ public class ControllerProfileRelationManager extends GenericController{
 	
 	public void clickButtonEdit(){
 		try{
-			Profile profile = table.getSelectionModel().getSelectedItem();
-			if(profile == null){
+			City city = table.getSelectionModel().getSelectedItem();
+			if(city == null){
 				return;
 			}
-			ScreeanProfileModal scream = new ScreeanProfileModal();
-			scream.setNewProfile(false);
+			ScreeanCityModal scream = new ScreeanCityModal();
+			scream.setNewCity(false);
 			scream.setRelation(this);
-			scream.setProfile(profile);
+			scream.setCity(city);
 			scream.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -63,27 +61,27 @@ public class ControllerProfileRelationManager extends GenericController{
 	
 	public void clickButtonDelete(){
 		try {
-			Profile profile = table.getSelectionModel().getSelectedItem();
-			if(profile == null){
+			City city = table.getSelectionModel().getSelectedItem();
+			if(city == null){
 				return;
 			}
 			final ButtonType btnSim = new ButtonType("Sim");
 			final ButtonType btnNao = new ButtonType("Não");
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir o cliente "+ profile.getName()+"?", btnSim, btnNao);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir a Cidade "+ city.getName()+"?", btnSim, btnNao);
 			alert.showAndWait();
 
 			if (alert.getResult() == btnSim) {
-				if(ProfileManager.delete(profile)){
+				if(CityManager.delete(city)){
 					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 					dialog.setTitle("Sucesso!");
-					dialog.setHeaderText("Cliente excluído com sucesso");
+					dialog.setHeaderText("Cidade excluído com sucesso");
 					dialog.showAndWait();
 					updateTable(null);
 				}else{
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
 					dialog.setTitle("Erro!");
-					dialog.setHeaderText("Erro ao excluir Cliente!");
+					dialog.setHeaderText("Cidade ao excluir Funcionário!");
 					dialog.showAndWait();
 				}
 			}
@@ -94,8 +92,8 @@ public class ControllerProfileRelationManager extends GenericController{
 	
 	public void clickTable(){
 		try {
-			Profile profile = table.getSelectionModel().getSelectedItem();
-			if(profile != null){
+			City city = table.getSelectionModel().getSelectedItem();
+			if(city != null){
 				disableButtons(false);
 			}
 		}catch (Exception e) {
@@ -111,27 +109,27 @@ public class ControllerProfileRelationManager extends GenericController{
 	
 	public void filterByName(){
 		try {
-			String profileName = textNameFilter.getText().toLowerCase();
-			List<Profile> listProfilesSelects = new ArrayList<>();
-			for (Profile profile : list) {
-				String name = profile.getName().toLowerCase();
-				if(name.contains(profileName)){
-					listProfilesSelects.add(profile);
+			String cityName = textNameFilter.getText().toLowerCase();
+			List<City> listCitysSelects = new ArrayList<>();
+			for (City city : list) {
+				String name = city.getName().toLowerCase();
+				if(name.contains(cityName)){
+					listCitysSelects.add(city);
 				}
 			}
-			updateTable(listProfilesSelects);
+			updateTable(listCitysSelects);
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	
-	public void updateTable(List<Profile> listProfiles){
+	public void updateTable(List<City> listCitys){
 		try {
-			if(listProfiles== null){
-				listProfiles = ProfileManager.getProfiles();
+			if(listCitys== null){
+				listCitys = CityManager.getCities();
 			}
 			disableButtons(true);
-			table.setItems(FXCollections.observableArrayList(listProfiles));
+			table.setItems(FXCollections.observableArrayList(listCitys));
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -140,12 +138,10 @@ public class ControllerProfileRelationManager extends GenericController{
 	
 	public void createTable(){
 		try {
-			list = ProfileManager.getProfiles();
+			list = CityManager.getCities();
 			columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
-			columnTwo.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-			columnThree.setCellValueFactory(new PropertyValueFactory<>("email"));
-			columnFour.setCellValueFactory(new PropertyValueFactory<>("telephone"));
-			columnFive.setCellValueFactory(new PropertyValueFactory<>("address"));
+			columnTwo.setCellValueFactory(new PropertyValueFactory<>("uf"));
+			columnThree.setCellValueFactory(new PropertyValueFactory<>("country"));
 			updateTable(list);
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -160,11 +156,11 @@ public class ControllerProfileRelationManager extends GenericController{
 		updateTable(null);
 	}
 
-	public List<Profile> getList() {
+	public List<City> getList() {
 		return list;
 	}
 
-	public void setList(List<Profile> list) {
+	public void setList(List<City> list) {
 		this.list = list;
 	}
 

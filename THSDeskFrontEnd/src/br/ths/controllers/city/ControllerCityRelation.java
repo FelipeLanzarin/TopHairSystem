@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.ths.beans.City;
-import br.ths.utils.TableViewUtils;
-import br.ths.utils.beans.CityRown;
+import br.ths.beans.manager.CityManager;
+import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -18,47 +20,84 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ControllerCityRelation extends GenericController{
 	
-	private List<CityRown> listCities;
+	private List<City> listCities;
 	private GenericController lastController;
+	private City citySelected;
 	
 	@FXML private TextField textNameFilter;
-	@FXML private TableView<CityRown> table;
+	@FXML private TableView<City> table;
 	@FXML private TableColumn<City, String> columnOne;
 	@FXML private TableColumn<City, String> columnTwo;
 	@FXML private TableColumn<City, String> columnThree;
-	@FXML private TableColumn<City, String> columnFour;
+	@FXML private Label itemSelected;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 	}	
 	
+	public void selectItem(){
+		try {
+			if(citySelected != null){
+				lastController.selectCity(citySelected);
+				this.getStage().close();
+			}else{
+				Alert dialog = new Alert(Alert.AlertType.WARNING);
+				dialog.setTitle("Aviso!");
+				dialog.setHeaderText("Selecione a cidade antes de prosseguir!");
+				dialog.showAndWait();
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void clickTableItem(){
+		try {
+			citySelected = table.getSelectionModel().getSelectedItem();
+			if(citySelected != null){
+				itemSelected.setText(citySelected.getName());
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
 	
 	public void filterCities(){
-		String cityName = textNameFilter.getText().toLowerCase();
-		List<CityRown> listCitiesSelects = new ArrayList<>();
-		for (CityRown city : listCities) {
-			String name = city.getName().toLowerCase();
-			if(name.contains(cityName)){
-				listCitiesSelects.add(city);
+		try {
+			String cityName = textNameFilter.getText().toLowerCase();
+			List<City> listCitiesSelects = new ArrayList<>();
+			for (City city : listCities) {
+				String name = city.getName().toLowerCase();
+				if(name.contains(cityName)){
+					listCitiesSelects.add(city);
+				}
 			}
+			updateTable(listCitiesSelects);
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
-		updateTable(listCitiesSelects);
 	}
 	
-	public void updateTable(List<CityRown> listCities){
-		if(listCities== null){
-			listCities = this.listCities;
+	public void updateTable(List<City> listCities){
+		try {
+			if(listCities== null){
+				listCities = this.listCities;
+			}
+			table.setItems(FXCollections.observableArrayList(listCities));
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
-		table.setItems(FXCollections.observableArrayList(listCities));
-
 	}
 	public void createTable(){
-		listCities = TableViewUtils.getCities(getStage().getScene(), lastController, this);
-		columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
-		columnTwo.setCellValueFactory(new PropertyValueFactory<>("uf"));
-		columnThree.setCellValueFactory(new PropertyValueFactory<>("country"));
-		columnFour.setCellValueFactory(new PropertyValueFactory<>("select"));
-		updateTable(listCities);
+		try{
+			listCities = CityManager.getCities();
+			columnOne.setCellValueFactory(new PropertyValueFactory<>("name"));
+			columnTwo.setCellValueFactory(new PropertyValueFactory<>("uf"));
+			columnThree.setCellValueFactory(new PropertyValueFactory<>("country"));
+			updateTable(listCities);
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
 
 

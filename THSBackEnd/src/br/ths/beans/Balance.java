@@ -21,8 +21,8 @@ public class Balance {
 	@JoinColumn(name="branch_company_id", referencedColumnName="id")
 	private BranchCompany branchCompany;
 	@ManyToOne
-	@JoinColumn(name="client_id", referencedColumnName="id")
-	private Client client;
+	@JoinColumn(name="profile_id", referencedColumnName="id")
+	private Profile profile;
 	
 	public Double getValue() {
 		return value;
@@ -36,11 +36,11 @@ public class Balance {
 	public void setBranchCompany(BranchCompany branchCompany) {
 		this.branchCompany = branchCompany;
 	}
-	public Client getClient() {
-		return client;
+	public Profile getProfile() {
+		return profile;
 	}
-	public void setClient(Client client) {
-		this.client = client;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 	public Integer getId() {
 		return id;
