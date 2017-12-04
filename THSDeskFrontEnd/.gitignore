@@ -1,1 +1,4 @@
+# Para arquivos Java compilados
+*.class
 /bin/
+/logs/
