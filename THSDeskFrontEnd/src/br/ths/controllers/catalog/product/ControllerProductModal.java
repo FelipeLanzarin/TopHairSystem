@@ -1,12 +1,230 @@
 package br.ths.controllers.catalog.product;
 
-public class ControllerProductModal {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-	public void actionName(){
+import br.ths.beans.Category;
+import br.ths.beans.Product;
+import br.ths.beans.SubCategory;
+import br.ths.beans.manager.CategoryManager;
+import br.ths.beans.manager.ProductManager;
+import br.ths.tools.log.LogTools;
+import fx.tools.controller.GenericController;
+import fx.tools.mask.MaskMoney;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+
+public class ControllerProductModal extends GenericController{
+	
+	private static final String STYLE_ERROR = "-fx-border-color:red; -fx-border-radius:4";
+	private static final String SEP = " - ";
+	private static final String KEY_CODE_DOWN = "DOWN";
+	private static final String KEY_CODE_UP = "UP";
+	private static final String KEY_CODE_LEFT = "LEFT";
+	private static final String KEY_CODE_RIGHT = "RIGHT";
+
+	@FXML private Label labelTitle;
+	@FXML private TextField textName;
+	@FXML private TextArea textDescription;
+	@FXML private ComboBox<String> comboCategory;
+	@FXML private MaskMoney textPrice;
+	
+	private List<Category> listCategory;
+	private List<Category> listCategoryFilters;
+	private Category categorySelected;
+	private SubCategory subCategorySelected;
+	private Stage stage;
+	private Boolean newProduct;
+	private Product product;
+	private List<String> states;
+	private ControllerProductRelationManager relation;
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		textPrice.setGenericController(this);
+	}
+
+    @FXML
+	public void filterItens(KeyEvent key){
+		try {
+			if(KEY_CODE_DOWN.equals(key.getCode().toString()) 
+			|| KEY_CODE_UP.equals(key.getCode().toString()) 
+			|| KEY_CODE_LEFT.equals(key.getCode().toString())
+			|| KEY_CODE_RIGHT.equals(key.getCode().toString())){
+				return;
+			}
+			String categoryName =  (String) comboCategory.getEditor().getText().toLowerCase();
+			String categoryNames[] = categoryName.split(SEP);
+			if(categoryNames.length > 1){
+				categoryName = categoryNames[1];
+			}
+			listCategoryFilters = new ArrayList<>();
+			comboCategory.getItems().clear();
+			for (Category category : listCategory) {
+				String name = category.getName().toLowerCase();
+				if(name.contains(categoryName)){
+					listCategoryFilters.add(category);
+					comboCategory.getItems().add(category.getId()+ SEP + category.getName());
+					if(name.equals(categoryName)){
+						categorySelected = category;
+					}else{
+						categorySelected = null;
+					}
+				}
+			}
+			comboCategory.show();
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	public void save(){
+		try {
+			if(!validateFiedls()){
+				return;
+			}
+			if(product == null){
+				product = new Product();
+			}
+			product.setName(textName.getText());
+			product.setDescription(textDescription.getText());
+			product.setSubCategory(subCategorySelected);// ja vem preenchido pelo validate
+			if(newProduct){
+				if(ProductManager.create(product)){
+					stage.close();
+					relation.messageSucess("Categoria cadastrada com sucesso!");
+				}else{
+					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+					dialogoInfo.setTitle("Erro!");
+					dialogoInfo.setHeaderText("Erro ao cadastrar Categoria!");
+					dialogoInfo.showAndWait();
+				}
+			}else{
+				if(ProductManager.update(product)){
+					stage.close();
+					relation.messageSucess("Categoria alterada com sucesso!");
+				}else{
+					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+					dialogoInfo.setTitle("Erro!");
+					dialogoInfo.setHeaderText("Erro ao alterar Categoria!");
+					dialogoInfo.showAndWait();
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	private Category getCategory(String name){
+		if(name == null || listCategoryFilters == null){
+			return null;
+		}
+		for (Category category : listCategoryFilters) {
+			String categoryName = category.getId() + SEP + category.getName();
+			if(name.equals(categoryName)){
+				return category;
+			}
+		}
+		return null;
+	}
+	
+	private Boolean validateFiedls(){
+		Boolean valid = true;
+		try {
+			if(textName.getText().isEmpty()){
+				textName.setStyle(STYLE_ERROR);
+				valid = false;
+			}
+			if(categorySelected == null){
+				categorySelected = getCategory(comboCategory.getSelectionModel().getSelectedItem());
+				if(categorySelected == null){
+					comboCategory.setStyle(STYLE_ERROR);
+					valid = false;
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+		return valid;
 		
 	}
 	
-	public void save(){
-		
+	private void populateProduct(Product product){
+		try {
+			textName.setText(product.getName());
+			textDescription.setText(product.getDescription());
+			if(product.getSubCategory() != null){	
+				comboCategory.setValue(product.getSubCategory().getId()+ SEP +product.getSubCategory().getName());
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
+	
+	public void actionName(){
+		textName.setStyle("");
+	}
+	public void actionComboCategory(){
+		comboCategory.setStyle("");
+	}
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public Boolean getNewProduct() {
+		return newProduct;
+	}
+
+	public void setNewProduct(Boolean newProduct) {
+		this.newProduct = newProduct;
+		if(newProduct){
+			labelTitle.setText("Cadastrar "+ labelTitle.getText());
+		}else{
+			labelTitle.setText("Alterar "+ labelTitle.getText());
+		}
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+		if(product != null){
+			populateProduct(product);
+		}
+	}
+
+	public List<String> getStates() {
+		return states;
+	}
+
+	public void setStates(List<String> states) {
+		this.states = states;
+	}
+
+	public ControllerProductRelationManager getRelation() {
+		return relation;
+	}
+
+	public void setRelation(ControllerProductRelationManager relation) {
+		this.relation = relation;
+		listCategory = CategoryManager.getCategories();
+		listCategoryFilters = listCategory;
+		for (Category category : listCategory) {
+			comboCategory.getItems().add(category.getId()+SEP+ category.getName());
+		}
+	}
+	
 }

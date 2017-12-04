@@ -2,7 +2,7 @@ package br.ths.handlers.employee;
 
 import br.ths.beans.Employee;
 import br.ths.controllers.branch.employee.ControllerEmployeeRelationManager;
-import br.ths.screens.branch.employee.ScreeanEmployeeModal;
+import br.ths.screens.branch.employee.ScreenEmployeeModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.action.EventAction;
 import javafx.stage.Stage;
@@ -15,7 +15,7 @@ public class ButtonEditEmployeeMouseClicked implements EventAction {
 	@Override
 	public void action() {
 		try {
-			ScreeanEmployeeModal scream = new ScreeanEmployeeModal();
+			ScreenEmployeeModal scream = new ScreenEmployeeModal();
 			scream.setNewEmployee(false);
 			scream.setRelation(controller);
 			scream.setEmployee(obj);

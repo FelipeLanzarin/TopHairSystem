@@ -3,7 +3,7 @@ package br.ths.controllers.branch.employee;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ths.screens.branch.employee.ScreeanEmployeeModal;
+import br.ths.screens.branch.employee.ScreenEmployeeModal;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.TableViewUtils;
 import br.ths.utils.beans.EmployeeManagerRown;
@@ -33,7 +33,7 @@ public class ControllerEmployeeRelationManager2 extends GenericController{
 	
 	public void clickButtonNew(){
 		try{
-			ScreeanEmployeeModal scream = new ScreeanEmployeeModal();
+			ScreenEmployeeModal scream = new ScreenEmployeeModal();
 			scream.setNewEmployee(true);
 //			scream.setRelation(this);
 			scream.start(new Stage());

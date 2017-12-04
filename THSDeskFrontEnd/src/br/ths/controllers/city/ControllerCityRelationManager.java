@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.ths.beans.City;
 import br.ths.beans.manager.CityManager;
-import br.ths.screens.city.ScreeanCityModal;
+import br.ths.screens.city.ScreenCityModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
@@ -34,7 +34,7 @@ public class ControllerCityRelationManager extends GenericController{
 	
 	public void clickButtonNew(){
 		try{
-			ScreeanCityModal scream = new ScreeanCityModal();
+			ScreenCityModal scream = new ScreenCityModal();
 			scream.setNewCity(true);
 			scream.setRelation(this);
 			scream.start(new Stage());
@@ -49,7 +49,7 @@ public class ControllerCityRelationManager extends GenericController{
 			if(city == null){
 				return;
 			}
-			ScreeanCityModal scream = new ScreeanCityModal();
+			ScreenCityModal scream = new ScreenCityModal();
 			scream.setNewCity(false);
 			scream.setRelation(this);
 			scream.setCity(city);
@@ -75,13 +75,14 @@ public class ControllerCityRelationManager extends GenericController{
 				if(CityManager.delete(city)){
 					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 					dialog.setTitle("Sucesso!");
-					dialog.setHeaderText("Cidade excluído com sucesso");
+					dialog.setHeaderText("Cidade excluída com sucesso");
 					dialog.showAndWait();
 					updateTable(null);
 				}else{
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
 					dialog.setTitle("Erro!");
-					dialog.setHeaderText("Cidade ao excluir Funcionário!");
+					dialog.setHeaderText("Cidade possui uma pessoa!");
+					dialog.setContentText("Essa Cidade já possui uma pessoa. Por esse motivo você não pode excluir a mesma.");
 					dialog.showAndWait();
 				}
 			}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ths.beans.Employee;
 import br.ths.database.EmployeeDao;
+import br.ths.tools.THSTools;
 
 public class EmployeeManager {
 	
@@ -14,6 +15,8 @@ public class EmployeeManager {
 	}
 
 	public static Boolean create(Employee employee) {
+		employee.setCompany(THSTools.getCompanySession());
+		employee.setBranchCompany(THSTools.getBranchCompanySession());
 		return Boolean.valueOf(getEmployeeDao().createEmployee(employee));
 	}
 

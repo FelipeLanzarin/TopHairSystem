@@ -29,6 +29,7 @@ public class Employee {
 	private String cep;
 	private String email;
 	private String color;
+	private Boolean active;
 	@ManyToOne
 	@JoinColumn(name="city_id", referencedColumnName="id")
 	private City city;
@@ -123,5 +124,10 @@ public class Employee {
 	public void setCity(City city) {
 		this.city = city;
 	}
-
+	public Boolean getActive() {
+		return active;
+	}
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 }

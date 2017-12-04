@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Tela para listar as categorias do sistema -->
+<!-- Tela para listar os usuarios do funcionarios -->
 
-<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -32,15 +34,7 @@
          <children>
             <Pane layoutX="14.0" layoutY="6.0" prefHeight="63.0" prefWidth="1270.0" style="-fx-border-color: #ddd; -fx-background-color: #f5f5f5; -fx-border-radius: 10; -fx-background-radius: 10;">
                <children>
-                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="1107.0" layoutY="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNew" prefHeight="34.0" prefWidth="149.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Cadastrar Produto" textAlignment="CENTER" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="SansSerif Bold" size="13.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="39.0" layoutY="15.0" prefHeight="35.0" prefWidth="697.0" text="Relação de Produtos" textFill="#403d3d">
+                  <Label layoutX="39.0" layoutY="15.0" prefHeight="35.0" prefWidth="697.0" text="Relação de produtos" textFill="#403d3d">
                      <font>
                         <Font name="SansSerif Regular" size="16.0" />
                      </font>
@@ -57,19 +51,73 @@
                         <Font name="SansSerif Regular" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="textName" focusTraversable="false" layoutX="17.0" layoutY="40.0" onKeyReleased="#filterByName" prefHeight="31.0" prefWidth="410.0" promptText="Nome">
+                  <TextField fx:id="textNameFilter" focusTraversable="false" layoutX="17.0" layoutY="40.0" onKeyReleased="#filterByName" prefHeight="31.0" prefWidth="787.0" promptText="Nome">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextField>
-                  <ComboBox fx:id="comboSubCategory" editable="true" focusTraversable="false" layoutX="845.0" layoutY="39.0" prefHeight="31.0" prefWidth="410.0" promptText="Sub Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
-                  <ComboBox fx:id="comboCategory" editable="true" focusTraversable="false" layoutX="432.0" layoutY="39.0" prefHeight="31.0" prefWidth="410.0" promptText="Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
-                  <ScrollPane layoutX="17.0" layoutY="82.0" prefHeight="437.0" prefWidth="1240.0" style="-fx-background-color: #fff; -fx-border-color: gray;">
-                     <content>
-                        <AnchorPane fx:id="anchorPaneTable" maxWidth="1238.0" minHeight="433.0" minWidth="1236.0" prefHeight="433.0" prefWidth="1236.0" style="-fx-background-color: #fff;" />
-                     </content>
-                  </ScrollPane>
+                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="815.0" layoutY="41.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNew" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Cadastrar" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" translateX="-49.0">
+                           <image>
+                              <Image url="@../../../images/manager/add-user_white2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="buttonEdit" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="964.0" layoutY="41.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonEdit" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2; -fx-background-radius: 2;" text="Alterar" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" translateX="-49.0">
+                           <image>
+                              <Image url="@../../../images/manager/editor.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="buttonDelete" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1116.0" layoutY="41.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonDelete" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2; -fx-background-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" translateX="-49.0">
+                           <image>
+                              <Image url="@../../../images/manager/lixeira.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </Pane>
+            <TableView fx:id="table" focusTraversable="false" layoutX="32.0" layoutY="144.0" maxWidth="1238.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="430.0" prefWidth="1237.0" stylesheets="@../../../css/employeRelationManager.css">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <columns>
+                  <TableColumn fx:id="columnOne" editable="false" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" resizable="false" text="Id" />
+                  <TableColumn fx:id="columnTwo" editable="false" maxWidth="573.0" minWidth="573.0" prefWidth="573.0" resizable="false" text="Nome" />
+                  <TableColumn fx:id="columnThree" editable="false" maxWidth="128.0" minWidth="128.0" prefWidth="128.0" resizable="false" text="Tipo" />
+                  <TableColumn fx:id="columnFour" editable="false" maxWidth="121.0" minWidth="121.0" prefWidth="121.0" resizable="false" text="Unidade" />
+                  <TableColumn fx:id="columnFive" editable="false" maxWidth="162.0" minWidth="162.0" prefWidth="162.0" resizable="false" text="Preço" />
+                  <TableColumn fx:id="columnSix" editable="false" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" resizable="false" text="Quantidade" />
+               </columns>
+            </TableView>
+            <Pane layoutX="35.0" layoutY="145.0" prefHeight="4.0" prefWidth="1233.0" style="-fx-background-color: #fff;" />
+            <Pane layoutX="33.0" layoutY="145.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
+            <Pane layoutX="1250.0" layoutY="145.0" prefHeight="30.0" prefWidth="18.0" style="-fx-background-color: #fff;" />
          </children>
       </Pane>
    </children>

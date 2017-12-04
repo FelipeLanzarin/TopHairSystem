@@ -2,6 +2,7 @@ package br.ths.beans;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class Transaction {
     @GeneratedValue(generator="SEQ_CASHIER_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Double amount;
+	@Column(length=9999)
 	private String description;
 	private Date time;
 	private String type;

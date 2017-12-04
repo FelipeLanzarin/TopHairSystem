@@ -24,6 +24,7 @@ public class Payment {
 	private Double amountReceived;
 	@Column(name="creation_date")
 	private Date creationDate;
+	@Column(length=9999)
 	private String description;
 	@Column(name="last_payment_date")
 	private Date lastPaymentDate;

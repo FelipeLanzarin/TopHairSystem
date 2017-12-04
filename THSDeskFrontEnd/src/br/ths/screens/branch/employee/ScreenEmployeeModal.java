@@ -13,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreeanEmployeeModal extends Application {
+public class ScreenEmployeeModal extends Application {
 	
 	public Boolean newEmployee;
 	public ControllerEmployeeRelationManager relation;

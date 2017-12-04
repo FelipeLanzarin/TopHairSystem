@@ -1,5 +1,6 @@
 package br.ths.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class SubCategory {
     @GeneratedValue(generator="SEQ",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private String name;
+	@Column(length=9999)
 	private String description;
 	@ManyToOne
 	@JoinColumn(name="category_id", referencedColumnName="id")
@@ -45,5 +47,10 @@ public class SubCategory {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+	public String getCategoryName(){
+		if(this.category != null){
+			return this.getCategory().getName();
+		}
+		return "";
+	}
 }

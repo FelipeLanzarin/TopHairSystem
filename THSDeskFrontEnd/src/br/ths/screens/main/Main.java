@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.stage.WindowEvent;
 import br.ths.database.EntityManagerUtil;
+import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
@@ -24,6 +25,7 @@ public class Main extends Application {
 		try {
 			//TODO implementar conexão com o banco
 			EntityManagerUtil.initEntityManager();
+			THSTools.setConfSession();
 			URL arquivoFXML = getClass().getResource(XmlPathUtils.MAIN);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();

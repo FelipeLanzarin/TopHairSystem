@@ -1,5 +1,6 @@
 package br.ths.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Cashier {
     @GeneratedValue(generator="SEQ_CASHIER_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Double balance;
+	@Column(length=9999)
 	private String description;
 	@ManyToOne
 	@JoinColumn(name="branch_company_id", referencedColumnName="id")

@@ -16,7 +16,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -33,6 +35,9 @@ public class ControllerEmployeeModal extends GenericController{
 	@FXML private TextField textCep;
 	@FXML private TextField textCity;
 	@FXML private ColorPicker color;
+	@FXML private ToggleGroup groupActive;
+	@FXML private RadioButton radioButtonYes;
+	@FXML private RadioButton radioButtonNo;
 	
 	private static final String STYLE_ERROR = "-fx-border-color:red; -fx-border-radius:4";
 	
@@ -96,6 +101,12 @@ public class ControllerEmployeeModal extends GenericController{
 			employee.setCep(textCep.getText());
 			employee.setCity(city);
 			employee.setColor("#"+ Integer.toHexString(color.getValue().hashCode()));
+			RadioButton radioSelect = (RadioButton) groupActive.getSelectedToggle();
+			if("true".equals(radioSelect.getId())){
+				employee.setActive(true);
+			}else{
+				employee.setActive(false);
+			}
 			if(newEmployee){
 				employee.setCreationDate(new Date());
 				if(EmployeeManager.create(employee)){
@@ -140,6 +151,11 @@ public class ControllerEmployeeModal extends GenericController{
 				textCity.setText(employee.getCity().getName());
 			}
 			color.setValue(Color.web(employee.getColor()));
+			if(employee.getActive() != null && !employee.getActive()){
+				radioButtonNo.setSelected(true);
+			}else{
+				radioButtonYes.setSelected(true);
+			}
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}

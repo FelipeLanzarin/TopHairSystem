@@ -20,6 +20,7 @@ public class Account {
     @GeneratedValue(generator="SEQ_ACCOUNT_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Double amount;
+	@Column(length=9999)
 	private String description;
 	private Date date;
 	@Column(name="payment_method")

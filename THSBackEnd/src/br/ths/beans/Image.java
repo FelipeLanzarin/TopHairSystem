@@ -18,6 +18,7 @@ public class Image {
     @GeneratedValue(generator="SEQ_IMAGE_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private String path;
+	@Column(length=9999)
 	private String description;
 	@Column(name="partOfProcess")
 	private String partOfProcess;

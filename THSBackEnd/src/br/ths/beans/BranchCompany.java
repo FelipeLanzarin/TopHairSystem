@@ -19,6 +19,7 @@ public class BranchCompany {
     @SequenceGenerator(name="SEQ_BRANCH_COMPANY_ID", sequenceName="GEN_BRANCH_COMPANY_ID", allocationSize=1, initialValue=1000)
     @GeneratedValue(generator="SEQ_BRANCH_COMPANY_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
+	@Column(length=9999)
 	private String description;
 	private String branchId;
 	@Column(name="creation_date")

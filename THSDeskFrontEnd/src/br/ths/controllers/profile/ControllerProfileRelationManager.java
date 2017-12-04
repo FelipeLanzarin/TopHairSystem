@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.ths.beans.Profile;
 import br.ths.beans.manager.ProfileManager;
-import br.ths.screens.profile.ScreeanProfileModal;
+import br.ths.screens.profile.ScreenProfileModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
@@ -36,7 +36,7 @@ public class ControllerProfileRelationManager extends GenericController{
 	
 	public void clickButtonNew(){
 		try{
-			ScreeanProfileModal scream = new ScreeanProfileModal();
+			ScreenProfileModal scream = new ScreenProfileModal();
 			scream.setNewProfile(true);
 			scream.setRelation(this);
 			scream.start(new Stage());
@@ -51,7 +51,7 @@ public class ControllerProfileRelationManager extends GenericController{
 			if(profile == null){
 				return;
 			}
-			ScreeanProfileModal scream = new ScreeanProfileModal();
+			ScreenProfileModal scream = new ScreenProfileModal();
 			scream.setNewProfile(false);
 			scream.setRelation(this);
 			scream.setProfile(profile);

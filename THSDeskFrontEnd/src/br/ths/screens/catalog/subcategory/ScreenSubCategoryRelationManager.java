@@ -2,6 +2,7 @@ package br.ths.screens.catalog.subcategory;
 
 import java.net.URL;
 
+import br.ths.controllers.catalog.subcategory.ControllerSubCategoryRelationManager;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
@@ -21,7 +22,10 @@ public class ScreenSubCategoryRelationManager extends Application {
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
 			stage.setResizable(false);
-			stage.setTitle("Categoria");
+			stage.setTitle("Top Hair System");
+			ControllerSubCategoryRelationManager control = (ControllerSubCategoryRelationManager) loader.getController();
+			control.setStage(stage);
+			control.createTable();
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);

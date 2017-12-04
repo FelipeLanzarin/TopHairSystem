@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.ths.beans.Employee;
 import br.ths.beans.manager.EmployeeManager;
-import br.ths.screens.branch.employee.ScreeanEmployeeModal;
+import br.ths.screens.branch.employee.ScreenEmployeeModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
@@ -36,7 +36,7 @@ public class ControllerEmployeeRelationManager extends GenericController{
 	
 	public void clickButtonNew(){
 		try{
-			ScreeanEmployeeModal scream = new ScreeanEmployeeModal();
+			ScreenEmployeeModal scream = new ScreenEmployeeModal();
 			scream.setNewEmployee(true);
 			scream.setRelation(this);
 			scream.start(new Stage());
@@ -51,7 +51,7 @@ public class ControllerEmployeeRelationManager extends GenericController{
 			if(employee == null){
 				return;
 			}
-			ScreeanEmployeeModal scream = new ScreeanEmployeeModal();
+			ScreenEmployeeModal scream = new ScreenEmployeeModal();
 			scream.setNewEmployee(false);
 			scream.setRelation(this);
 			scream.setEmployee(employee);

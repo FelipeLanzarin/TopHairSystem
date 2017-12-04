@@ -1,8 +1,8 @@
-package br.ths.screens.city;
+package br.ths.screens.profile;
 
 import java.net.URL;
 
-import br.ths.controllers.city.ControllerCityRelationManager;
+import br.ths.controllers.profile.ControllerProfileRelationManager;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
@@ -11,17 +11,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreeanCityRelationManager extends Application {
+public class ScreenProfileRelationManager extends Application {
 	
 	@Override
 	public void start(Stage stage) {
 		try {
 			//TODO implementar conexão com o banco
-			URL arquivoFXML = getClass().getResource(XmlPathUtils.CITY_RELATION_MANAGER);
+			URL arquivoFXML = getClass().getResource(XmlPathUtils.PROFILE_MANAGER);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
-			ControllerCityRelationManager control = (ControllerCityRelationManager) loader.getController();
+			ControllerProfileRelationManager control = (ControllerProfileRelationManager) loader.getController();
 			control.setStage(stage);
 			control.createTable();
 			stage.setResizable(false);

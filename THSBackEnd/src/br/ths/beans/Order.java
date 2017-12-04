@@ -24,6 +24,7 @@ public class Order {
 	private Double discount;
 	@Column(name="final_amount")
 	private Double finalAmount;
+	@Column(length=9999)
 	private String description;
 	@Column(name="creation_date")
 	private Date creationDate;

@@ -36,7 +36,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="textDescription" layoutX="93.0" layoutY="80.0" prefHeight="179.0" prefWidth="514.0" promptText="Descrição">
+                  <TextArea fx:id="textDescription" layoutX="93.0" layoutY="80.0" prefHeight="179.0" prefWidth="514.0" promptText="Descrição" wrapText="true">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextArea>
@@ -50,7 +50,7 @@
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../images/save/salvar_2_32x32.png" />
+                              <Image url="@../../../images/save/salvar_2_32x32.png" />
                            </image>
                         </ImageView>
                      </graphic>

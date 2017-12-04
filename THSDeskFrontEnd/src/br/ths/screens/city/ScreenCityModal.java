@@ -13,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreeanCityModal extends Application {
+public class ScreenCityModal extends Application {
 	
 	public Boolean newCity;
 	public ControllerCityRelationManager relation;
@@ -27,7 +27,7 @@ public class ScreeanCityModal extends Application {
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
 			stage.setResizable(false);
-			stage.setTitle("Funcionário");
+			stage.setTitle("Cidade");
 			ControllerCityModal controllerCityModal = (ControllerCityModal) loader.getController();
 			controllerCityModal.setNewCity(newCity);
 			controllerCityModal.setRelation(relation);

@@ -16,6 +16,7 @@ public class Product {
 	@Id
 	private Integer id;//sera criato um gerador proprio
 	private String name;
+	@Column(length=9999)
 	private String description;
 	private String type;
 	private String un;

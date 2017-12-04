@@ -13,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreeanProfileModal extends Application {
+public class ScreenProfileModal extends Application {
 	public Boolean newProfile;
 	public ControllerProfileRelationManager relation;
 	public Profile profile;
