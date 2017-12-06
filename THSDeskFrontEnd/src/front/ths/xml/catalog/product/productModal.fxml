@@ -27,64 +27,65 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="23.0" text="Categoria * ">
+                  <Label layoutX="33.0" layoutY="74.0" text="Categoria * ">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboCategory" editable="true" layoutX="134.0" layoutY="16.0" prefHeight="34.0" prefWidth="514.0" promptText="Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
-                  <ComboBox fx:id="comboSubCategory" editable="true" layoutX="134.0" layoutY="67.0" prefHeight="34.0" prefWidth="514.0" promptText="Sub Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
-                  <TextField fx:id="textName" layoutX="134.0" layoutY="119.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="514.0" promptText="Nome">
+                  <TextField fx:id="textName" layoutX="130.0" layoutY="14.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="514.0" promptText="Nome">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="59.0" layoutY="128.0" text="Nome * ">
+                  <ComboBox fx:id="comboCategory" editable="true" layoutX="130.0" layoutY="67.0" onAction="#actionComboCategory" onHiding="#populateSubcategories" onKeyReleased="#filterItensCategory" prefHeight="34.0" prefWidth="514.0" promptText="Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
+                  <ComboBox fx:id="comboSubCategory" editable="true" layoutX="130.0" layoutY="118.0" onAction="#actionComboSubCategory" onKeyReleased="#filterItensSubCategory" prefHeight="34.0" prefWidth="514.0" promptText="Sub Categoria" style="-fx-font-family: SansSerif; -fx-font-size: 14;" />
+                  <Label layoutX="8.0" layoutY="125.0" text="SubCategoria * ">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="12.0" layoutY="74.0" text="SubCategoria * ">
+                  <Label layoutX="71.0" layoutY="181.0" text="Tipo*">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="72.0" layoutY="181.0" text="Tipo*">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="radioProduct" layoutX="134.0" layoutY="183.0" mnemonicParsing="false" text="Produto">
+                  <RadioButton fx:id="radioService" layoutX="131.0" layoutY="182.0" mnemonicParsing="false" selected="true" text="Serviço">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="productType" />
+                     </toggleGroup>
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="radioService" layoutX="238.0" layoutY="183.0" mnemonicParsing="false" text="Serviço">
+                  <RadioButton fx:id="radioProduct" layoutX="238.0" layoutY="182.0" mnemonicParsing="false" text="Produto" toggleGroup="$productType">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </RadioButton>
-                  <Label layoutX="50.0" layoutY="233.0" text="Unidade">
+                  <Label layoutX="46.0" layoutY="235.0" text="Unidade*">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="radioUn" layoutX="134.0" layoutY="235.0" mnemonicParsing="false" text="Un">
+                  <RadioButton fx:id="radioUn" layoutX="131.0" layoutY="235.0" mnemonicParsing="false" selected="true" text="Un">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="unitType" />
+                     </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="radioMl" layoutX="238.0" layoutY="236.0" mnemonicParsing="false" text="ML">
+                  <RadioButton fx:id="radioMl" layoutX="238.0" layoutY="236.0" mnemonicParsing="false" text="ML" toggleGroup="$unitType">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="radioLt" layoutX="338.0" layoutY="236.0" mnemonicParsing="false" text="LT">
+                  <RadioButton fx:id="radioLt" layoutX="338.0" layoutY="236.0" mnemonicParsing="false" text="LT" toggleGroup="$unitType">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </RadioButton>
-                  <Label layoutX="28.0" layoutY="289.0" text="Quantidade">
+                  <Label layoutX="338.0" layoutY="344.0" text="Quantidade*">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -94,16 +95,21 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textUnitValue" layoutX="134.0" layoutY="282.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="225.0" promptText="Quantidade">
+                  <MaskMoney fx:id="textCostPrice" alignment="CENTER_RIGHT" componentName="Preço" layoutX="134.0" layoutY="282.0" mask="NNN.NNN.NNN,NN" onKeyPressed="#actionCostPrice" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
                      <font>
-                        <Font name="SansSerif Regular" size="14.0" />
-                     </font>
-                  </TextField>
-                  <MaskMoney fx:id="textPrice" alignment="CENTER_RIGHT" componentName="Preço" layoutX="135.0" layoutY="337.0" mask="NNN.NNN.NNN,NN" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="225.0" promptText="0,00">
-                     <font>
-                        <Font name="SansSerif Regular" size="14.0" />
+                        <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </MaskMoney>
+                  <MaskMoney fx:id="textPrice" alignment="CENTER_RIGHT" componentName="Preço" layoutX="134.0" layoutY="337.0" mask="NNN.NNN.NNN,NN" onKeyPressed="#actionPrice" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
+                     <font>
+                        <Font name="SansSerif Bold" size="14.0" />
+                     </font>
+                  </MaskMoney>
+                  <MaskTextField fx:id="textUnitValue" componentName="Quantidade" layoutX="437.0" layoutY="337.0" mask="NNNN" onKeyPressed="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </MaskTextField>
                   <TextArea fx:id="textDescription" layoutX="134.0" layoutY="394.0" prefHeight="179.0" prefWidth="514.0" promptText="Descrição">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
@@ -123,6 +129,16 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Label layoutX="7.0" layoutY="289.0" text="Preço de custo*">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="56.0" layoutY="21.0" text="Nome * ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
             <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="682.0" style="-fx-background-color: #d9edf7;" />

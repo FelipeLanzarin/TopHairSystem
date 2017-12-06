@@ -29,7 +29,7 @@ public class ControllerProfileModal extends GenericController{
 	@FXML private TextField textAddress;
 	@FXML private TextField textNumber;
 	@FXML private TextField textNeighborhood;
-	@FXML private TextField textCep;
+	@FXML private MaskTextField textCep;
 	@FXML private TextField textCity;
 	@FXML private ColorPicker color;
 	
@@ -45,6 +45,7 @@ public class ControllerProfileModal extends GenericController{
 	public void initialize(URL location, ResourceBundle resources) {
 		textCpf.setGenericController(this);
 		textTelephone.setGenericController(this);
+		textCep.setGenericController(this);
 	}
 	
 	public void actionName(){

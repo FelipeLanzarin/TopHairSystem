@@ -70,6 +70,8 @@ public class ControllerSubCategoryModal implements Initializable{
 					comboCategory.getItems().add(category.getId()+ SEP + category.getName());
 					if(name.equals(categoryName)){
 						categorySelected = category;
+						comboCategory.getSelectionModel().select(category.getId()+ SEP + category.getName());
+						break;
 					}else{
 						categorySelected = null;
 					}

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import br.ths.beans.Category;
 import br.ths.beans.SubCategory;
 import br.ths.tools.log.LogTools;
 
@@ -92,6 +93,25 @@ public class SubCategoryDao {
 			subCategory = query.getResultList();
 		}catch (Exception e) {
 			LogTools.logError("erro ao obter subCategorys no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return subCategory;
+	}
+	
+	public List<SubCategory> getSubCategoriesByCategoryId(Integer id){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<SubCategory> subCategory = null;
+		String sql = "select * from sub_category sc "
+				+ "where sc.category_id = ? "
+				+ "order by sc.name";
+		try{
+			Query query = em.createNativeQuery(sql, SubCategory.class);
+			query.setParameter(1, id);
+			subCategory = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter subCategorys no banco: "+ e.toString());
+			LogTools.logError(e);
 		}finally{
 			em.close();
 		}

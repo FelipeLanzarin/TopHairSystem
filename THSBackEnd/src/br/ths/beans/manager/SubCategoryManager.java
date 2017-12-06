@@ -2,6 +2,7 @@ package br.ths.beans.manager;
 
 import java.util.List;
 
+import br.ths.beans.Category;
 import br.ths.beans.SubCategory;
 import br.ths.database.SubCategoryDao;
 
@@ -26,6 +27,9 @@ public class SubCategoryManager {
 		return getSubCategoryDao().getSubCategories();
 	}
 	
+	public static List<SubCategory> getSubCategoriesByCategoryId(Category category) {
+		return getSubCategoryDao().getSubCategoriesByCategoryId(category.getId());
+	}
 	
 	
 	private static SubCategoryDao getSubCategoryDao(){

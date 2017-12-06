@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.ths.screens.branch.employee.ScreenEmployeeModal;
 import br.ths.tools.log.LogTools;
-import br.ths.utils.TableViewUtils;
 import br.ths.utils.beans.EmployeeManagerRown;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
