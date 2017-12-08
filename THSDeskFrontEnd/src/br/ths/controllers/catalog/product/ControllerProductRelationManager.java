@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ths.beans.Product;
+import br.ths.beans.SubCategory;
 import br.ths.beans.manager.ProductManager;
+import br.ths.beans.manager.SubCategoryManager;
 import br.ths.screens.branch.catalog.product.ScreenProductModal;
 import br.ths.tools.log.LogTools;
 import javafx.beans.property.SimpleStringProperty;
@@ -41,6 +43,15 @@ public class ControllerProductRelationManager {
 	
 	public void clickButtonNew(){
 		try{
+			List<SubCategory> listSubCategories = SubCategoryManager.getSubCategories();
+			if(listSubCategories == null || listSubCategories.isEmpty()){
+				Alert dialogoInfo = new Alert(Alert.AlertType.WARNING);
+				dialogoInfo.setTitle("Aviso!");
+				dialogoInfo.setHeaderText("Nenhuma subcategoria cadastrada!");
+				dialogoInfo.setContentText("Cadastre uma subcategoria se você dejesa cadastrar um produto. Todos os produtos devem obrigatóriamente ter uma subcategoria");
+				dialogoInfo.showAndWait();
+				return;	
+			}
 			ScreenProductModal scream = new ScreenProductModal();
 			scream.setNewProduct(true);
 			scream.setRelation(this);

@@ -107,7 +107,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn fx:id="columnOne" editable="false" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" resizable="false" text="Id" />
+                  <TableColumn fx:id="columnOne" editable="false" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" resizable="false" text="Código" />
                   <TableColumn fx:id="columnTwo" editable="false" maxWidth="404.0" minWidth="404.0" prefWidth="404.0" resizable="false" text="Nome" />
                   <TableColumn fx:id="columnThree" editable="false" maxWidth="431.0" minWidth="431.0" prefWidth="431.0" resizable="false" text="Descrição" />
                   <TableColumn fx:id="columnFour" editable="false" maxWidth="262.0" minWidth="262.0" prefWidth="262.0" resizable="false" text="Categoria" />
