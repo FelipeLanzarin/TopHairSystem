@@ -1,6 +1,7 @@
 package br.ths.controllers.catalog.product;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,15 +35,17 @@ public class ControllerProductModal extends GenericController{
 	private static final String KEY_CODE_UP = "UP";
 	private static final String KEY_CODE_LEFT = "LEFT";
 	private static final String KEY_CODE_RIGHT = "RIGHT";
+	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 
 	@FXML private Label labelTitle;
 	@FXML private ComboBox<String> comboCategory;
 	@FXML private ComboBox<String> comboSubCategory;
+	@FXML private MaskTextField textId;
 	@FXML private TextField textName;
-	@FXML private ToggleGroup productType;
+	@FXML private ToggleGroup groupProductType;
 	@FXML private RadioButton radioService;
 	@FXML private RadioButton radioProduct;
-	@FXML private ToggleGroup unitType;
+	@FXML private ToggleGroup groupUnitType;
 	@FXML private RadioButton radioUn;
 	@FXML private RadioButton radioMl;
 	@FXML private RadioButton radioLt;
@@ -94,7 +97,7 @@ public class ControllerProductModal extends GenericController{
 					if(name.equals(categoryName)){
 						categorySelected = category;
 						comboCategory.getSelectionModel().select(category.getId()+ SEP + category.getName());
-						populateSubCetegiresByCategory(categorySelected);
+						populateSubCategiresByCategory(categorySelected);
 						break;
 					}else{
 						categorySelected = null;
@@ -150,27 +153,35 @@ public class ControllerProductModal extends GenericController{
 			if(product == null){
 				product = new Product();
 			}
+			product.setId(Integer.parseInt(textId.getText()));
 			product.setName(textName.getText());
 			product.setDescription(textDescription.getText());
 			product.setSubCategory(subCategorySelected);// ja vem preenchido pelo validate
+			RadioButton radioSelect = (RadioButton) groupUnitType.getSelectedToggle();
+			product.setUnType(radioSelect.getId());
+			radioSelect = (RadioButton) groupProductType.getSelectedToggle();
+			product.setType(radioSelect.getId());
+			product.setCostPrice(df.parse(textCostPrice.getText()).doubleValue());
+			product.setPrice(df.parse(textPrice.getText()).doubleValue());
+			product.setUn(Integer.parseInt(textUnitValue.getText()));
 			if(newProduct){
 				if(ProductManager.create(product)){
 					stage.close();
-					relation.messageSucess("Categoria cadastrada com sucesso!");
+					relation.messageSucess("Produto cadastrado com sucesso!");
 				}else{
 					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 					dialogoInfo.setTitle("Erro!");
-					dialogoInfo.setHeaderText("Erro ao cadastrar Categoria!");
+					dialogoInfo.setHeaderText("Erro ao cadastrar Produto!");
 					dialogoInfo.showAndWait();
 				}
 			}else{
 				if(ProductManager.update(product)){
 					stage.close();
-					relation.messageSucess("Categoria alterada com sucesso!");
+					relation.messageSucess("Produto alterado com sucesso!");
 				}else{
 					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 					dialogoInfo.setTitle("Erro!");
-					dialogoInfo.setHeaderText("Erro ao alterar Categoria!");
+					dialogoInfo.setHeaderText("Erro ao alterar Produto!");
 					dialogoInfo.showAndWait();
 				}
 			}
@@ -222,6 +233,10 @@ public class ControllerProductModal extends GenericController{
 					valid = false;
 				}
 			}
+			if(textId.getText().isEmpty()){
+				textId.setStyle(STYLE_ERROR);
+				valid = false;
+			}
 			if(textName.getText().isEmpty()){
 				textName.setStyle(STYLE_ERROR);
 				valid = false;
@@ -248,11 +263,36 @@ public class ControllerProductModal extends GenericController{
 	
 	private void populateProduct(Product product){
 		try {
+			textId.setText(product.getId().toString());
 			textName.setText(product.getName());
 			textDescription.setText(product.getDescription());
 			if(product.getSubCategory() != null){	
-				comboCategory.setValue(product.getSubCategory().getId()+ SEP +product.getSubCategory().getName());
+				comboCategory.setValue(product.getSubCategory().getCategory().getId()+ SEP +product.getSubCategory().getCategory().getName());
+				comboSubCategory.setValue(product.getSubCategory().getId()+ SEP +product.getSubCategory().getName());
+				populateSubCategiresByCategory(product.getSubCategory().getCategory());
 			}
+			textCostPrice.setText(df.format(product.getCostPrice()));
+			textPrice.setText(df.format(product.getPrice()));
+			textUnitValue.setText(product.getUn().toString());
+			
+			if(product.getType() != null && "service".equals(product.getType())){
+				radioService.setSelected(true);
+			}else{
+				radioProduct.setSelected(true);
+			}
+			
+			switch (product.getUnType()) {
+			case "UN":
+				radioUn.setSelected(true);
+				break;
+			case "ML":
+				radioMl.setSelected(true);
+				break;
+			case "LT":
+				radioLt.setSelected(true);
+				break;
+			}
+			
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -263,10 +303,10 @@ public class ControllerProductModal extends GenericController{
 		if(categorySelected == null){
 			return;
 		}
-		populateSubCetegiresByCategory(categorySelected);
+		populateSubCategiresByCategory(categorySelected);
 	}
 	
-	private void populateSubCetegiresByCategory(Category categorySelected){
+	private void populateSubCategiresByCategory(Category categorySelected){
 		subCategorySelected = null;
 		if(categorySelected == null){
 			return;
@@ -279,12 +319,21 @@ public class ControllerProductModal extends GenericController{
 		}
 	}
 	
+	private void defineProductId(){
+		Integer newId = ProductManager.getNewProductId();
+		textId.setText(newId.toString());
+	}
+	
 	public void actionComboCategory(){
 		comboCategory.setStyle("");
 	}
 	
 	public void actionComboSubCategory(){
 		comboSubCategory.setStyle("");
+	}
+	
+	public void actionId(){
+		textId.setStyle("");
 	}
 	
 	public void actionName(){
@@ -319,8 +368,10 @@ public class ControllerProductModal extends GenericController{
 		this.newProduct = newProduct;
 		if(newProduct){
 			labelTitle.setText("Cadastrar "+ labelTitle.getText());
+			defineProductId();
 		}else{
 			labelTitle.setText("Alterar "+ labelTitle.getText());
+			textId.setEditable(false);
 		}
 	}
 

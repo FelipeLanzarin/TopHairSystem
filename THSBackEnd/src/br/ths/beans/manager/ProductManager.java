@@ -25,6 +25,10 @@ public class ProductManager {
 		return getProductDao().getProducts();
 	}
 	
+	public static Integer getNewProductId() {
+		return getProductDao().getNewProductId();
+	}
+	
 	private static ProductDao getProductDao(){
 		if(cd == null){
 			cd = new ProductDao();

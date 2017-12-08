@@ -19,7 +19,7 @@ public class ProductRown extends Product{
 	}
 
 	public String getPriceFormat() {
-		DecimalFormat df = new DecimalFormat("###,###,##0.00");
+		DecimalFormat df = new DecimalFormat("###,###,###.##");
 		this.priceFormat = df.format(getPrice());
 		return this.priceFormat;
 	}

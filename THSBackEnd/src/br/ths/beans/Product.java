@@ -19,7 +19,7 @@ public class Product {
 	@Column(length=9999)
 	private String description;
 	private String type;
-	private String un;
+	private Integer un;
 	private String unType;
 	@Column(name="creation_date")
 	private Date creationDate;
@@ -54,10 +54,10 @@ public class Product {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getUn() {
+	public Integer getUn() {
 		return un;
 	}
-	public void setUn(String un) {
+	public void setUn(Integer un) {
 		this.un = un;
 	}
 	public String getUnType() {

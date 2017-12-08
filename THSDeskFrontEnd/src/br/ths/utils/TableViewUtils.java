@@ -92,6 +92,8 @@ public class TableViewUtils {
 			objRown.setType(obj.getType());
 			objRown.setUn(obj.getUn());
 			objRown.setUnType(obj.getUnType());
+			objRown.setProduct(obj);
+			objRown.setPrice(obj.getPrice());
 			list.add(objRown);
 		}
 		return list;

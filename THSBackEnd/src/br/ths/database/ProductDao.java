@@ -83,7 +83,7 @@ public class ProductDao {
 		
 		return product;
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<Product> getProducts (){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Product> product = null;
@@ -96,6 +96,33 @@ public class ProductDao {
 			em.close();
 		}
 		return product;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Integer getNewProductId(){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Integer> maxProduc = null;
+		try{
+			Query query = em.createQuery("select max(id) from Product");
+			maxProduc = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter products no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		Integer max = 1000;
+		if(maxProduc == null || maxProduc.isEmpty()){
+			return max;
+		}
+		try{
+			max =  maxProduc.get(0)+1;
+			if(max<1000){
+				max=1000;
+			}
+		}catch (Exception e) {
+			return 10000;
+		}
+		return max;
 	}
 
 }

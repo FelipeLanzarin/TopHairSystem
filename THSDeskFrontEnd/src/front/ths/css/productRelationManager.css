@@ -1,0 +1,41 @@
+.table-view {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #ddd;
+}
+
+.table-view .column-header{
+    -fx-background-color: #ffffff;
+	-fx-border-color:#f5f5f5;
+	-fx-pref-height: 30;
+}
+
+
+.table-view .column-header .label {
+    -fx-font-size: 14;
+    -fx-font-family: "SansSerif Bold";
+}
+
+.table-row-cell {
+    -fx-font-size: 14;
+    -fx-font-family: "SansSerif Bold";
+}
+
+.table-view .column-header.left .label{
+   	-fx-alignment: center-left;
+   	-fx-padding: 0 0 0 7;
+}
+
+.table-view .table-cell.left{
+	-fx-alignment: center-left;
+	-fx-padding: 0 0 0 7;
+}
+
+.table-view .column-header.right .label{
+   	-fx-alignment: center-right;
+  	-fx-padding: 0 7 0 0;
+}
+
+.table-view .table-cell.right{
+   	-fx-alignment: center-right;
+	-fx-padding: 0 7 0 0;
+}

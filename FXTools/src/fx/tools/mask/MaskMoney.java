@@ -50,6 +50,7 @@ public class MaskMoney extends TextField {
         super(text);
         patterns = new ArrayList<String>();
     }
+    
 
     @Override
     public void replaceText(int start, int end, String text) {
@@ -64,6 +65,10 @@ public class MaskMoney extends TextField {
         if(mask == null || mask.length() == 0){
             super.replaceText(start, end, text);
         }else if (tempText.matches(this.mask) || tempText.length() == 0 || text.length() == 0) {        //text.length == 0 representa o delete ou backspace
+        	
+        	if(tempText.length() != end){
+        		return;
+        	}
         	this.setText(pastSimbolToLeftIndex(this.getText()));
         	if(deleteSimbol){//tamanho da string diminuiu
         		start--;

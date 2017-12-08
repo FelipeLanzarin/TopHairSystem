@@ -1,5 +1,6 @@
 package br.ths.controllers.catalog.product;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,24 +8,26 @@ import br.ths.beans.Product;
 import br.ths.beans.manager.ProductManager;
 import br.ths.screens.branch.catalog.product.ScreenProductModal;
 import br.ths.tools.log.LogTools;
-import br.ths.utils.TableViewUtils;
-import br.ths.utils.beans.ProductRown;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerProductRelationManager {
 	
 	@FXML private TextField textNameFilter;
-	@FXML private TableView<ProductRown> table;
+	@FXML private TableView<Product> table;
 	@FXML private TableColumn<Product, String> columnOne;
 	@FXML private TableColumn<Product, String> columnTwo;
 	@FXML private TableColumn<Product, String> columnThree;
@@ -34,7 +37,7 @@ public class ControllerProductRelationManager {
 	@FXML private Button buttonEdit;
 	@FXML private Button buttonDelete;
 	
-	private List<ProductRown> list;
+	private List<Product> list;
 	
 	public void clickButtonNew(){
 		try{
@@ -49,14 +52,14 @@ public class ControllerProductRelationManager {
 	
 	public void clickButtonEdit(){
 		try{
-			ProductRown productRown = table.getSelectionModel().getSelectedItem();
-			if(productRown == null || productRown.getProduct() == null){
+			Product product = table.getSelectionModel().getSelectedItem();
+			if(product == null){
 				return;
 			}
 			ScreenProductModal scream = new ScreenProductModal();
 			scream.setNewProduct(false);
 			scream.setRelation(this);
-			scream.setProdutc(productRown.getProduct());
+			scream.setProdutc(product);
 			scream.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -72,7 +75,7 @@ public class ControllerProductRelationManager {
 			final ButtonType btnSim = new ButtonType("Sim");
 			final ButtonType btnNao = new ButtonType("Não");
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir a SubCategoria "+ product.getName()+"?", btnSim, btnNao);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir o Produto "+ product.getName()+"?", btnSim, btnNao);
 			alert.showAndWait();
 
 			if (alert.getResult() == btnSim) {
@@ -115,8 +118,8 @@ public class ControllerProductRelationManager {
 	public void filterByName(){
 		try {
 			String productName = textNameFilter.getText().toLowerCase();
-			List<ProductRown> listProductsSelects = new ArrayList<>();
-			for (ProductRown product : list) {
+			List<Product> listProductsSelects = new ArrayList<>();
+			for (Product product : list) {
 				String name = product.getName().toLowerCase();
 				if(name.contains(productName)){
 					listProductsSelects.add(product);
@@ -128,10 +131,10 @@ public class ControllerProductRelationManager {
 		}
 	}
 	
-	public void updateTable(List<ProductRown> listProducts){
+	public void updateTable(List<Product> listProducts){
 		try {
 			if(listProducts== null){
-				listProducts = TableViewUtils.getProductManagers();
+				listProducts = ProductManager.getProducts();
 			}
 			disableButtons(true);
 			table.setItems(FXCollections.observableArrayList(listProducts));
@@ -143,14 +146,35 @@ public class ControllerProductRelationManager {
 	
 	public void createTable(){
 		try {
-			list = TableViewUtils.getProductManagers();
+			list = ProductManager.getProducts();
 			columnOne.setCellValueFactory(new PropertyValueFactory<>("id"));
 			columnTwo.setCellValueFactory(new PropertyValueFactory<>("name"));
 			columnThree.setCellValueFactory(new PropertyValueFactory<>("type"));
 			columnFour.setCellValueFactory(new PropertyValueFactory<>("unType"));
-			columnFive.setCellValueFactory(new PropertyValueFactory<>("priceFormat"));
 			columnSix.setCellValueFactory(new PropertyValueFactory<>("un"));
-			
+			columnThree.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Product, String> product) {
+					String type = "Produto";
+					if("service".equals(product.getValue().getType())){
+						type = "Serviço";
+					}
+					return new SimpleStringProperty(type);
+				}
+			});
+			columnFive.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Product, String> product) {
+					DecimalFormat df = new DecimalFormat("###,###,###.##");
+					String price= "0,00";
+					try{
+						price = df.format(product.getValue().getPrice());
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+					return new SimpleStringProperty("R$ "+price);
+				}
+			});
 			updateTable(list);
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -165,12 +189,13 @@ public class ControllerProductRelationManager {
 		updateTable(null);
 	}
 
-	public List<ProductRown> getList() {
+	public List<Product> getList() {
 		return list;
 	}
 
-	public void setList(List<ProductRown> list) {
+	public void setList(List<Product> list) {
 		this.list = list;
 	}
+
 
 }
