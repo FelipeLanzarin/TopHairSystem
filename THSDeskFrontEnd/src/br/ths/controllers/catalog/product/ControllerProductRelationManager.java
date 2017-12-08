@@ -165,7 +165,7 @@ public class ControllerProductRelationManager {
 			columnFive.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Product, String> product) {
-					DecimalFormat df = new DecimalFormat("###,###,###.##");
+					DecimalFormat df = new DecimalFormat("###,###,##0.00");
 					String price= "0,00";
 					try{
 						price = df.format(product.getValue().getPrice());

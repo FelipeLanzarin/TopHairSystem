@@ -228,8 +228,8 @@ public class ControllerProductModal extends GenericController{
 			}
 			if(subCategorySelected == null){
 				subCategorySelected = getSubCategory(comboSubCategory.getSelectionModel().getSelectedItem());
-				if(categorySelected == null){
-					comboCategory.setStyle(STYLE_ERROR);
+				if(subCategorySelected == null){
+					comboSubCategory.setStyle(STYLE_ERROR);
 					valid = false;
 				}
 			}
