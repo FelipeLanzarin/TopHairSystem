@@ -17,4 +17,6 @@ public class XmlPathUtils {
 	public static final String CITY_RELATION = "/front/ths/xml/city/cityRelation.fxml";
 	public static final String CITY_RELATION_MANAGER  = "/front/ths/xml/city/cityRelationManager.fxml";
 	public static final String CITY_MODAL  = "/front/ths/xml/city/cityModal.fxml";
+	public static final String USER_RELATION_MANAGER  = "/front/ths/xml/branch/user/userRelationManager.fxml";
+	public static final String USER_MODAL  = "/front/ths/xml/branch/user/userModal.fxml";
 }

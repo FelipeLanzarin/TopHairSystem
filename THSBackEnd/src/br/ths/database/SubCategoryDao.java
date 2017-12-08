@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.ths.beans.Category;
 import br.ths.beans.SubCategory;
 import br.ths.tools.log.LogTools;
 
@@ -85,6 +84,7 @@ public class SubCategoryDao {
 		return subCategory;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SubCategory> getSubCategories(){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<SubCategory> subCategory = null;
@@ -99,6 +99,7 @@ public class SubCategoryDao {
 		return subCategory;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SubCategory> getSubCategoriesByCategoryId(Integer id){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<SubCategory> subCategory = null;

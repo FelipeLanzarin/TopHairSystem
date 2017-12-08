@@ -9,17 +9,6 @@
 	-fx-pref-height: 30;	 
 }
 
-.table-view .column-header .label{
-   	-fx-alignment: center-left;
-   	-fx-padding: 0 0 0 7;
-}
-
-.table-view .table-cell {
-	-fx-alignment: center-left;
-	-fx-padding: 0 0 0 7;
-}
-
-
 
 .table-view .column-header .label {
     -fx-font-size: 14;
@@ -30,4 +19,15 @@
     -fx-font-size: 14;
     -fx-font-family: "SansSerif Bold";
 }
+
+.table-view .column-header .label{
+   	-fx-alignment: center;
+   	-fx-padding: 0 0 0 0;
+}
+
+.table-view .table-cell {
+	-fx-alignment: center;
+	-fx-padding: 0 0 0 0;
+}
+
 

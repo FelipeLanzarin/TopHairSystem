@@ -9,6 +9,7 @@ import br.ths.screens.catalog.category.ScreenCategoryRelationManager;
 import br.ths.screens.catalog.subcategory.ScreenSubCategoryRelationManager;
 import br.ths.screens.city.ScreenCityRelationManager;
 import br.ths.screens.profile.ScreenProfileRelationManager;
+import br.ths.screens.user.ScreenUserRelationManager;
 import br.ths.tools.log.LogTools;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
@@ -20,7 +21,6 @@ public class ControllerMain implements Initializable{
 		// TODO jogar todos os panes em um array para facilitar no moneto de preencher a agenda
 		
 	}
-	
 	
 	public void openEmployeeManager(){
 		try{
@@ -72,5 +72,14 @@ public class ControllerMain implements Initializable{
 			LogTools.logError(e);
 		}
 	}
+	public void openUserRelationManager(){
+		try{
+			ScreenUserRelationManager scream = new ScreenUserRelationManager();
+			scream.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+		
 	
 }

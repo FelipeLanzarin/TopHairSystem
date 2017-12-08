@@ -1,7 +1,6 @@
 package fx.tools.mouse.events;
 
 import fx.tools.action.EventAction;
-import fx.tools.utils.FXUtilsControl;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;

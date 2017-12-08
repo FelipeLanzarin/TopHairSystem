@@ -3,6 +3,7 @@ package br.ths.controllers.catalog.product;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -165,6 +166,7 @@ public class ControllerProductModal extends GenericController{
 			product.setPrice(df.parse(textPrice.getText()).doubleValue());
 			product.setUn(Integer.parseInt(textUnitValue.getText()));
 			if(newProduct){
+				product.setCreationDate(new Date());
 				if(ProductManager.create(product)){
 					stage.close();
 					relation.messageSucess("Produto cadastrado com sucesso!");

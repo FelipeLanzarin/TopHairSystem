@@ -5,23 +5,27 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.ths.beans.Employee;
+import br.ths.beans.UserBranch;
 import br.ths.tools.log.LogTools;
 
 
 
-public class EmployeeDao {
+public class UserBranchDao {
 	
-	public boolean createEmployee (Employee employee){
+	public boolean createUserBranch (UserBranch userBranch){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		
 		try{
 			em.getTransaction().begin();
-			em.persist(employee);
+			em.persist(userBranch);
 			em.getTransaction().commit();
 		}catch (Exception e) {
-			LogTools.logError("erro ao inserir employee no banco: "+ e.toString());
-			em.getTransaction().rollback();
+			LogTools.logError("erro ao inserir userBranch no banco: "+ e.toString());
+			e.printStackTrace();
+			try{
+				em.getTransaction().rollback();
+			}catch (Exception ex) {
+			}
 			return false;
 		}finally{
 			em.close();
@@ -30,14 +34,14 @@ public class EmployeeDao {
 		return true;
 	}
 	
-	public boolean updateEmployee(Employee employee){
+	public boolean updateUserBranch(UserBranch userBranch){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		try{
 			em.getTransaction().begin();
-			em.merge(employee);
+			em.merge(userBranch);
 			em.getTransaction().commit();
 		}catch (Exception e) {
-			LogTools.logError("erro ao alterar employee no banco: "+ e.toString());
+			LogTools.logError("erro ao alterar userBranch no banco: "+ e.toString());
 			em.getTransaction().rollback();
 			return false;
 		}finally{
@@ -46,14 +50,14 @@ public class EmployeeDao {
 		return true;
 	}
 	
-	public boolean deleteEmployee(Integer id){
+	public boolean deleteUserBranch(String id){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		try{
-			Employee employee = getEmployee(id);
-			if(employee != null){
+			UserBranch userBranch = getUserBranch(id);
+			if(userBranch != null){
 				em.getTransaction().begin();
-				employee = em.merge(employee);
-				em.remove(employee);
+				userBranch = em.merge(userBranch);
+				em.remove(userBranch);
 				em.getTransaction().commit();
 			}
 		}catch (Exception e) {
@@ -70,32 +74,33 @@ public class EmployeeDao {
 		return true;
 	}
 	
-	public Employee getEmployee(Integer id){
+	public UserBranch getUserBranch(String id){
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		Employee employee = null;
+		UserBranch userBranch = null;
 		try{
-			employee = em.find(Employee.class, id);
+			userBranch = em.find(UserBranch.class, id);
 		}catch (Exception e) {
-			LogTools.logError("erro ao obter employee no banco: "+ e.toString());
+			LogTools.logError("erro ao obter userBranch no banco: "+ e.toString());
 		}finally{
 			em.close();
 		}
 		
-		return employee;
+		return userBranch;
 	}
 	@SuppressWarnings("unchecked")
-	public List<Employee> getEmployees (){
+	public List<UserBranch> getUserBranchs (){
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		List<Employee> employee = null;
+		List<UserBranch> userBranch = null;
 		try{
-			Query query = em.createQuery("FROM Employee ORDER BY name");
-			employee = query.getResultList();
+			Query query = em.createQuery("FROM UserBranch ORDER BY login");
+			userBranch = query.getResultList();
 		}catch (Exception e) {
-			LogTools.logError("erro ao obter employees no banco: "+ e.toString());
+			LogTools.logError("erro ao obter userBranchs no banco: "+ e.toString());
 		}finally{
 			em.close();
 		}
-		return employee;
+		return userBranch;
 	}
-
+	
+	
 }

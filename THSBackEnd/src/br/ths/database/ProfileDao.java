@@ -83,7 +83,7 @@ public class ProfileDao {
 		
 		return profile;
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<Profile> getProfiles (){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Profile> profile = null;

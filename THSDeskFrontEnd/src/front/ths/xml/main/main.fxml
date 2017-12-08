@@ -51,7 +51,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Configurações">
                      <items>
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Usuários" />
+                        <MenuItem mnemonicParsing="false" onAction="#openUserRelationManager" style="-fx-font-family: SansSerif Regular;" text="Usuários" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Relatórios">

@@ -83,7 +83,7 @@ public class CategoryDao {
 		
 		return category;
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<Category> getCategories (){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Category> category = null;

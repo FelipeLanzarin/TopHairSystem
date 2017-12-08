@@ -83,7 +83,7 @@ public class CityDao {
 		
 		return city;
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<City> getCities (){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<City> city = null;
