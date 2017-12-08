@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ths.beans.Product;
 import br.ths.database.ProductDao;
+import br.ths.exceptions.ManagersExceptions;
 
 public class ProductManager {
 	
@@ -13,7 +14,7 @@ public class ProductManager {
 		return Boolean.valueOf(getProductDao().updateProduct(product));
 	}
 
-	public static Boolean create(Product product) {
+	public static Boolean create(Product product) throws ManagersExceptions {
 		return Boolean.valueOf(getProductDao().createProduct(product));
 	}
 

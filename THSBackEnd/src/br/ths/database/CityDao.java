@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.ths.beans.City;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
 
 
@@ -21,7 +22,10 @@ public class CityDao {
 			em.getTransaction().commit();
 		}catch (Exception e) {
 			LogTools.logError("erro ao inserir city no banco: "+ e.toString());
-			em.getTransaction().rollback();
+			try{
+				em.getTransaction().rollback();
+			}catch (Exception ex) {
+			}
 			return false;
 		}finally{
 			em.close();
@@ -46,7 +50,7 @@ public class CityDao {
 		return true;
 	}
 	
-	public boolean deleteCity(Integer id){
+	public boolean deleteCity(Integer id) throws ManagersExceptions{
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		try{
 			City city = getCity(id);
@@ -57,6 +61,16 @@ public class CityDao {
 				em.getTransaction().commit();
 			}
 		}catch (Exception e) {
+			Throwable t = e;
+			while (t != null) {
+				if (t.getMessage().contains("ERROR: update or delete on table \"city\" violates foreign key constraint")) {
+					ManagersExceptions me = new ManagersExceptions();
+					me.setId(ManagersExceptions.CITY_IN_USE);
+					me.setExcepetionMessage("Essa cidade já está sendo utilizada em outro lugar.");
+					throw me;
+				}
+				t = t.getCause();
+			}
 			LogTools.logError("erro ao excluir : "+ e.toString());
 			try{
 				em.getTransaction().rollback();

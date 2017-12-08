@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.ths.beans.City;
 import br.ths.beans.manager.CityManager;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.city.ScreenCityModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
@@ -72,17 +73,24 @@ public class ControllerCityRelationManager extends GenericController{
 			alert.showAndWait();
 
 			if (alert.getResult() == btnSim) {
-				if(CityManager.delete(city)){
-					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-					dialog.setTitle("Sucesso!");
-					dialog.setHeaderText("Cidade excluída com sucesso");
-					dialog.showAndWait();
-					updateTable(null);
-				}else{
+				try{
+					if(CityManager.delete(city)){
+						Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+						dialog.setTitle("Sucesso!");
+						dialog.setHeaderText("Cidade excluída com sucesso");
+						dialog.showAndWait();
+						updateTable(null);
+					}else{
+						Alert dialog = new Alert(Alert.AlertType.ERROR);
+						dialog.setTitle("Erro!");
+						dialog.setHeaderText("Erro inesperado!");
+						dialog.showAndWait();
+					}
+				}catch (ManagersExceptions me) {
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
 					dialog.setTitle("Erro!");
-					dialog.setHeaderText("Cidade possui uma pessoa!");
-					dialog.setContentText("Essa Cidade já possui uma pessoa. Por esse motivo você não pode excluir a mesma.");
+					dialog.setHeaderText("Erro ao excluir!");
+					dialog.setContentText(me.getExcepetionMessage());
 					dialog.showAndWait();
 				}
 			}

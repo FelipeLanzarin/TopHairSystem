@@ -97,5 +97,24 @@ public class ProfileDao {
 		}
 		return profile;
 	}
+	@SuppressWarnings("unchecked")
+	public Profile getProfileByCpf(String cpf){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Profile> profile = null;
+		try{
+			Query query = em.createQuery("FROM Profile WHERE cpf = :cpf");
+			query.setParameter("cpf", cpf);
+			profile = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter profiles no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		try{
+			return profile.get(0);
+		}catch (Exception e) {
+			return null;
+		}
+	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ths.beans.City;
 import br.ths.database.CityDao;
+import br.ths.exceptions.ManagersExceptions;
 
 public class CityManager {
 	
@@ -17,7 +18,7 @@ public class CityManager {
 		return Boolean.valueOf(getCityDao().createCity(city));
 	}
 
-	public static Boolean delete(City city) {
+	public static Boolean delete(City city) throws ManagersExceptions {
 		return Boolean.valueOf(getCityDao().deleteCity(city.getId()));
 	}
 	

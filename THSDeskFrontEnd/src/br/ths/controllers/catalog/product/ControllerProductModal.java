@@ -13,6 +13,7 @@ import br.ths.beans.SubCategory;
 import br.ths.beans.manager.CategoryManager;
 import br.ths.beans.manager.ProductManager;
 import br.ths.beans.manager.SubCategoryManager;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskMoney;
@@ -166,14 +167,22 @@ public class ControllerProductModal extends GenericController{
 			product.setPrice(df.parse(textPrice.getText()).doubleValue());
 			product.setUn(Integer.parseInt(textUnitValue.getText()));
 			if(newProduct){
-				product.setCreationDate(new Date());
-				if(ProductManager.create(product)){
-					stage.close();
-					relation.messageSucess("Produto cadastrado com sucesso!");
-				}else{
+				try{
+					product.setCreationDate(new Date());
+					if(ProductManager.create(product)){
+						stage.close();
+						relation.messageSucess("Produto cadastrado com sucesso!");
+					}else{
+						Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+						dialogoInfo.setTitle("Erro!");
+						dialogoInfo.setHeaderText("Erro ao cadastrar Produto!");
+						dialogoInfo.showAndWait();
+					}
+				}catch (ManagersExceptions me) {
 					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 					dialogoInfo.setTitle("Erro!");
 					dialogoInfo.setHeaderText("Erro ao cadastrar Produto!");
+					dialogoInfo.setContentText(me.getExcepetionMessage());
 					dialogoInfo.showAndWait();
 				}
 			}else{

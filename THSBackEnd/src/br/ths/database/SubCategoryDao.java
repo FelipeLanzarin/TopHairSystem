@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.ths.beans.SubCategory;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
 
 
@@ -46,7 +47,7 @@ public class SubCategoryDao {
 		return true;
 	}
 	
-	public boolean deleteSubCategory(Integer id){
+	public boolean deleteSubCategory(Integer id) throws ManagersExceptions{
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		try{
 			SubCategory subCategory = getSubCategory(id);
@@ -58,6 +59,16 @@ public class SubCategoryDao {
 			}
 		}catch (Exception e) {
 			LogTools.logError("erro ao excluir : "+ e.toString());
+			Throwable t = e;
+			while (t != null) {
+				if (t.getMessage().contains("ERROR: update or delete on table \"sub_category\" violates foreign key constraint")) {
+					ManagersExceptions me = new ManagersExceptions();
+					me.setId(ManagersExceptions.CITY_IN_USE);
+					me.setExcepetionMessage("Essa SubCategoria já possui um produto. Por esse motivo a mesma não pode ser excluída");
+					throw me;
+				}
+				t = t.getCause();
+			}
 			try{
 				em.getTransaction().rollback();
 			}catch (Exception ex) {

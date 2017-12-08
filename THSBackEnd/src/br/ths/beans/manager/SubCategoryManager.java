@@ -5,6 +5,7 @@ import java.util.List;
 import br.ths.beans.Category;
 import br.ths.beans.SubCategory;
 import br.ths.database.SubCategoryDao;
+import br.ths.exceptions.ManagersExceptions;
 
 public class SubCategoryManager {
 	
@@ -18,7 +19,7 @@ public class SubCategoryManager {
 		return Boolean.valueOf(getSubCategoryDao().createSubCategory(subCategory));
 	}
 
-	public static Boolean delete(SubCategory subCategory) {
+	public static Boolean delete(SubCategory subCategory) throws ManagersExceptions {
 		return Boolean.valueOf(getSubCategoryDao().deleteSubCategory(subCategory.getId()));
 	}
 	

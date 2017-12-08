@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.ths.beans.Category;
 import br.ths.beans.manager.CategoryManager;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.catalog.category.ScreenCategoryModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
@@ -68,21 +69,28 @@ public class ControllerCategoryRelationManager extends GenericController{
 			final ButtonType btnSim = new ButtonType("Sim");
 			final ButtonType btnNao = new ButtonType("Não");
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir a SubCategoria "+ category.getName()+"?", btnSim, btnNao);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir a Categoria "+ category.getName()+"?", btnSim, btnNao);
 			alert.showAndWait();
 
 			if (alert.getResult() == btnSim) {
-				if(CategoryManager.delete(category)){
-					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-					dialog.setTitle("Sucesso!");
-					dialog.setHeaderText("SubCategoria excluído com sucesso");
-					dialog.showAndWait();
-					updateTable(null);
-				}else{
+				try{
+					if(CategoryManager.delete(category)){
+						Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+						dialog.setTitle("Sucesso!");
+						dialog.setHeaderText("SubCategoria excluído com sucesso");
+						dialog.showAndWait();
+						updateTable(null);
+					}else{
+						Alert dialog = new Alert(Alert.AlertType.ERROR);
+						dialog.setTitle("Erro!");
+						dialog.setHeaderText("Erro inesperado!");
+						dialog.showAndWait();
+					}
+				}catch (ManagersExceptions me) {
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
 					dialog.setTitle("Erro!");
-					dialog.setHeaderText("Categoria já possui uma SubCategoria!");
-					dialog.setContentText("Essa Categoria já possui uma SubCategoria. Por esse motivo a mesma não pode ser excluída");
+					dialog.setHeaderText("Erro ao excluir!");
+					dialog.setContentText(me.getExcepetionMessage());
 					dialog.showAndWait();
 				}
 			}

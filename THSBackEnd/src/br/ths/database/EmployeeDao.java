@@ -97,5 +97,45 @@ public class EmployeeDao {
 		}
 		return employee;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Employee getEmployeeByCpf(String cpf){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Employee> profile = null;
+		try{
+			Query query = em.createQuery("FROM Employee WHERE cpf = :cpf");
+			query.setParameter("cpf", cpf);
+			profile = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter profiles no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		try{
+			return profile.get(0);
+		}catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Employee getEmployeeByEmail(String email){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Employee> profile = null;
+		try{
+			Query query = em.createQuery("FROM Employee WHERE email = :email");
+			query.setParameter("email", email);
+			profile = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter profiles no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		try{
+			return profile.get(0);
+		}catch (Exception e) {
+			return null;
+		}
+	}
 
 }

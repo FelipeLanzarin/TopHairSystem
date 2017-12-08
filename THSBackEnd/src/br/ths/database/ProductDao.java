@@ -3,25 +3,41 @@ package br.ths.database;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import br.ths.beans.Product;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
 
 
 
 public class ProductDao {
 	
-	public boolean createProduct (Product product){
+	public boolean createProduct (Product product) throws ManagersExceptions{
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		
 		try{
 			em.getTransaction().begin();
 			em.persist(product);
 			em.getTransaction().commit();
-		}catch (Exception e) {
+		}catch (PersistenceException e) {
+			Throwable t = e;
+			while (t != null) {
+				if (t.getMessage().contains("ERROR: duplicate key value violates unique constraint \"product_pkey\"")) {
+					ManagersExceptions me = new ManagersExceptions();
+					me.setId(ManagersExceptions.ID_ALREADY_EXIST);
+					me.setExcepetionMessage("Código informado já está sendo utilizado por outro produto.");
+					throw me;
+				}
+				t = t.getCause();
+			}
 			LogTools.logError("erro ao inserir product no banco: "+ e.toString());
-			em.getTransaction().rollback();
+			LogTools.logError(e);
+			try{
+				em.getTransaction().rollback();
+			}catch (Exception ex) {
+			}
 			return false;
 		}finally{
 			em.close();
@@ -38,7 +54,10 @@ public class ProductDao {
 			em.getTransaction().commit();
 		}catch (Exception e) {
 			LogTools.logError("erro ao alterar product no banco: "+ e.toString());
-			em.getTransaction().rollback();
+			try{
+				em.getTransaction().rollback();
+			}catch (Exception ex) {
+			}
 			return false;
 		}finally{
 			em.close();

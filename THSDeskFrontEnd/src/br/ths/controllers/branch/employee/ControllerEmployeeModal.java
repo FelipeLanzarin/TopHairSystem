@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import br.ths.beans.City;
 import br.ths.beans.Employee;
 import br.ths.beans.manager.EmployeeManager;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.city.ScreenCityRelation;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
@@ -129,8 +130,18 @@ public class ControllerEmployeeModal extends GenericController{
 					dialogoInfo.showAndWait();
 				}
 			}
+		}catch (ManagersExceptions me) {
+			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+			dialogoInfo.setTitle("Erro!");
+			dialogoInfo.setHeaderText("Erro ao executar operação!");
+			dialogoInfo.setContentText(me.getExcepetionMessage());
+			dialogoInfo.showAndWait();
 		}catch (Exception e) {
 			LogTools.logError(e);
+			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+			dialogoInfo.setTitle("Erro!");
+			dialogoInfo.setHeaderText("Erro inesperado!");
+			dialogoInfo.showAndWait();
 		}
 	}
 	

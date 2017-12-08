@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ths.beans.Category;
 import br.ths.database.CategoryDao;
+import br.ths.exceptions.ManagersExceptions;
 
 public class CategoryManager {
 	
@@ -17,7 +18,7 @@ public class CategoryManager {
 		return Boolean.valueOf(getCategoryDao().createCategory(category));
 	}
 
-	public static Boolean delete(Category category) {
+	public static Boolean delete(Category category) throws ManagersExceptions {
 		return Boolean.valueOf(getCategoryDao().deleteCategory(category.getId()));
 	}
 	

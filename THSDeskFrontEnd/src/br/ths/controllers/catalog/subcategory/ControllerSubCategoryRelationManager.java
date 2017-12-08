@@ -7,6 +7,7 @@ import br.ths.beans.Category;
 import br.ths.beans.SubCategory;
 import br.ths.beans.manager.CategoryManager;
 import br.ths.beans.manager.SubCategoryManager;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.catalog.subcategory.ScreenSubCategoryModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
@@ -80,20 +81,27 @@ public class ControllerSubCategoryRelationManager extends GenericController{
 			final ButtonType btnSim = new ButtonType("Sim");
 			final ButtonType btnNao = new ButtonType("Não");
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir a Categoria "+ subSubCategory.getName()+"?", btnSim, btnNao);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir a SubCategoria "+ subSubCategory.getName()+"?", btnSim, btnNao);
 			alert.showAndWait();
 
 			if (alert.getResult() == btnSim) {
-				if(SubCategoryManager.delete(subSubCategory)){
-					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-					dialog.setTitle("Sucesso!");
-					dialog.setHeaderText("Categoria excluído com sucesso");
-					dialog.showAndWait();
-					updateTable(null);
-				}else{
+				try{
+					if(SubCategoryManager.delete(subSubCategory)){
+						Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+						dialog.setTitle("Sucesso!");
+						dialog.setHeaderText("SubCategoria excluída com sucesso");
+						dialog.showAndWait();
+						updateTable(null);
+					}else{
+						Alert dialog = new Alert(Alert.AlertType.ERROR);
+						dialog.setTitle("Erro!");
+						dialog.setHeaderText("Erro inesperado!");
+						dialog.showAndWait();
+					}
+				}catch (ManagersExceptions me) {
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
 					dialog.setTitle("Erro!");
-					dialog.setHeaderText("SubCategoria já possui um produto!");
+					dialog.setHeaderText("Erro ao excluir!");
 					dialog.setContentText("Essa SubCategoria já possui um produto. Por esse motivo a mesma não pode ser excluída");
 					dialog.showAndWait();
 				}
