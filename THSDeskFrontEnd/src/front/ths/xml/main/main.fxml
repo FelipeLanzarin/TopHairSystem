@@ -36,7 +36,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Clientes">
                      <items>
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Consultar Cliente" />
+                        <MenuItem mnemonicParsing="false" onAction="#openProfileRelation" style="-fx-font-family: SansSerif Regular;" text="Consultar Cliente" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Cadastros">

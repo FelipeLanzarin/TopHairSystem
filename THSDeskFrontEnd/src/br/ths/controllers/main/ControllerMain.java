@@ -8,6 +8,7 @@ import br.ths.screens.branch.employee.ScreenEmployeeRelationManager;
 import br.ths.screens.catalog.category.ScreenCategoryRelationManager;
 import br.ths.screens.catalog.subcategory.ScreenSubCategoryRelationManager;
 import br.ths.screens.city.ScreenCityRelationManager;
+import br.ths.screens.profile.ScreenProfileRelation;
 import br.ths.screens.profile.ScreenProfileRelationManager;
 import br.ths.screens.user.ScreenUserRelationManager;
 import br.ths.tools.log.LogTools;
@@ -18,14 +19,14 @@ public class ControllerMain implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO jogar todos os panes em um array para facilitar no moneto de preencher a agenda
+		// TODO jogar todos os panes em um array para facilitar no momento de preencher a agenda
 		
 	}
 	
 	public void openEmployeeManager(){
 		try{
-			ScreenEmployeeRelationManager scream = new ScreenEmployeeRelationManager();
-			scream.start(new Stage());
+			ScreenEmployeeRelationManager screen = new ScreenEmployeeRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -33,16 +34,16 @@ public class ControllerMain implements Initializable{
 	
 	public void openCityManager(){
 		try{
-			ScreenCityRelationManager scream = new ScreenCityRelationManager();
-			scream.start(new Stage());
+			ScreenCityRelationManager screen = new ScreenCityRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	public void openCategoryManager(){
 		try{
-			ScreenCategoryRelationManager scream = new ScreenCategoryRelationManager();
-			scream.start(new Stage());
+			ScreenCategoryRelationManager screen = new ScreenCategoryRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -50,36 +51,43 @@ public class ControllerMain implements Initializable{
 	
 	public void openProfileManager(){
 		try{
-			ScreenProfileRelationManager scream = new ScreenProfileRelationManager();
-			scream.start(new Stage());
+			ScreenProfileRelationManager screen = new ScreenProfileRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	public void openSubCategoryManager(){
 		try{
-			ScreenSubCategoryRelationManager scream = new ScreenSubCategoryRelationManager();
-			scream.start(new Stage());
+			ScreenSubCategoryRelationManager screen = new ScreenSubCategoryRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	public void openProductManager(){
 		try{
-			ScreenProductRelationManager scream = new ScreenProductRelationManager();
-			scream.start(new Stage());
+			ScreenProductRelationManager screen = new ScreenProductRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	public void openUserRelationManager(){
 		try{
-			ScreenUserRelationManager scream = new ScreenUserRelationManager();
-			scream.start(new Stage());
+			ScreenUserRelationManager screen = new ScreenUserRelationManager();
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 		
-	
+	public void openProfileRelation(){
+		try{
+			ScreenProfileRelation screen = new ScreenProfileRelation();
+			screen.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
 }
