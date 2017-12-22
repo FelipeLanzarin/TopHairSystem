@@ -2,7 +2,9 @@ package br.ths.beans.manager;
 
 import java.util.List;
 
+import br.ths.beans.Category;
 import br.ths.beans.Product;
+import br.ths.beans.SubCategory;
 import br.ths.database.ProductDao;
 import br.ths.exceptions.ManagersExceptions;
 
@@ -24,6 +26,14 @@ public class ProductManager {
 	
 	public static List<Product> getProducts() {
 		return getProductDao().getProducts();
+	}
+	
+	public static List<Product> getProductsBySubCategory(SubCategory subCategory) {
+		return getProductDao().getProductsBySubCategoryId(subCategory.getId());
+	}
+	
+	public static List<Product> getProductsByCategory(Category category) {
+		return getProductDao().getProductsByCategoryId(category.getId());
 	}
 	
 	public static Integer getNewProductId() {

@@ -11,6 +11,7 @@ public class XmlPathUtils {
 	public static final String SUBCATEGORY_MODAL = "/front/ths/xml/catalog/subcategory/subcategoryModal.fxml";
 	public static final String SUBCATEGORY_MANAGER = "/front/ths/xml/catalog/subcategory/subcategoryRelationManager.fxml";
 	public static final String PRODUCT_MODAL = "/front/ths/xml/catalog/product/productModal.fxml";
+	public static final String PRODUCT_DETAIL = "/front/ths/xml/catalog/product/productDetail.fxml";
 	public static final String PRODUCT_MANAGER = "/front/ths/xml/catalog/product/productRelationManager.fxml";
 	public static final String PROFILE_MODAL = "/front/ths/xml/profile/profileModal.fxml";
 	public static final String PROFILE_DETAIL = "/front/ths/xml/profile/profileDetail.fxml";
@@ -21,4 +22,8 @@ public class XmlPathUtils {
 	public static final String CITY_MODAL  = "/front/ths/xml/city/cityModal.fxml";
 	public static final String USER_RELATION_MANAGER  = "/front/ths/xml/branch/user/userRelationManager.fxml";
 	public static final String USER_MODAL  = "/front/ths/xml/branch/user/userModal.fxml";
+	public static final String CATALOG_CATEGORY = "/front/ths/xml/catalog/catalogCategory.fxml";
+	public static final String CATALOG_SUB_CATEGORY = "/front/ths/xml/catalog/catalogSubCategory.fxml";
+	public static final String CATALOG_PRODUCT = "/front/ths/xml/catalog/catalogProduct.fxml";
+	public static final String PROFILE_SELECTION = "/front/ths/xml/profile/profileSelection.fxml";
 }

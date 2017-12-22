@@ -110,7 +110,7 @@
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </MaskMoney>
-                  <MaskTextField fx:id="textUnitValue" componentName="Quantidade" layoutX="430.0" layoutY="385.0" mask="NNNN" onKeyPressed="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1">
+                  <MaskTextField fx:id="textUnitValue" componentName="Quantidade" layoutX="430.0" layoutY="385.0" mask="NNNN" onKeyPressed="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1" text="1">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>

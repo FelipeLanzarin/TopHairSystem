@@ -3,6 +3,7 @@ package br.ths.controllers.main;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import br.ths.screens.branch.catalog.ScreenCatalogCategory;
 import br.ths.screens.branch.catalog.product.ScreenProductRelationManager;
 import br.ths.screens.branch.employee.ScreenEmployeeRelationManager;
 import br.ths.screens.catalog.category.ScreenCategoryRelationManager;
@@ -85,6 +86,15 @@ public class ControllerMain implements Initializable{
 	public void openProfileRelation(){
 		try{
 			ScreenProfileRelation screen = new ScreenProfileRelation();
+			screen.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void openCatalog(){
+		try{
+			ScreenCatalogCategory screen = new ScreenCatalogCategory();
 			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);

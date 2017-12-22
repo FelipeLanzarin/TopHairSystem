@@ -31,7 +31,7 @@
                 </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Catálogo">
                      <items>
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Consultar Produtos" />
+                        <MenuItem mnemonicParsing="false" onAction="#openCatalog" style="-fx-font-family: SansSerif Regular;" text="Consultar Produtos" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Clientes">

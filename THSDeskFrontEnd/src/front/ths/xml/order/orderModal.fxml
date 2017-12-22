@@ -1,10 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- tela para cadastrar um pedido -->
+<!-- Tela para listar os usuarios do funcionarios -->
 
+<?import java.net.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1287.0" prefHeight="700.0" prefWidth="1287.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.ControllerCatalogProduct">
+   <children>
+      <Pane prefHeight="100.0" prefWidth="1300.0">
+         <children>
+            <Label fx:id="labelTitle" layoutX="471.0" layoutY="32.0" prefHeight="42.0" prefWidth="358.0" text="Pedido 00000000">
+               <font>
+                  <Font name="SansSerif Bold" size="36.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="63.0" fitWidth="55.0" layoutX="35.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/order/003-female-hair-cut-with-scissors.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="61.0" layoutX="113.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/order/002-hairdresser.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="64.0" fitWidth="62.0" layoutX="1198.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/order/007-shopping-bag.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="1118.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" rotate="-3.8">
+               <image>
+                  <Image url="@../../images/order/004-shampoo.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="45.0" layoutX="1052.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" rotate="-43.3">
+               <image>
+                  <Image url="@../../images/order/005-baber-scissors.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="15.0" layoutY="98.0" prefHeight="1.0" prefWidth="1248.0" style="-fx-background-color: #bce8f1;" />
+      <Pane layoutY="109.0" prefHeight="591.0" prefWidth="1280.0">
+         <children>
+            <Pane fx:id="paneList" layoutX="15.0" layoutY="14.0" prefHeight="575.0" prefWidth="1270.0" style="-fx-opacity: 10000;">
+               <children>
+                  <TextField fx:id="textName" editable="false" focusTraversable="false" layoutX="120.0" layoutY="2.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="358.0" promptText="Nome">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font></TextField>
+                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="797.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonAllProducts" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" translateX="-49.0">
+                           <image>
+                              <Image url="@../../images/manager/shopping-bag.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="252.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#setAtendedt" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #337ab7; -fx-background-color: #2e6da4; -fx-border-radius: 2; -fx-background-radius: 2;" text="Marcar como Atendido" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="585.0" layoutY="9.0" text="Produtos">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="9.0" text="Cliente:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1.0" layoutY="330.0" text="Sub Total:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textSubTotal" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="120.0" layoutY="322.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textDiscounts" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="120.0" layoutY="368.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="1.0" layoutY="375.0" text="Descontos:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1.0" layoutY="423.0" text="Valor Final:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textAmount" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="120.0" layoutY="416.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="483.0" layoutY="2.0" onMouseClicked="#updateProfile" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/order/progress-arrows2.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#delete" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2; -fx-background-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="1.0" layoutY="93.0" text="Status:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textStatus" editable="false" focusTraversable="false" layoutX="120.0" layoutY="86.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="358.0" promptText="Status" text="Em Atendimento">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1024.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#finishOrder" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #337ab7; -fx-background-color: #2e6da4; -fx-border-radius: 2; -fx-background-radius: 2;" text="Finalizar Pedido" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="1.0" layoutY="133.0" text="Obs.:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="textDescriptions" layoutX="120.0" layoutY="133.0" prefHeight="161.0" prefWidth="432.0" wrapText="true" />
+                  <Label layoutX="343.0" layoutY="335.0" text="Horario de atendimento:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="textSchedulable" layoutX="343.0" layoutY="368.0" prefHeight="35.0" prefWidth="208.0" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#save" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Salvar" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="textEmployee" editable="false" focusTraversable="false" layoutX="120.0" layoutY="44.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="358.0" promptText="Status">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutY="51.0" text="Atendente:">
+                     <font>
+                        <Font name="SansSerif Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="483.0" layoutY="49.0" onMouseClicked="#updateEmployee" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@../../images/lupa/lupa_sf_24x24.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="buttonDelete" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1109.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonDelete" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" translateX="-49.0">
+                           <image>
+                              <Image url="@../../images/manager/lixeira.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="buttonEdit" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="954.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonEdit" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Alterar" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" translateX="-49.0">
+                           <image>
+                              <Image url="@../../images/manager/editor.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <TableView fx:id="table" focusTraversable="false" layoutX="598.0" layoutY="50.0" maxWidth="669.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="425.0" prefWidth="667.0" stylesheets="@../../css/employeRelationManager.css">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <columns>
+                  <TableColumn fx:id="columnOne" editable="false" maxWidth="107.0" minWidth="107.0" prefWidth="107.0" resizable="false" text="Código" />
+                  <TableColumn fx:id="columnTwo" editable="false" maxWidth="215.0" prefWidth="215.0" resizable="false" text="Nome" />
+                  <TableColumn fx:id="columnThree" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" text="Valor Un" />
+                  <TableColumn fx:id="columnThree1" editable="false" maxWidth="59.0" minWidth="50.0" prefWidth="55.0" resizable="false" text="Qtd" />
+                  <TableColumn fx:id="columnThree11" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" text="Descontos" />
+                  <TableColumn fx:id="columnThree111" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" text="Valor Total" />
+               </columns>
+            </TableView>
+            <Pane layoutX="599.0" layoutY="51.0" prefHeight="4.0" prefWidth="665.0" style="-fx-background-color: #fff;" />
+            <Pane layoutX="599.0" layoutY="51.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
+            <Pane layoutX="1248.0" layoutY="51.0" prefHeight="30.0" prefWidth="16.0" style="-fx-background-color: #fff;" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

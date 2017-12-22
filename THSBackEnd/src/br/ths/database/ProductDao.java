@@ -118,6 +118,47 @@ public class ProductDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Product> getProductsBySubCategoryId (Integer id){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Product> products = null;
+		String sql = "select * from product p "
+				+ "where p.sub_category_id = ? "
+				+ "order by p.name";
+		try{
+			Query query = em.createNativeQuery(sql, Product.class);
+			query.setParameter(1, id);
+			products = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter products no banco: "+ e.toString());
+			LogTools.logError(e);
+		}finally{
+			em.close();
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByCategoryId (Integer id){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Product> products = null;
+		String sql = "select * from product p, sub_category sc "
+				+ "where p.sub_category_id = sc.id "
+				+ "and sc.category_id = ? "
+				+ "order by p.name";
+		try{
+			Query query = em.createNativeQuery(sql, Product.class);
+			query.setParameter(1, id);
+			products = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter products no banco: "+ e.toString());
+			LogTools.logError(e);
+		}finally{
+			em.close();
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public Integer getNewProductId(){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Integer> maxProduc = null;
