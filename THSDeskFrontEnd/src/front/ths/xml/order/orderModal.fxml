@@ -2,6 +2,7 @@
 
 <!-- Tela para listar os usuarios do funcionarios -->
 
+<?import fx.tools.mask.*?>
 <?import java.net.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1287.0" prefHeight="700.0" prefWidth="1287.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.ControllerCatalogProduct">
+<Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1287.0" prefHeight="700.0" prefWidth="1287.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.order.ControllerOrderModal">
    <children>
       <Pane prefHeight="100.0" prefWidth="1300.0">
          <children>
@@ -54,11 +55,11 @@
          <children>
             <Pane fx:id="paneList" layoutX="15.0" layoutY="14.0" prefHeight="575.0" prefWidth="1270.0" style="-fx-opacity: 10000;">
                <children>
-                  <TextField fx:id="textName" editable="false" focusTraversable="false" layoutX="120.0" layoutY="2.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="358.0" promptText="Nome">
+                  <TextField fx:id="textName" editable="false" focusTraversable="false" layoutX="120.0" layoutY="2.0" prefHeight="35.0" prefWidth="358.0" promptText="Nome">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextField>
-                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="797.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonAllProducts" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="797.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -96,16 +97,16 @@
                         <Font name="SansSerif Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textSubTotal" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="120.0" layoutY="322.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
+                  <MaskMoney fx:id="textSubTotal" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="120.0" layoutY="322.0" mask="NNN.NNN.NNN,NN" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
                      <font>
-                        <Font name="SansSerif Regular" size="14.0" />
+                        <Font name="SansSerif Bold" size="14.0" />
                      </font>
-                  </TextField>
-                  <TextField fx:id="textDiscounts" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="120.0" layoutY="368.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
+                  </MaskMoney>
+                  <MaskMoney fx:id="textDiscounts" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="120.0" layoutY="368.0" mask="NNN.NNN.NNN,NN" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
                      <font>
-                        <Font name="SansSerif Regular" size="14.0" />
+                        <Font name="SansSerif Bold" size="14.0" />
                      </font>
-                  </TextField>
+                  </MaskMoney>
                   <Label layoutX="1.0" layoutY="375.0" text="Descontos:">
                      <font>
                         <Font name="SansSerif Bold" size="18.0" />
@@ -116,11 +117,11 @@
                         <Font name="SansSerif Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textAmount" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="120.0" layoutY="416.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
+                  <MaskMoney fx:id="textAmountFinal" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="120.0" layoutY="416.0" mask="NNN.NNN.NNN,NN" prefHeight="35.0" prefWidth="188.0" promptText="0,00">
                      <font>
-                        <Font name="SansSerif Regular" size="14.0" />
+                        <Font name="SansSerif Bold" size="14.0" />
                      </font>
-                  </TextField>
+                  </MaskMoney>
                   <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="483.0" layoutY="2.0" onMouseClicked="#updateProfile" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/order/progress-arrows2.png" />
@@ -129,7 +130,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#delete" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2; -fx-background-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonDeleteOrder" alignment="CENTER" contentDisplay="CENTER" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#deleteOrder" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2; -fx-background-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -142,12 +143,12 @@
                         <Font name="SansSerif Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textStatus" editable="false" focusTraversable="false" layoutX="120.0" layoutY="86.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="358.0" promptText="Status" text="Em Atendimento">
+                  <TextField fx:id="textStatus" editable="false" focusTraversable="false" layoutX="120.0" layoutY="86.0" prefHeight="35.0" prefWidth="358.0" promptText="Status" text="Aguardando Atendimento">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </TextField>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1024.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#finishOrder" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #337ab7; -fx-background-color: #2e6da4; -fx-border-radius: 2; -fx-background-radius: 2;" text="Finalizar Pedido" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonFinishOrder" alignment="CENTER" contentDisplay="CENTER" layoutX="1024.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#finishOrder" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #337ab7; -fx-background-color: #2e6da4; -fx-border-radius: 2; -fx-background-radius: 2;" text="Finalizar Pedido" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -175,7 +176,7 @@
                         <Font name="SansSerif Bold" size="13.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="textEmployee" editable="false" focusTraversable="false" layoutX="120.0" layoutY="44.0" onKeyReleased="#filterByName" prefHeight="35.0" prefWidth="358.0" promptText="Status">
+                  <TextField fx:id="textEmployee" editable="false" focusTraversable="false" layoutX="120.0" layoutY="44.0" prefHeight="35.0" prefWidth="358.0" promptText="Status">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
@@ -193,7 +194,7 @@
                         <Image url="@../../images/lupa/lupa_sf_24x24.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="buttonDelete" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1109.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonDelete" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonDeleteCi" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1109.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonDelete" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #cd4b47; -fx-background-color: #d9534f; -fx-border-radius: 2;" text="Excluir" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -208,7 +209,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="buttonEdit" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="954.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonEdit" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Alterar" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonEditCi" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="954.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonEdit" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #2e6da4; -fx-background-color: #337ab7; -fx-border-radius: 2;" text="Alterar" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -223,6 +224,29 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="764.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#save" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #ea6f03; -fx-background-color: #f17704; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar Imagem" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <MaskTextField fx:id="textMin" alignment="CENTER_RIGHT" layoutX="506.0" layoutY="416.0" mask="NN" prefHeight="35.0" prefWidth="46.0" text="00">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </MaskTextField>
+                  <MaskTextField fx:id="textHour" alignment="CENTER_RIGHT" layoutX="437.0" layoutY="416.0" mask="NN" onMouseClicked="#hClick" prefHeight="35.0" prefWidth="46.0" text="00">
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                  </MaskTextField>
+                  <Text layoutX="490.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":">
+                     <font>
+                        <Font name="SansSerif Bold" size="27.0" />
+                     </font>
+                  </Text>
                </children>
             </Pane>
             <TableView fx:id="table" focusTraversable="false" layoutX="598.0" layoutY="50.0" maxWidth="669.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="425.0" prefWidth="667.0" stylesheets="@../../css/employeRelationManager.css">

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.ths.utils.OrderStatus;
+
 @Entity
 @Table(name="ths_order")
 public class Order {
@@ -31,12 +33,21 @@ public class Order {
 	private String status;
 	@Column(name="payment_status")
 	private String paymentStatus;
+	@Column(name="is_attendance")
+	private Boolean isAttendance;
 	@ManyToOne
 	@JoinColumn(name="profile_id", referencedColumnName="id")
 	private Profile profile;
 	@ManyToOne
 	@JoinColumn(name="employee_id", referencedColumnName="id")
 	private Employee employee;
+	
+	public Order(){
+		this.status = OrderStatus.OPEN;
+		this.amount = 0.0d;
+		this.finalAmount = 0.0d;
+		this.discount = 0.0d;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -103,5 +114,13 @@ public class Order {
 	}
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public Boolean getIsAttendance() {
+		return isAttendance;
+	}
+
+	public void setIsAttendance(Boolean isAttendance) {
+		this.isAttendance = isAttendance;
 	}
 }

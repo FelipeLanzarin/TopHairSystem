@@ -62,7 +62,7 @@
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </MaskMoney>
-                  <MaskTextField fx:id="textQuantity" componentName="Quantidade" layoutX="432.0" layoutY="213.0" mask="NNNN" onKeyPressed="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1">
+                  <MaskTextField fx:id="textQuantity" componentName="Quantidade" layoutX="432.0" layoutY="213.0" mask="NNNN" onKeyPressed="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1" text="1">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
@@ -101,7 +101,7 @@
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextArea>
-                  <Button layoutX="523.0" layoutY="480.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Adicionar" textFill="WHITE">
+                  <Button fx:id="buttonAdd" layoutX="517.0" layoutY="480.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Adicionar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -136,6 +136,21 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
+                  <Button fx:id="buttonSave" layoutX="523.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Salvar" textFill="WHITE" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="SansSerif Regular" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/save/salvar_2_32x32.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </Pane>
             <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="682.0" style="-fx-background-color: #d9edf7;" />

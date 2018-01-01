@@ -4,7 +4,10 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
+import br.ths.beans.Order;
 import br.ths.beans.Profile;
+import br.ths.beans.manager.OrderManager;
+import br.ths.screens.order.ScreenOrderModal;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskTelephone;
@@ -13,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ControllerProfileDetail extends GenericController{
 	
@@ -77,7 +81,15 @@ public class ControllerProfileDetail extends GenericController{
 	}
 	
 	public void newOrder(){
-		
+		try{
+			Order order = OrderManager.create(profile);
+			ScreenOrderModal screen = new ScreenOrderModal();
+			screen.setOrder(order);
+			screen.setOrder(order);
+			screen.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
 	
 	public void openOrders(){

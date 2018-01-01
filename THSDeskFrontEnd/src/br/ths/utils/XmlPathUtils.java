@@ -26,4 +26,5 @@ public class XmlPathUtils {
 	public static final String CATALOG_SUB_CATEGORY = "/front/ths/xml/catalog/catalogSubCategory.fxml";
 	public static final String CATALOG_PRODUCT = "/front/ths/xml/catalog/catalogProduct.fxml";
 	public static final String PROFILE_SELECTION = "/front/ths/xml/profile/profileSelection.fxml";
+	public static final String ORDER_MODAL = "/front/ths/xml/order/orderModal.fxml";
 }

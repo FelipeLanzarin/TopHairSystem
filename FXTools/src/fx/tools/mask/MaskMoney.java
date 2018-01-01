@@ -69,10 +69,12 @@ public class MaskMoney extends TextField {
         	if(tempText.length() != end){
         		return;
         	}
-        	this.setText(pastSimbolToLeftIndex(this.getText()));
-        	if(deleteSimbol){//tamanho da string diminuiu
-        		start--;
-        		end--;
+        	if(start != 0){//apagou o texto todo
+	        	this.setText(pastSimbolToLeftIndex(this.getText()));
+	        	if(deleteSimbol){//tamanho da string diminuiu
+	        		start--;
+	        		end--;
+	        	}
         	}
             super.replaceText(start, end, text);
         } else {
