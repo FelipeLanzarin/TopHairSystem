@@ -8,6 +8,7 @@ import br.ths.beans.Order;
 import br.ths.beans.Profile;
 import br.ths.beans.manager.OrderManager;
 import br.ths.screens.order.ScreenOrderModal;
+import br.ths.screens.profile.ScreenOrderProfileRelationManager;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskTelephone;
@@ -33,7 +34,6 @@ public class ControllerProfileDetail extends GenericController{
 	@FXML private ColorPicker color;
 	@FXML private TextField textBalance;
 	
-	private static final String STYLE_TEXT_RED_COLOR = "-fx-text-inner-color:red;";
 	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 	
 	public Profile profile;
@@ -85,7 +85,6 @@ public class ControllerProfileDetail extends GenericController{
 			Order order = OrderManager.create(profile);
 			ScreenOrderModal screen = new ScreenOrderModal();
 			screen.setOrder(order);
-			screen.setOrder(order);
 			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -93,6 +92,12 @@ public class ControllerProfileDetail extends GenericController{
 	}
 	
 	public void openOrders(){
-		
+		try{
+			ScreenOrderProfileRelationManager screen = new ScreenOrderProfileRelationManager();
+			screen.setProfile(profile);
+			screen.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
 }

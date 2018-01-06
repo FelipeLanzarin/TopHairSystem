@@ -15,6 +15,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ControllerProfileRelation extends GenericController{
@@ -29,13 +31,18 @@ public class ControllerProfileRelation extends GenericController{
 	
 	private List<Profile> list;
 	
-	public void clickTable(){
+	@FXML
+	public void clickTable(MouseEvent mouseEvent){
 		try {
-			Profile profile = table.getSelectionModel().getSelectedItem();
-			if(profile != null){
-				ScreenProfileDetail screen = new ScreenProfileDetail();
-				screen.setProfile(profile);
-				screen.start(new Stage());
+			if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+				if(mouseEvent.getClickCount() == 2){
+					Profile profile = table.getSelectionModel().getSelectedItem();
+					if(profile != null){
+						ScreenProfileDetail screen = new ScreenProfileDetail();
+						screen.setProfile(profile);
+						screen.start(new Stage());
+					}
+				}
 			}
 		}catch (Exception e) {
 			LogTools.logError(e);

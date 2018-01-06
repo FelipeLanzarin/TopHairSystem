@@ -6,33 +6,33 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import br.ths.beans.Order;
+import br.ths.beans.CommerceItem;
 import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
 
 
 
-public class OrderDao {
+public class CommerceItemDao {
 	
-	public boolean createOrder (Order order) throws ManagersExceptions{
+	public boolean createCommerceItem (CommerceItem commerceItem) throws ManagersExceptions{
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		
 		try{
 			em.getTransaction().begin();
-			em.persist(order);
+			em.persist(commerceItem);
 			em.getTransaction().commit();
 		}catch (PersistenceException e) {
 			Throwable t = e;
 			while (t != null) {
-				if (t.getMessage().contains("ERROR: duplicate key value violates unique constraint \"order_pkey\"")) {
+				if (t.getMessage().contains("ERROR: duplicate key value violates unique constraint \"commerceItem_pkey\"")) {
 					ManagersExceptions me = new ManagersExceptions();
 					me.setId(ManagersExceptions.ID_ALREADY_EXIST);
-					me.setExcepetionMessage("Código informado já está sendo utilizado por outro pedido.");
+					me.setExcepetionMessage("Código informado já está sendo utilizado por outro commerceItem.");
 					throw me;
 				}
 				t = t.getCause();
 			}
-			LogTools.logError("erro ao inserir order no banco: "+ e.toString());
+			LogTools.logError("erro ao inserir commerceItem no banco: "+ e.toString());
 			LogTools.logError(e);
 			try{
 				em.getTransaction().rollback();
@@ -46,14 +46,14 @@ public class OrderDao {
 		return true;
 	}
 	
-	public boolean updateOrder(Order order){
+	public boolean updateCommerceItem(CommerceItem commerceItem){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		try{
 			em.getTransaction().begin();
-			em.merge(order);
+			em.merge(commerceItem);
 			em.getTransaction().commit();
 		}catch (Exception e) {
-			LogTools.logError("erro ao alterar order no banco: "+ e.toString());
+			LogTools.logError("erro ao alterar commerceItem no banco: "+ e.toString());
 			try{
 				em.getTransaction().rollback();
 			}catch (Exception ex) {
@@ -65,14 +65,14 @@ public class OrderDao {
 		return true;
 	}
 	
-	public boolean deleteOrder(Integer id){
+	public boolean deleteCommerceItem(Integer id){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		try{
-			Order order = getOrder(id);
-			if(order != null){
+			CommerceItem commerceItem = getCommerceItem(id);
+			if(commerceItem != null){
 				em.getTransaction().begin();
-				order = em.merge(order);
-				em.remove(order);
+				commerceItem = em.merge(commerceItem);
+				em.remove(commerceItem);
 				em.getTransaction().commit();
 			}
 		}catch (Exception e) {
@@ -89,53 +89,52 @@ public class OrderDao {
 		return true;
 	}
 	
-	public Order getOrder(Integer id){
+	public CommerceItem getCommerceItem(Integer id){
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		Order order = null;
+		CommerceItem commerceItem = null;
 		try{
-			order = em.find(Order.class, id);
+			commerceItem = em.find(CommerceItem.class, id);
 		}catch (Exception e) {
-			LogTools.logError("erro ao obter order no banco: "+ e.toString());
+			LogTools.logError("erro ao obter commerceItem no banco: "+ e.toString());
 		}finally{
 			em.close();
 		}
 		
-		return order;
+		return commerceItem;
 	}
 	@SuppressWarnings("unchecked")
-	public List<Order> getOrders (){
+	public List<CommerceItem> getCommerceItems (){
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		List<Order> order = null;
+		List<CommerceItem> commerceItem = null;
 		try{
-			Query query = em.createQuery("FROM Order ORDER BY name");
-			order = query.getResultList();
+			Query query = em.createQuery("FROM CommerceItem ORDER BY name");
+			commerceItem = query.getResultList();
 		}catch (Exception e) {
-			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+			LogTools.logError("erro ao obter commerceItems no banco: "+ e.toString());
 		}finally{
 			em.close();
 		}
-		return order;
+		return commerceItem;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Order> getOrdersByProfileId (Integer id){
-		//TODO adjust the order
+	public List<CommerceItem> getCommerceItemsByOrderId (Integer id){
+		//TODO adjust the commerceItem
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		List<Order> orders = null;
-		String sql = "select * from ths_order o "
-				+ "where o.profile_id = ? "
-				+ "order by o.id desc";
+		List<CommerceItem> commerceItems = null;
+		String sql = "select * from commerce_item ci "
+				+ "where ci.order_id = ? "
+				+ "order by ci.id";
 		try{
-			Query query = em.createNativeQuery(sql, Order.class);
+			Query query = em.createNativeQuery(sql, CommerceItem.class);
 			query.setParameter(1, id);
-			orders = query.getResultList();
+			commerceItems = query.getResultList();
 		}catch (Exception e) {
-			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+			LogTools.logError("erro ao obter commerceItems no banco: "+ e.toString());
 		}finally{
 			em.close();
 		}
-		return orders;
+		return commerceItems;
 	}
-	
 
 }

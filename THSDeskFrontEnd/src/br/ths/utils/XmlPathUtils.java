@@ -16,6 +16,7 @@ public class XmlPathUtils {
 	public static final String PROFILE_MODAL = "/front/ths/xml/profile/profileModal.fxml";
 	public static final String PROFILE_DETAIL = "/front/ths/xml/profile/profileDetail.fxml";
 	public static final String PROFILE_MANAGER = "/front/ths/xml/profile/profileRelationManager.fxml";
+	public static final String PROFILE_ORDER_MANAGER = "/front/ths/xml/profile/profileOrderRelationManager.fxml";
 	public static final String PROFILE_RELATION = "/front/ths/xml/profile/profileRelation.fxml";
 	public static final String CITY_RELATION = "/front/ths/xml/city/cityRelation.fxml";
 	public static final String CITY_RELATION_MANAGER  = "/front/ths/xml/city/cityRelationManager.fxml";

@@ -14,7 +14,6 @@ import br.ths.beans.Employee;
 import br.ths.beans.Order;
 import br.ths.beans.Profile;
 import br.ths.beans.manager.OrderManager;
-import br.ths.screens.city.ScreenCityRelation;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskMoney;
@@ -27,7 +26,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 
 //TODO verificar o que acontece se abrir duas orders ao mesmo tempo
@@ -108,17 +106,6 @@ public class ControllerOrderModal extends GenericController{
 		textName.setStyle("");
 	}
 	
-	public void openCities(){
-		try{
-			ScreenCityRelation cityRelation = new ScreenCityRelation();
-			cityRelation.setLastController(this);
-			cityRelation.start(new Stage());
-		}catch (Exception e) {
-			e.printStackTrace();
-			LogTools.logError("Erro ao abrir tela cidades = " + e);
-		}
-	}
-	
 	public boolean validateFiedls(){
 		Boolean valid = true;
 		try {
@@ -192,6 +179,12 @@ public class ControllerOrderModal extends GenericController{
 		
 	}
 	
+	public void manageButtons(){
+		if(!"open".equals(order.getStatus())){
+			buttonDeleteOrder.setDisable(true);
+		}
+	}
+	
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -208,6 +201,7 @@ public class ControllerOrderModal extends GenericController{
 		this.order = order;
 		if(order != null){
 			populateTextFields(order);
+			manageButtons();
 		}
 	}
 

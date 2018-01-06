@@ -47,6 +47,7 @@ public class Order {
 		this.amount = 0.0d;
 		this.finalAmount = 0.0d;
 		this.discount = 0.0d;
+		this.creationDate = new Date();
 	}
 	
 	public Integer getId() {

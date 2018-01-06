@@ -1,6 +1,8 @@
 package br.ths.beans.manager;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import br.ths.beans.Order;
@@ -22,6 +24,7 @@ import br.ths.exceptions.ManagersExceptions;
 public class OrderManager {
 	
 	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
+	private  static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private static OrderDao cd;
 	
 	public static Boolean update(Order order) {
@@ -58,8 +61,18 @@ public class OrderManager {
 		return getOrderDao().getOrders();
 	}
 	
+	public static List<Order> getOrdersByProfile(Profile profile) {
+		if(profile == null){
+			return null;
+		}
+		return getOrderDao().getOrdersByProfileId(profile.getId());
+	}
+	
 	public static String getStatusAsString(Order order){
 		if(order == null){
+			return "";
+		}
+		if(order.getStatus() == null){
 			return "";
 		}
 		switch (order.getStatus()) {
@@ -73,6 +86,30 @@ public class OrderManager {
 			break;
 		}
 		return "";
+	}
+	
+	public static String getCreationDateAsString(Order order){
+		String date = "";
+		if(order == null){
+			return date;
+		}
+		Date creationDate = order.getCreationDate();
+		if(creationDate != null){
+			date=sdf.format(creationDate);
+		}
+		return date;
+	}
+	
+	public static String getSchedulerAsString(Order order){
+		String date = "";
+		if(order == null){
+			return date;
+		}
+		Date scheduler = order.getScheduler();
+		if(scheduler != null){
+			date=sdf.format(scheduler);
+		}
+		return date;
 	}
 	
 	public static String getAmountAsString(Order order){
