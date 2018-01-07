@@ -1,18 +1,16 @@
 package br.ths.controllers.order.commerceitem;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import br.ths.beans.Category;
+import br.ths.beans.CommerceItem;
+import br.ths.beans.Order;
 import br.ths.beans.Product;
-import br.ths.beans.SubCategory;
-import br.ths.beans.manager.CategoryManager;
+import br.ths.beans.manager.CommerceItemManager;
+import br.ths.beans.manager.OrderManager;
 import br.ths.beans.manager.ProductManager;
-import br.ths.beans.manager.SubCategoryManager;
 import br.ths.controllers.order.ControllerOrderModal;
 import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
@@ -21,179 +19,102 @@ import fx.tools.mask.MaskMoney;
 import fx.tools.mask.MaskTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class ControllerCommerceItemModal extends GenericController{
 	
 	private static final String STYLE_ERROR = "-fx-border-color:red; -fx-border-radius:4";
-	private static final String SEP = " - ";
-	private static final String KEY_CODE_DOWN = "DOWN";
-	private static final String KEY_CODE_UP = "UP";
-	private static final String KEY_CODE_LEFT = "LEFT";
-	private static final String KEY_CODE_RIGHT = "RIGHT";
-	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 
 	@FXML private Label labelTitle;
-	@FXML private ComboBox<String> comboCategory;
-	@FXML private ComboBox<String> comboSubCategory;
-	@FXML private MaskTextField textId;
+	@FXML private TextField textId;
 	@FXML private TextField textName;
-	@FXML private ToggleGroup groupProductType;
-	@FXML private RadioButton radioService;
-	@FXML private RadioButton radioProduct;
-	@FXML private ToggleGroup groupUnitType;
-	@FXML private RadioButton radioUn;
-	@FXML private RadioButton radioMl;
-	@FXML private RadioButton radioLt;
-	@FXML private MaskMoney textCostPrice;
+	@FXML private TextField textType;
+	@FXML private TextField textUn;
+	@FXML private MaskMoney textDiscount;
 	@FXML private MaskMoney textPrice;
-	@FXML private MaskTextField textUnitValue;
+	@FXML private MaskTextField textQuantity;
+	@FXML private MaskMoney textAmount;
 	@FXML private TextArea textDescription;
+	@FXML private Button buttonAdd;
 	
-	private List<Category> listCategory;
-	private List<Category> listCategoryFilters;
-	private List<SubCategory> listSubCategory;
-	private List<SubCategory> listSubCategoryFilters;
-	private Category categorySelected;
-	private SubCategory subCategorySelected;
 	private Stage stage;
-	private Boolean newProduct;
-	private Product product;
+	private Stage stageCatalog;
+	private Boolean newCommerceItem;
+	private CommerceItem commerceItem;
 	private List<String> states;
 	private ControllerOrderModal orderModal;
+	private Product product;
+	private Order order;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		textCostPrice.setGenericController(this);
-		textPrice.setGenericController(this);
-		textUnitValue.setGenericController(this);
+		textDiscount.setGenericController(this);
+		textAmount.setGenericController(this);
+		textQuantity.setGenericController(this);
 	}
 
-    @FXML
-	public void filterItensCategory(KeyEvent key){
-		try {
-			if(KEY_CODE_DOWN.equals(key.getCode().toString()) 
-			|| KEY_CODE_UP.equals(key.getCode().toString()) 
-			|| KEY_CODE_LEFT.equals(key.getCode().toString())
-			|| KEY_CODE_RIGHT.equals(key.getCode().toString())){
-				return;
-			}
-			String categoryName =  (String) comboCategory.getEditor().getText().toLowerCase();
-			String categoryNames[] = categoryName.split(SEP);
-			if(categoryNames.length > 1){
-				categoryName = categoryNames[1];
-			}
-			listCategoryFilters = new ArrayList<>();
-			comboCategory.getItems().clear();
-			for (Category category : listCategory) {
-				String name = category.getName().toLowerCase();
-				if(name.contains(categoryName)){
-					listCategoryFilters.add(category);
-					comboCategory.getItems().add(category.getId()+ SEP + category.getName());
-					if(name.equals(categoryName)){
-						categorySelected = category;
-						comboCategory.getSelectionModel().select(category.getId()+ SEP + category.getName());
-						populateSubCategiresByCategory(categorySelected);
-						break;
-					}else{
-						categorySelected = null;
-					}
-				}
-			}
-			comboCategory.show();
-		}catch (Exception e) {
-			LogTools.logError(e);
-		}
-	}
-    
-    @FXML
-	public void filterItensSubCategory(KeyEvent key){
-		try {
-			if(KEY_CODE_DOWN.equals(key.getCode().toString()) 
-			|| KEY_CODE_UP.equals(key.getCode().toString()) 
-			|| KEY_CODE_LEFT.equals(key.getCode().toString())
-			|| KEY_CODE_RIGHT.equals(key.getCode().toString())){
-				return;
-			}
-			String subcategoryName =  (String) comboSubCategory.getEditor().getText().toLowerCase();
-			String subcategoryNames[] = subcategoryName.split(SEP);
-			if(subcategoryNames.length > 1){
-				subcategoryName = subcategoryNames[1];
-			}
-			listSubCategoryFilters = new ArrayList<>();
-			comboSubCategory.getItems().clear();
-			for (SubCategory subcategory : listSubCategory) {
-				String name = subcategory.getName().toLowerCase();
-				if(name.contains(subcategoryName)){
-					listSubCategoryFilters.add(subcategory);
-					comboSubCategory.getItems().add(subcategory.getId()+ SEP + subcategory.getName());
-					if(name.equals(subcategoryName)){
-						subCategorySelected = subcategory;
-						comboSubCategory.getSelectionModel().select(subcategory.getId()+ SEP + subcategory.getName());
-						break;
-					}else{
-						subCategorySelected = null;
-					}
-				}
-			}
-			comboSubCategory.show();
-		}catch (Exception e) {
-			LogTools.logError(e);
-		}
-	}
+  
 	public void save(){
 		try {
 			if(!validateFiedls()){
 				return;
 			}
-			if(product == null){
-				product = new Product();
+			if(commerceItem == null){
+				commerceItem = new CommerceItem();
 			}
-			product.setId(Integer.parseInt(textId.getText()));
-			product.setName(textName.getText());
-			product.setDescription(textDescription.getText());
-			product.setSubCategory(subCategorySelected);// ja vem preenchido pelo validate
-			RadioButton radioSelect = (RadioButton) groupUnitType.getSelectedToggle();
-			product.setUnType(radioSelect.getId());
-			radioSelect = (RadioButton) groupProductType.getSelectedToggle();
-			product.setType(radioSelect.getId());
-			product.setCostPrice(df.parse(textCostPrice.getText()).doubleValue());
-			product.setPrice(df.parse(textPrice.getText()).doubleValue());
-			product.setUn(Integer.parseInt(textUnitValue.getText()));
-			if(newProduct){
+			commerceItem.setAmount(CommerceItemManager.getValuePriceAsDouble(textAmount.getText()));
+			commerceItem.setDiscount(CommerceItemManager.getValuePriceAsDouble(textDiscount.getText()));
+			commerceItem.setNote(textDescription.getText());
+			commerceItem.setQuantity(CommerceItemManager.getQuantityAsInteger(textQuantity.getText()));
+			commerceItem.setUnitPrice(CommerceItemManager.getValuePriceAsDouble(textPrice.getText()));
+			if(newCommerceItem){
 				try{
-					product.setCreationDate(new Date());
-					if(ProductManager.create(product)){
+					commerceItem.setCreationDate(new Date());
+					commerceItem.setOrder(order);
+					commerceItem.setProduct(product);
+					commerceItem.setCostPrice(product.getCostPrice());
+					if(CommerceItemManager.create(commerceItem)){
+						if(stageCatalog != null){
+							stageCatalog.close();
+						}
 						stage.close();
-//						orderModal.messageSucess("Produto cadastrado com sucesso!");
+						orderModal.createTable();
 					}else{
 						Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 						dialogoInfo.setTitle("Erro!");
-						dialogoInfo.setHeaderText("Erro ao cadastrar Produto!");
+						dialogoInfo.setHeaderText("Erro ao inserir produto à compra!");
 						dialogoInfo.showAndWait();
 					}
 				}catch (ManagersExceptions me) {
 					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 					dialogoInfo.setTitle("Erro!");
-					dialogoInfo.setHeaderText("Erro ao cadastrar Produto!");
+					dialogoInfo.setHeaderText("Erro ao inserir produto à compra!");
 					dialogoInfo.setContentText(me.getExcepetionMessage());
 					dialogoInfo.showAndWait();
 				}
 			}else{
-				if(ProductManager.update(product)){
-					stage.close();
-//					relation.messageSucess("Produto alterado com sucesso!");
-				}else{
+				try{
+					if(CommerceItemManager.update(commerceItem)){
+						if(stageCatalog != null){
+							stageCatalog.close();
+						}
+						stage.close();
+						orderModal.createTable();
+					}else{
+						Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+						dialogoInfo.setTitle("Erro!");
+						dialogoInfo.setHeaderText("Erro ao alterar item!");
+						dialogoInfo.showAndWait();
+					}
+				}catch (ManagersExceptions me) {
 					Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 					dialogoInfo.setTitle("Erro!");
-					dialogoInfo.setHeaderText("Erro ao alterar Produto!");
+					dialogoInfo.setHeaderText("Erro ao alterar item!");
+					dialogoInfo.setContentText(me.getExcepetionMessage());
 					dialogoInfo.showAndWait();
 				}
 			}
@@ -202,166 +123,194 @@ public class ControllerCommerceItemModal extends GenericController{
 		}
 	}
 	
-	private Category getCategory(String name){
-		if(name == null || listCategoryFilters == null){
-			return null;
-		}
-		for (Category category : listCategoryFilters) {
-			String categoryName = category.getId() + SEP + category.getName();
-			if(name.equals(categoryName)){
-				return category;
-			}
-		}
-		return null;
-	}
-	
-	private SubCategory getSubCategory(String name){
-		if(name == null || listSubCategoryFilters == null){
-			return null;
-		}
-		for (SubCategory subCategory : listSubCategoryFilters) {
-			String categoryName = subCategory.getId() + SEP + subCategory.getName();
-			if(name.equals(categoryName)){
-				return subCategory;
-			}
-		}
-		return null;
-	}
-	
-	private Boolean validateFiedls(){
+	public boolean validateFiedls(){
 		Boolean valid = true;
-		try {
-			if(categorySelected == null){
-				categorySelected = getCategory(comboCategory.getSelectionModel().getSelectedItem());
-				if(categorySelected == null){
-					comboCategory.setStyle(STYLE_ERROR);
-					valid = false;
-				}
-			}
-			if(subCategorySelected == null){
-				subCategorySelected = getSubCategory(comboSubCategory.getSelectionModel().getSelectedItem());
-				if(subCategorySelected == null){
-					comboSubCategory.setStyle(STYLE_ERROR);
-					valid = false;
-				}
-			}
-			if(textId.getText().isEmpty()){
-				textId.setStyle(STYLE_ERROR);
+		try{
+			if(textQuantity.getText().isEmpty()){
+				textQuantity.setStyle(STYLE_ERROR);
 				valid = false;
 			}
-			if(textName.getText().isEmpty()){
-				textName.setStyle(STYLE_ERROR);
+			if(textAmount.getText().isEmpty()){
+				textAmount.setStyle(STYLE_ERROR);
 				valid = false;
 			}
-			if(textCostPrice.getText().isEmpty()){
-				textCostPrice.setStyle(STYLE_ERROR);
-				valid = false;
-			}
-			if(textPrice.getText().isEmpty()){
-				textPrice.setStyle(STYLE_ERROR);
-				valid = false;
-			}
-			if(textUnitValue.getText().isEmpty()){
-				textUnitValue.setStyle(STYLE_ERROR);
-				valid = false;
-			}
-			
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 		return valid;
-		
 	}
 	
-	private void populateProduct(Product product){
+	private void populateCommerceItem(CommerceItem commerceItem){
 		try {
-			textId.setText(product.getId().toString());
+			if(commerceItem == null){
+				return;
+			}
+			Product product = commerceItem.getProduct();
+			textId.setText(product.getId()+"");
 			textName.setText(product.getName());
-			textDescription.setText(product.getDescription());
-			if(product.getSubCategory() != null){	
-				comboCategory.setValue(product.getSubCategory().getCategory().getId()+ SEP +product.getSubCategory().getCategory().getName());
-				comboSubCategory.setValue(product.getSubCategory().getId()+ SEP +product.getSubCategory().getName());
-				populateSubCategiresByCategory(product.getSubCategory().getCategory());
-			}
-			textCostPrice.setText(df.format(product.getCostPrice()));
-			textPrice.setText(df.format(product.getPrice()));
-			textUnitValue.setText(product.getUn().toString());
-			
-			if(product.getType() != null && "service".equals(product.getType())){
-				radioService.setSelected(true);
-			}else{
-				radioProduct.setSelected(true);
-			}
-			
-			switch (product.getUnType()) {
-			case "UN":
-				radioUn.setSelected(true);
-				break;
-			case "ML":
-				radioMl.setSelected(true);
-				break;
-			case "LT":
-				radioLt.setSelected(true);
-				break;
-			}
-			
+			textUn.setText(product.getUnType());
+			textType.setText(product.getType());
+			textPrice.setText(CommerceItemManager.getUnitPriceAsString(commerceItem));
+			textAmount.setText(CommerceItemManager.getFinalAmountAsString(commerceItem));
+			textDiscount.setText(CommerceItemManager.getDiscountAsString(commerceItem));
+			textQuantity.setText(commerceItem.getQuantity()+"");
+			textDescription.setText(commerceItem.getNote());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	
-	public void populateSubcategories(){
-		categorySelected = getCategory(comboCategory.getSelectionModel().getSelectedItem());
-		if(categorySelected == null){
-			return;
+	private void populateProduct(Product product){
+		try {
+			if(product == null){
+				return;
+			}
+			textId.setText(product.getId()+"");
+			textName.setText(product.getName());
+			textUn.setText(product.getUnType());
+			textType.setText(product.getType());
+			textPrice.setText(ProductManager.getUnitPriceAsString(product));
+			textAmount.setText(ProductManager.getUnitPriceAsString(product));
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
-		populateSubCategiresByCategory(categorySelected);
-	}
-	
-	private void populateSubCategiresByCategory(Category categorySelected){
-		subCategorySelected = null;
-		if(categorySelected == null){
-			return;
-		}
-		listSubCategory = SubCategoryManager.getSubCategoriesByCategoryId(categorySelected);
-		listSubCategoryFilters = listSubCategory;
-		comboSubCategory.getItems().clear();
-		for (SubCategory subCategory : listSubCategory) {
-			comboSubCategory.getItems().add(subCategory.getId()+SEP+ subCategory.getName());
-		}
-	}
-	
-	private void defineProductId(){
-		Integer newId = ProductManager.getNewProductId();
-		textId.setText(newId.toString());
-	}
-	
-	public void actionComboCategory(){
-		comboCategory.setStyle("");
-	}
-	
-	public void actionComboSubCategory(){
-		comboSubCategory.setStyle("");
-	}
-	
-	public void actionId(){
-		textId.setStyle("");
-	}
-	
-	public void actionName(){
-		textName.setStyle("");
-	}
-	
-	public void actionCostPrice(){
-		textCostPrice.setStyle("");
-	}
-	
-	public void actionPrice(){
-		textPrice.setStyle("");
 	}
 	
 	public void actionUnitValue(){
-		textUnitValue.setStyle("");
+		try{
+			if(textQuantity.getText().isEmpty()){
+				return;
+			}
+			textQuantity.setStyle("");
+			Integer newQuantity = Integer.parseInt(textQuantity.getText());
+			if(newQuantity<1){
+				textQuantity.setText(commerceItem.getQuantity()+"");
+			}else{
+				recalculateCommerceItemByQuantity(newQuantity);
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	private void recalculateCommerceItemByQuantity(Integer newQuantity){
+		if(newQuantity == null || newQuantity < 1){
+			return;
+		}
+		Double unitPrice = CommerceItemManager.getValuePriceAsDouble(textPrice.getText());
+		Double discount = CommerceItemManager.getValuePriceAsDouble(textDiscount.getText());
+		Double newFinalAmount = unitPrice * newQuantity;
+		if(newFinalAmount < discount){
+			textDiscount.setText(CommerceItemManager.getValuePriceAsString(0.0D));
+			textAmount.setText(CommerceItemManager.getValuePriceAsString(newFinalAmount));
+		}else{
+			textAmount.setText(CommerceItemManager.getValuePriceAsString(newFinalAmount-discount));
+		}
+	}
+	
+	public void plusQuantity(){
+		try{
+			textQuantity.setStyle("");
+			String qt = textQuantity.getText();
+			if(qt.isEmpty()){
+				textQuantity.setText("1");
+				recalculateCommerceItemByQuantity(1);
+			}else{
+				Integer qtd = Integer.parseInt(qt);
+				qtd += 1;
+				textQuantity.setText(qtd+"");
+				recalculateCommerceItemByQuantity(qtd);
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void lessQuantity(){
+		try{
+			textQuantity.setStyle("");
+			String qt = textQuantity.getText();
+			if(qt.isEmpty() || qt.equals("1")){
+				return;
+			}else{
+				Integer qtd = Integer.parseInt(qt);
+				qtd -= 1;
+				textQuantity.setText(qtd+"");
+				recalculateCommerceItemByQuantity(qtd);
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void actionAmount(){
+		textAmount.setStyle("");
+		try{
+			String amount = textAmount.getText();
+			if(amount.isEmpty()){
+				textDiscount.setText("0,00");
+				return;
+			}else{
+				Double finalPrice = CommerceItemManager.getValuePriceAsDouble(amount);
+				Integer qt = 1;
+				Double unitPrice = 0.0D;
+				if(commerceItem != null){//produto novo
+					if(commerceItem.getUnitPrice() != null){
+						unitPrice = commerceItem.getUnitPrice();
+					}else{
+						unitPrice = product.getPrice();
+					}
+				}else{
+					unitPrice = product.getPrice();
+				}
+				
+				if(!textQuantity.getText().isEmpty()){
+					qt = Integer.parseInt(textQuantity.getText());
+				}
+				Double discount = (unitPrice*qt) - finalPrice;
+				if(discount>=0){
+					textDiscount.setText(CommerceItemManager.getValuePriceAsString(discount));
+				}else{
+					textDiscount.setText("0,00");
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	public void actionDiscount(){
+		textDiscount.setStyle("");
+		try{
+			String discount = textDiscount.getText();
+			if(discount.isEmpty()){
+				textAmount.setText(textPrice.getText());
+				return;
+			}else{
+				Double discountAmount = CommerceItemManager.getValuePriceAsDouble(discount);
+				Integer qt = 1;
+				Double unitPrice = 0.0D;
+				if(commerceItem != null){//produto novo
+					if(commerceItem.getUnitPrice() != null){
+						unitPrice = commerceItem.getUnitPrice();
+					}else{
+						unitPrice = product.getPrice();
+					}
+				}else{
+					unitPrice = product.getPrice();
+				}
+				if(!textQuantity.getText().isEmpty()){
+					qt = Integer.parseInt(textQuantity.getText());
+				}
+				Double finalPrice = (unitPrice*qt) - discountAmount;
+				if(finalPrice>=0){
+					textAmount.setText(CommerceItemManager.getValuePriceAsString(finalPrice));
+				}else{
+					textAmount.setText("0,00");
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
 	}
 	
 	public Stage getStage() {
@@ -372,29 +321,25 @@ public class ControllerCommerceItemModal extends GenericController{
 		this.stage = stage;
 	}
 
-	public Boolean getNewProduct() {
-		return newProduct;
+	public Boolean getNewCommerceItem() {
+		return newCommerceItem;
 	}
 
-	public void setNewProduct(Boolean newProduct) {
-		this.newProduct = newProduct;
-		if(newProduct){
-			labelTitle.setText("Cadastrar "+ labelTitle.getText());
-			defineProductId();
-		}else{
-			labelTitle.setText("Alterar "+ labelTitle.getText());
-			textId.setEditable(false);
+	public void setNewCommerceItem(Boolean newCommerceItem) {
+		this.newCommerceItem = newCommerceItem;
+		if(!newCommerceItem){
+			buttonAdd.setText("Alterar");
 		}
 	}
 
-	public Product getProduct() {
-		return product;
+	public CommerceItem getCommerceItem() {
+		return commerceItem;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-		if(product != null){
-			populateProduct(product);
+	public void setCommerceItem(CommerceItem commerceItem) {
+		this.commerceItem = commerceItem;
+		if(commerceItem != null){
+			populateCommerceItem(commerceItem);
 		}
 	}
 
@@ -406,5 +351,67 @@ public class ControllerCommerceItemModal extends GenericController{
 		this.states = states;
 	}
 
+	public ControllerOrderModal getOrderModal() {
+		return orderModal;
+	}
+
+	public void setOrderModal(ControllerOrderModal orderModal) {
+		this.orderModal = orderModal;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+		if(product != null){
+			if(!findProductInOrder(product)){
+				populateProduct(product);
+			}
+		}
+	}
+	
+	private boolean findProductInOrder(Product product){
+		if(product == null || order == null){
+			return false;
+		}
+		List<CommerceItem> cis = CommerceItemManager.getCommerceItemsByOrder(order);
+		if(cis != null){
+			for (CommerceItem ci : CommerceItemManager.getCommerceItemsByOrder(order)) {
+				if(ci.getProduct().getId().equals(product.getId())){
+					setCommerceItem(CommerceItemManager.addQuantityOnCommerceItem(ci, 1));
+					setNewCommerceItem(false);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+		if(order == null){
+			try {
+				order = OrderManager.createForProfile(null);
+			} catch (ManagersExceptions e) {
+				LogTools.logError(e);
+			}
+		}
+	}
+
+	public Stage getStageCatalog() {
+		return stageCatalog;
+	}
+
+
+	public void setStageCatalog(Stage stageCatalog) {
+		this.stageCatalog = stageCatalog;
+	}
 	
 }

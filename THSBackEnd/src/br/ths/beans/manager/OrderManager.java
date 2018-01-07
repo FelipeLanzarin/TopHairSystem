@@ -37,7 +37,7 @@ public class OrderManager {
 	 * @return
 	 * @throws ManagersExceptions
 	 */
-	public static Order create(Profile profile) throws ManagersExceptions {
+	public static Order createForProfile(Profile profile) throws ManagersExceptions {
 		Order order = new Order();
 		order.setProfile(profile);
 		if(create(order)){
@@ -98,6 +98,18 @@ public class OrderManager {
 			date=sdf.format(creationDate);
 		}
 		return date;
+	}
+	
+	public static String getProfileAsString(Order order){
+		String name = "";
+		if(order == null){
+			return name;
+		}
+		Profile profile = order.getProfile();
+		if(profile != null){
+			name=profile.getName();
+		}
+		return name;
 	}
 	
 	public static String getSchedulerAsString(Order order){

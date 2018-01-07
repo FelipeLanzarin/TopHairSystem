@@ -28,4 +28,6 @@ public class XmlPathUtils {
 	public static final String CATALOG_PRODUCT = "/front/ths/xml/catalog/catalogProduct.fxml";
 	public static final String PROFILE_SELECTION = "/front/ths/xml/profile/profileSelection.fxml";
 	public static final String ORDER_MODAL = "/front/ths/xml/order/orderModal.fxml";
+	public static final String ORDER_RELATION = "/front/ths/xml/order/orderRelation.fxml";
+	public static final String COMMERCE_ITEM_MODAL = "/front/ths/xml/order/commerceitem/commerceitemModal.fxml";
 }

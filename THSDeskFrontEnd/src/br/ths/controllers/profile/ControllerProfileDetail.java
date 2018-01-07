@@ -14,6 +14,7 @@ import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskTelephone;
 import fx.tools.mask.MaskTextField;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,11 +34,13 @@ public class ControllerProfileDetail extends GenericController{
 	@FXML private TextField textCity;
 	@FXML private ColorPicker color;
 	@FXML private TextField textBalance;
+	@FXML private Button buttonOrders;
+	@FXML private Button buttonNewOrder;
 	
 	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 	
-	public Profile profile;
-	
+	private Profile profile;
+	private Boolean onlySee;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -69,20 +72,10 @@ public class ControllerProfileDetail extends GenericController{
 		}
 	}
 
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-		if(profile != null){
-			populateTextFields(profile);
-		}
-	}
 	
 	public void newOrder(){
 		try{
-			Order order = OrderManager.create(profile);
+			Order order = OrderManager.createForProfile(profile);
 			ScreenOrderModal screen = new ScreenOrderModal();
 			screen.setOrder(order);
 			screen.start(new Stage());
@@ -100,4 +93,28 @@ public class ControllerProfileDetail extends GenericController{
 			LogTools.logError(e);
 		}
 	}
+	
+	public Profile getProfile() {
+		return profile;
+	}
+	
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+		if(profile != null){
+			populateTextFields(profile);
+		}
+	}
+
+	public Boolean getOnlySee() {
+		return onlySee;
+	}
+
+	public void setOnlySee(Boolean onlySee) {
+		this.onlySee = onlySee;
+		if (onlySee != null && onlySee) {
+			buttonNewOrder.setVisible(false);
+			buttonOrders.setVisible(false);
+		}
+	}
+	
 }

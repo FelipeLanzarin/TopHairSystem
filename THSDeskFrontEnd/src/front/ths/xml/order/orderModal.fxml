@@ -59,7 +59,7 @@
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextField>
-                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="797.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="797.0" layoutY="-1.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNew" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -232,12 +232,12 @@
                         <Font name="SansSerif Bold" size="13.0" />
                      </font>
                   </Button>
-                  <MaskTextField fx:id="textMin" alignment="CENTER_RIGHT" layoutX="506.0" layoutY="416.0" mask="NN" prefHeight="35.0" prefWidth="46.0" text="00">
+                  <MaskTextField fx:id="textMin" alignment="CENTER_RIGHT" layoutX="506.0" layoutY="416.0" mask="NN" prefHeight="35.0" prefWidth="46.0" promptText="00">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </MaskTextField>
-                  <MaskTextField fx:id="textHour" alignment="CENTER_RIGHT" layoutX="437.0" layoutY="416.0" mask="NN" onMouseClicked="#hClick" prefHeight="35.0" prefWidth="46.0" text="00">
+                  <MaskTextField fx:id="textHour" alignment="CENTER_RIGHT" layoutX="437.0" layoutY="416.0" mask="NN" onMouseClicked="#hClick" prefHeight="35.0" prefWidth="46.0" promptText="00">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
@@ -249,22 +249,22 @@
                   </Text>
                </children>
             </Pane>
-            <TableView fx:id="table" focusTraversable="false" layoutX="598.0" layoutY="50.0" maxWidth="669.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="425.0" prefWidth="667.0" stylesheets="@../../css/employeRelationManager.css">
+            <TableView fx:id="table" focusTraversable="false" layoutX="598.0" layoutY="50.0" maxWidth="669.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="425.0" prefWidth="667.0" stylesheets="@../../css/productRelationManager.css">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
                   <TableColumn fx:id="columnOne" editable="false" maxWidth="107.0" minWidth="107.0" prefWidth="107.0" resizable="false" text="Código" />
                   <TableColumn fx:id="columnTwo" editable="false" maxWidth="215.0" prefWidth="215.0" resizable="false" text="Nome" />
-                  <TableColumn fx:id="columnThree" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" text="Valor Un" />
-                  <TableColumn fx:id="columnThree1" editable="false" maxWidth="59.0" minWidth="50.0" prefWidth="55.0" resizable="false" text="Qtd" />
-                  <TableColumn fx:id="columnThree11" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" text="Descontos" />
-                  <TableColumn fx:id="columnThree111" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" text="Valor Total" />
+                  <TableColumn fx:id="columnThree" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" styleClass="right" text="Valor Un" />
+                  <TableColumn fx:id="columnFour" editable="false" maxWidth="59.0" minWidth="50.0" prefWidth="55.0" resizable="false" styleClass="right" text="Qtd" />
+                  <TableColumn fx:id="columnFive" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" styleClass="right" text="Descontos" />
+                  <TableColumn fx:id="columnSix" editable="false" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" resizable="false" styleClass="right" text="Valor Total" />
                </columns>
             </TableView>
             <Pane layoutX="599.0" layoutY="51.0" prefHeight="4.0" prefWidth="665.0" style="-fx-background-color: #fff;" />
             <Pane layoutX="599.0" layoutY="51.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
-            <Pane layoutX="1248.0" layoutY="51.0" prefHeight="30.0" prefWidth="16.0" style="-fx-background-color: #fff;" />
+            <Pane layoutX="1253.0" layoutY="51.0" prefHeight="30.0" prefWidth="11.0" style="-fx-background-color: #fff;" />
          </children>
       </Pane>
    </children>

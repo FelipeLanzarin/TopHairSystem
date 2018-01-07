@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import fx.tools.mask.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="738.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.catalog.product.ControllerProductDetail">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="738.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.order.commerceitem.ControllerCommerceItemModal">
    <children>
       <Pane layoutX="30.0" layoutY="14.0" prefHeight="580.0" prefWidth="683.0" style="-fx-background-color: #d9edf7; -fx-border-color: #bce8f1; -fx-border-radius: 4; -fx-background-radius: 4;">
          <children>
@@ -27,12 +27,12 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <MaskTextField fx:id="textId" componentName="Código" editable="false" focusTraversable="false" layoutX="121.0" layoutY="14.0" mask="NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" onKeyPressed="#actionId" prefHeight="34.0" prefWidth="295.0" promptText="Código">
+                  <MaskTextField fx:id="textId" componentName="Código" editable="false" focusTraversable="false" layoutX="121.0" layoutY="14.0" mask="NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" prefHeight="34.0" prefWidth="295.0" promptText="Código">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </MaskTextField>
-                  <TextField fx:id="textName" editable="false" focusTraversable="false" layoutX="123.0" layoutY="62.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="514.0" promptText="Nome">
+                  <TextField fx:id="textName" editable="false" focusTraversable="false" layoutX="123.0" layoutY="62.0" prefHeight="34.0" prefWidth="514.0" promptText="Nome">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
@@ -57,12 +57,12 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <MaskMoney fx:id="textPrice" alignment="CENTER_RIGHT" componentName="Preço" editable="false" focusTraversable="false" layoutX="123.0" layoutY="213.0" mask="NNN.NNN.NNN,NN" onKeyPressed="#actionPrice" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
+                  <MaskMoney fx:id="textPrice" alignment="CENTER_RIGHT" componentName="Preço" editable="false" focusTraversable="false" layoutX="123.0" layoutY="213.0" mask="NNN.NNN.NNN,NN" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
                      <font>
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </MaskMoney>
-                  <MaskTextField fx:id="textQuantity" componentName="Quantidade" layoutX="432.0" layoutY="213.0" mask="NNNN" onKeyPressed="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1" text="1">
+                  <MaskTextField fx:id="textQuantity" componentName="Quantidade" layoutX="432.0" layoutY="213.0" mask="NNNN" onKeyReleased="#actionUnitValue" prefHeight="34.0" prefWidth="95.0" promptText="1" text="1">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
@@ -77,22 +77,22 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textType" editable="false" focusTraversable="false" layoutX="123.0" layoutY="110.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="235.0" promptText="Tipo">
+                  <TextField fx:id="textType" editable="false" focusTraversable="false" layoutX="123.0" layoutY="110.0" prefHeight="34.0" prefWidth="235.0" promptText="Tipo">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="textUn" editable="false" focusTraversable="false" layoutX="123.0" layoutY="162.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="235.0" promptText="Tipo">
+                  <TextField fx:id="textUn" editable="false" focusTraversable="false" layoutX="123.0" layoutY="162.0" prefHeight="34.0" prefWidth="235.0" promptText="Unidade">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </TextField>
-                  <MaskMoney fx:id="textDiscount" alignment="CENTER_RIGHT" componentName="Preço" layoutX="124.0" layoutY="268.0" mask="NNN.NNN.NNN,NN" onKeyPressed="#actionPrice" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
+                  <MaskMoney fx:id="textDiscount" alignment="CENTER_RIGHT" componentName="Preço" layoutX="124.0" layoutY="268.0" mask="NNN.NNN.NNN,NN" onKeyReleased="#actionDiscount" prefHeight="34.0" prefWidth="158.0" promptText="0,00" text="0,00">
                      <font>
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </MaskMoney>
-                  <MaskMoney fx:id="textAmount" alignment="CENTER_RIGHT" componentName="Preço" layoutX="431.0" layoutY="268.0" mask="NNN.NNN.NNN,NN" onKeyPressed="#actionPrice" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
+                  <MaskMoney fx:id="textAmount" alignment="CENTER_RIGHT" componentName="Preço" layoutX="431.0" layoutY="268.0" mask="NNN.NNN.NNN,NN" onKeyReleased="#actionAmount" prefHeight="34.0" prefWidth="158.0" promptText="0,00">
                      <font>
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
@@ -101,7 +101,7 @@
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextArea>
-                  <Button fx:id="buttonAdd" layoutX="517.0" layoutY="480.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Adicionar" textFill="WHITE">
+                  <Button fx:id="buttonAdd" layoutX="517.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Adicionar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -121,15 +121,21 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="535.0" layoutY="213.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="+" textFill="WHITE">
+                  <Button layoutX="583.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#plusQuantity" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="+" textFill="WHITE">
                      <font>
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button layoutX="582.0" layoutY="213.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #d9534f; -fx-border-color: #cd4b47; -fx-background-radius: 4; -fx-border-radius: 4;" text="-" textFill="WHITE">
+                  <Button layoutX="536.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#lessQuantity" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #d9534f; -fx-border-color: #cd4b47; -fx-background-radius: 4; -fx-border-radius: 4;" text="-" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Label layoutX="26.0" layoutY="275.0" text="Descontos:">
                      <font>

@@ -25,8 +25,8 @@
                   </Menu>
                 <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Pedidos">
                   <items>
-                    <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Criar Pedido" />
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Consultar Pedido" />
+                    <MenuItem mnemonicParsing="false" onAction="#openNewOrder" style="-fx-font-family: SansSerif Regular;" text="Criar Pedido" />
+                        <MenuItem mnemonicParsing="false" onAction="#openLookOrders" style="-fx-font-family: SansSerif Regular;" text="Consultar Pedido" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Catálogo">

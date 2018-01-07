@@ -3,8 +3,10 @@ package br.ths.screens.order.commerceitem;
 import java.net.URL;
 
 import br.ths.beans.CommerceItem;
+import br.ths.beans.Order;
 import br.ths.beans.Product;
 import br.ths.controllers.order.ControllerOrderModal;
+import br.ths.controllers.order.commerceitem.ControllerCommerceItemModal;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
@@ -15,26 +17,31 @@ import javafx.stage.Stage;
 
 public class ScreenCommerceItemModal extends Application {
 	
-	public Boolean newCommerceItem;
-	public ControllerOrderModal orderModal;
-	public Product produtc;
-	public CommerceItem commerceItem;
+	private Boolean newCommerceItem;
+	private ControllerOrderModal orderModal;
+	private Product produtc;
+	private CommerceItem commerceItem;
+	private Order order;
+	private Stage stageCatalog;
 	
 	@Override
 	public void start(Stage stage) {
 		try {
 			//TODO implementar conexão com o banco
-			URL arquivoFXML = getClass().getResource(XmlPathUtils.PRODUCT_MODAL);
+			URL arquivoFXML = getClass().getResource(XmlPathUtils.COMMERCE_ITEM_MODAL);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
 			stage.setResizable(false);
-			stage.setTitle("Produto");
-//			ControllerProductModal controllerProductModal = (ControllerProductModal) loader.getController();
-//			controllerProductModal.setNewProduct(newProduct);
-//			controllerProductModal.setRelation(relation);
-//			controllerProductModal.setProduct(produtc);
-//			controllerProductModal.setStage(stage);
+			stage.setTitle("Comprar produto");
+			ControllerCommerceItemModal controllerCommerceItemModal = (ControllerCommerceItemModal) loader.getController();
+			controllerCommerceItemModal.setNewCommerceItem(newCommerceItem);
+			controllerCommerceItemModal.setOrderModal(orderModal);
+			controllerCommerceItemModal.setOrder(order);
+			controllerCommerceItemModal.setCommerceItem(commerceItem);
+			controllerCommerceItemModal.setProduct(produtc);
+			controllerCommerceItemModal.setStage(stage);
+			controllerCommerceItemModal.setStageCatalog(stageCatalog);
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);
@@ -73,4 +80,19 @@ public class ScreenCommerceItemModal extends Application {
 		this.commerceItem = commerceItem;
 	}
 
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public Stage getStageCatalog() {
+		return stageCatalog;
+	}
+
+	public void setStageCatalog(Stage stageCatalog) {
+		this.stageCatalog = stageCatalog;
+	}
 }

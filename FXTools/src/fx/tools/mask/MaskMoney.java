@@ -3,6 +3,8 @@ package fx.tools.mask;
 import java.util.ArrayList;
 
 import fx.tools.controller.GenericController;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 
 /**
@@ -44,6 +46,12 @@ public class MaskMoney extends TextField {
     public MaskMoney() {
         super();
         patterns = new ArrayList<String>();
+        TextField text = this;
+        text.setOnKeyPressed(new EventHandler<Event>() {
+        	public void handle(Event arg0) {
+        		text.end();
+        	};
+		});
     }
 
     public MaskMoney(String text) {
@@ -51,10 +59,13 @@ public class MaskMoney extends TextField {
         patterns = new ArrayList<String>();
     }
     
-
+    
     @Override
     public void replaceText(int start, int end, String text) {
     	
+    	if(!text.isEmpty() && !isNumber(text)){
+    		return;
+    	}
     	String tempText = this.getText() + text;
     	if(originalMask.length() < tempText.length()){
     		return;
@@ -109,6 +120,15 @@ public class MaskMoney extends TextField {
             }
             setMask(backupMask);
        }
+    }
+    
+    private Boolean isNumber(String text){
+    	try{
+    		Integer.parseInt(text);
+    		return true;
+    	}catch (Exception e) {
+			return false;
+		}
     }
     
     /**

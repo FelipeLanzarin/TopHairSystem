@@ -1,8 +1,10 @@
 package br.ths.beans.manager;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import br.ths.beans.Category;
+import br.ths.beans.Order;
 import br.ths.beans.Product;
 import br.ths.beans.SubCategory;
 import br.ths.database.ProductDao;
@@ -10,6 +12,8 @@ import br.ths.exceptions.ManagersExceptions;
 
 public class ProductManager {
 	
+	
+	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 	private static ProductDao cd;
 	
 	public static Boolean update(Product product) {
@@ -38,6 +42,16 @@ public class ProductManager {
 	
 	public static Integer getNewProductId() {
 		return getProductDao().getNewProductId();
+	}
+	
+	public static String getUnitPriceAsString(Product product){
+		if(product == null){
+			return "0,00";
+		}
+		if(product.getPrice() != null){
+			return df.format(product.getPrice());
+		}
+		return "0,00";
 	}
 	
 	private static ProductDao getProductDao(){

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 public class ScreenProfileDetail extends Application {
 	public Profile profile;
+	public Boolean onlySee;
 	@Override
 	public void start(Stage stage) {
 		try {
@@ -24,6 +25,7 @@ public class ScreenProfileDetail extends Application {
 			stage.setResizable(false);
 			stage.setTitle("Cliente");
 			ControllerProfileDetail controllerProfileDetail = (ControllerProfileDetail) loader.getController();
+			controllerProfileDetail.setOnlySee(onlySee);
 			controllerProfileDetail.setProfile(profile);
 			controllerProfileDetail.setStage(stage);
 			stage.show();
@@ -31,6 +33,15 @@ public class ScreenProfileDetail extends Application {
 			LogTools.logError(e);
 		}
 	}
+	
+	public Boolean getOnlySee() {
+		return onlySee;
+	}
+
+	public void setOnlySee(Boolean onlySee) {
+		this.onlySee = onlySee;
+	}
+
 	public Profile getProfile() {
 		return profile;
 	}

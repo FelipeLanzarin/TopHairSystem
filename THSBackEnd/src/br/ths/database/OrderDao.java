@@ -107,7 +107,7 @@ public class OrderDao {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Order> order = null;
 		try{
-			Query query = em.createQuery("FROM Order ORDER BY name");
+			Query query = em.createQuery("FROM Order ORDER BY id desc");
 			order = query.getResultList();
 		}catch (Exception e) {
 			LogTools.logError("erro ao obter orders no banco: "+ e.toString());

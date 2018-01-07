@@ -25,6 +25,9 @@ public class GenericController implements Initializable{
 	
 	public void selectCity(Object obj) {
 	}
+	
+	public void selectProfileToOrder(Object obj) {
+	}
 
 	public Stage getStage() {
 		return stage;

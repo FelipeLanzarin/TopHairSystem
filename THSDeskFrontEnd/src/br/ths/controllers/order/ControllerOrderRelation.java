@@ -1,4 +1,4 @@
-package br.ths.controllers.profile;
+package br.ths.controllers.order;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,9 @@ import br.ths.beans.Order;
 import br.ths.beans.Profile;
 import br.ths.beans.manager.OrderManager;
 import br.ths.screens.order.ScreenOrderModal;
+import br.ths.screens.profile.ScreenProfileSelection;
 import br.ths.tools.log.LogTools;
+import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -33,7 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ControllerOrderProfileRelationManager extends GenericController{
+public class ControllerOrderRelation extends GenericController{
 	
 	@FXML private Label labelTitle;
 	@FXML private TableView<Order> table;
@@ -43,15 +45,18 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 	@FXML private TableColumn<Order, String> columnFour;
 	@FXML private TableColumn<Order, String> columnFive;
 	@FXML private TableColumn<Order, String> columnSix;
-	@FXML private TableColumn<Order, String> columnSeven;
 	@FXML private DatePicker textInitialDate;
 	@FXML private DatePicker textFinalDate;
+	@FXML private DatePicker textInitialDateAt;
+	@FXML private DatePicker textFinalDateAt;
 	@FXML private TextField textId;
+	@FXML private TextField textName;
 	@FXML private ComboBox<String> boxStatus;
 	private List<Order> list;
-	private Profile profile;
 	private Date initialDate;
 	private Date finalDate;
+	private Date initialDateAt;
+	private Date finalDateAt;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -62,12 +67,27 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 	
 	public void clickButtonNew(){
 		try{
-			Order order = OrderManager.createForProfile(profile);
-			ScreenOrderModal screen = new ScreenOrderModal();
-			screen.setOrder(order);
+			ScreenProfileSelection screen = new ScreenProfileSelection();
+			THSFrontUtils.setOrderSession(null);
+			screen.setController(this);
 			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
+		}
+	}
+	
+	@Override
+	public void selectProfileToOrder(Object obj) {
+		if(obj instanceof Profile){
+			Profile profile = (Profile)obj;
+			try{
+				Order order = OrderManager.createForProfile(profile);
+				ScreenOrderModal screen = new ScreenOrderModal();
+				screen.setOrder(order);
+				screen.start(new Stage());
+			}catch (Exception e) {
+				LogTools.logError(e);
+			}
 		}
 	}
 	
@@ -79,6 +99,23 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 				String orderId = order.getId()+"";
 				if(orderId.contains(id)){
 					listFilter.add(order);
+				}
+			}
+			updateTable(listFilter);
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void filterByName(){
+		try{
+			String name =  textName.getText();
+			List<Order> listFilter = new ArrayList<>();
+			for (Order order : list) {
+				if(order.getProfile() != null){
+					if(order.getProfile().getName().toLowerCase().contains(name.toLowerCase())){
+						listFilter.add(order);
+					}
 				}
 			}
 			updateTable(listFilter);
@@ -100,6 +137,24 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 		try{
 			finalDate = getDate(textFinalDate);
 			filterByDate();
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void filterByInitialDateAt(){
+		try{
+			initialDateAt = getDate(textInitialDateAt);
+			filterByDateAt();
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void filterByFinalDateAt(){
+		try{
+			finalDateAt = getDate(textFinalDateAt);
+			filterByDateAt();
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -145,6 +200,27 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 		}
 	}
 	
+	private void filterByDateAt(){
+		if(initialDateAt != null && finalDateAt != null){
+			List<Order> listFilter = new ArrayList<>();
+			for (Order order : list) {
+				if(order.getScheduler() != null){
+					Date orderDate = order.getScheduler();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					String initialDateString = sdf.format(initialDateAt);
+					String finalDateString = sdf.format(finalDateAt);
+					String orderDateString = sdf.format(orderDate);
+					Boolean equalsInitial =  initialDateString.equals(orderDateString);
+					Boolean equalsFinalDate = finalDateString.equals(orderDateString);
+					if((initialDateAt.before(orderDate)|| equalsInitial) && (finalDateAt.after(orderDate) ||equalsFinalDate)){
+						listFilter.add(order);
+					}
+				}
+			}
+			updateTable(listFilter);
+		}
+	}
+	
 	private Date getDate(DatePicker datePicker){
 		if(datePicker.getValue() != null){
 			LocalDate ld = datePicker.getValue();
@@ -176,7 +252,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 	public void updateTable(List<Order> listOrder){
 		try {
 			if(listOrder== null){
-				listOrder = OrderManager.getOrdersByProfile(profile);
+				listOrder = OrderManager.getOrders();
 			}
 			table.setItems(FXCollections.observableArrayList(listOrder));
 		}catch (Exception e) {
@@ -187,7 +263,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 	
 	public void createTable(){
 		try {
-			list = OrderManager.getOrdersByProfile(profile);
+			list = OrderManager.getOrders();
 			columnOne.setCellValueFactory(new PropertyValueFactory<>("id"));
 			columnTwo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
@@ -198,7 +274,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 			columnThree.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
-					return new SimpleStringProperty(OrderManager.getStatusAsString(order.getValue()));
+					return new SimpleStringProperty(OrderManager.getProfileAsString(order.getValue()));
 				}
 			});
 			columnFour.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
@@ -210,21 +286,16 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 			columnFive.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
-					return new SimpleStringProperty(OrderManager.getAmountAsString(order.getValue()));
+					return new SimpleStringProperty(OrderManager.getStatusAsString(order.getValue()));
 				}
 			});
 			columnSix.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
-					return new SimpleStringProperty(OrderManager.getDiscountAsString(order.getValue()));
-				}
-			});
-			columnSeven.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
 					return new SimpleStringProperty(OrderManager.getFinalAmountAsString(order.getValue()));
 				}
 			});
+		
 			updateTable(list);
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -245,17 +316,6 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 
 	public void setList(List<Order> list) {
 		this.list = list;
-	}
-
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-		if(profile != null){
-			labelTitle.setText("Pedidos de "+ profile.getName());
-		}
 	}
 
 }

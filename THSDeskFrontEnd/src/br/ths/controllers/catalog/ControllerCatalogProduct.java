@@ -8,11 +8,14 @@ import br.ths.beans.Product;
 import br.ths.beans.SubCategory;
 import br.ths.beans.manager.ProductManager;
 import br.ths.screens.branch.catalog.product.ScreenProductDetail;
+import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
+import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -30,7 +33,7 @@ public class ControllerCatalogProduct extends GenericController{
 	@FXML private TableColumn<Product, String> columnOne;
 	@FXML private TableColumn<Product, String> columnTwo;
 	@FXML private TableColumn<Product, String> columnThree;
-	@FXML private Button buttonAllProducts;
+	@FXML private Button buttonAdd;
 	@FXML private Label labelTitle;
 	
 	private List<Product> list;
@@ -38,10 +41,33 @@ public class ControllerCatalogProduct extends GenericController{
 	private SubCategory subCategory;
 	private Boolean showAllProducts = false;
 	private Category category;
+	private Product productSelect;
 	
-	public void clickButtonAllProducts(){
+	public void clickButtonAdd(){
 		try {
-			
+			if(productSelect != null){
+				if (THSFrontUtils.getOrderSession() == null) {
+					Alert dialog = new Alert(Alert.AlertType.WARNING);
+					dialog.setTitle("Atenção!");
+					dialog.setHeaderText("Nenhum pedido aberto!");
+					dialog.setContentText("Abra um pedido para adicionar esse item à compra");
+					dialog.showAndWait();
+					return;
+				}
+				ScreenCommerceItemModal screen = new ScreenCommerceItemModal();
+				screen.setOrder(THSFrontUtils.getOrderSession());
+				screen.setOrderModal(THSFrontUtils.getControllerOrderModalSession());
+				screen.setProdutc(productSelect);
+				screen.setNewCommerceItem(true);
+				screen.setStageCatalog(stage);
+				screen.start(new Stage());
+			}else{
+				Alert dialog = new Alert(Alert.AlertType.WARNING);
+				dialog.setTitle("Atenção!");
+				dialog.setHeaderText("Selecione um produto!");
+				dialog.setContentText("Selecione um produto para adicioná-lo a sua compra");
+				dialog.showAndWait();
+			}
 			
 		} catch (Exception e) {
 			LogTools.logError(e);
@@ -59,6 +85,12 @@ public class ControllerCatalogProduct extends GenericController{
 						screen.setProduct(product);
 						screen.start(new Stage());
 					}
+		        }else{
+		        	Product product = table.getSelectionModel().getSelectedItem();
+		        	if(product != null){
+		        		buttonAdd.setDisable(false);
+		        		productSelect = product;
+		        	}
 		        }
 			}
 		}catch (Exception e) {

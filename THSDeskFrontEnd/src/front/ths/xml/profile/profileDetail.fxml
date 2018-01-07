@@ -112,7 +112,7 @@
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="486.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#openOrders" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #337ab7; -fx-border-color: #2e6da4; -fx-background-radius: 4; -fx-border-radius: 4;" text="Pedidos" textFill="WHITE">
+                  <Button fx:id="buttonOrders" layoutX="486.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#openOrders" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #337ab7; -fx-border-color: #2e6da4; -fx-background-radius: 4; -fx-border-radius: 4;" text="Pedidos" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -130,7 +130,7 @@
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="345.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#newOrder" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #58b551; -fx-border-color: #50af49; -fx-background-radius: 4; -fx-border-radius: 4;" text="Novo pedido" textFill="WHITE">
+                  <Button fx:id="buttonNewOrder" layoutX="345.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#newOrder" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #58b551; -fx-border-color: #50af49; -fx-background-radius: 4; -fx-border-radius: 4;" text="Novo pedido" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

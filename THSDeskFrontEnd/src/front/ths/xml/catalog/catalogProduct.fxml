@@ -43,7 +43,7 @@
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextField>
-                  <Button fx:id="buttonAllProducts" alignment="CENTER" contentDisplay="CENTER" layoutX="1073.0" layoutY="41.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonAllProducts" prefHeight="30.0" prefWidth="181.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar a Compra" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonAdd" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1073.0" layoutY="41.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonAdd" prefHeight="30.0" prefWidth="181.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar a Compra" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

@@ -10,7 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="737.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.city.ControllerCityRelation">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="737.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.profile.ControllerProfileSelection">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="670.0" prefWidth="709.0" style="-fx-background-color: #d9edf7; -fx-border-color: #bce8f1; -fx-border-radius: 4; -fx-background-radius: 4;">
          <children>
@@ -26,8 +26,8 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textNameFilter" layoutX="88.0" layoutY="69.0" onKeyReleased="#filter" prefHeight="30.0" prefWidth="586.0" promptText="Nome" />
-                  <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="109.0" maxWidth="661.0" onMouseClicked="#clickTableItem" pickOnBounds="false" prefHeight="505.0" prefWidth="645.0" stylesheets="@../../css/cityRelation.css">
+                  <TextField fx:id="textNameFilter" layoutX="88.0" layoutY="69.0" onKeyReleased="#filterByName" prefHeight="30.0" prefWidth="586.0" promptText="Nome" />
+                  <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="109.0" maxWidth="661.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="505.0" prefWidth="645.0" stylesheets="@../../css/cityRelation.css">
                     <columns>
                       <TableColumn fx:id="columnOne" editable="false" maxWidth="168.0" minWidth="168.0" prefWidth="168.0" resizable="false" text="CPF" />
                       <TableColumn fx:id="columnTwo" editable="false" maxWidth="472.0" minWidth="472.0" prefWidth="472.0" resizable="false" text="Nome" />

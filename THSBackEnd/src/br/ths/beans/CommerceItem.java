@@ -24,6 +24,8 @@ public class CommerceItem {
 	private Double unitPrice;
 	private Double amount;
 	private Double discount;
+	@Column(name="cost_price")
+	private Double costPrice;
 	private String note;
 	@Column(name="creation_date")
 	private Date creationDate;
@@ -93,5 +95,11 @@ public class CommerceItem {
 	}
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	public Double getCostPrice() {
+		return costPrice;
+	}
+	public void setCostPrice(Double costPrice) {
+		this.costPrice = costPrice;
 	}
 }
