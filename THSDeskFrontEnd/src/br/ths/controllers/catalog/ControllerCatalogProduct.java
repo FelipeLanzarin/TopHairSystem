@@ -1,5 +1,6 @@
 package br.ths.controllers.catalog;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,11 @@ import br.ths.beans.SubCategory;
 import br.ths.beans.manager.ProductManager;
 import br.ths.screens.branch.catalog.product.ScreenProductDetail;
 import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
-import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,10 +23,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerCatalogProduct extends GenericController{
 	
@@ -33,6 +37,7 @@ public class ControllerCatalogProduct extends GenericController{
 	@FXML private TableColumn<Product, String> columnOne;
 	@FXML private TableColumn<Product, String> columnTwo;
 	@FXML private TableColumn<Product, String> columnThree;
+	@FXML private TableColumn<Product, String> columnFour;
 	@FXML private Button buttonAdd;
 	@FXML private Label labelTitle;
 	
@@ -83,6 +88,7 @@ public class ControllerCatalogProduct extends GenericController{
 					if(product != null){
 						ScreenProductDetail screen = new ScreenProductDetail();
 						screen.setProduct(product);
+						screen.setStageCatalog(stage);
 						screen.start(new Stage());
 					}
 		        }else{
@@ -148,7 +154,20 @@ public class ControllerCatalogProduct extends GenericController{
 			}
 			columnOne.setCellValueFactory(new PropertyValueFactory<>("id"));
 			columnTwo.setCellValueFactory(new PropertyValueFactory<>("name"));
-			columnThree.setCellValueFactory(new PropertyValueFactory<>("description"));
+			columnThree.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Product, String> product) {
+					DecimalFormat df = new DecimalFormat("###,###,##0.00");
+					String price= "0,00";
+					try{
+						price = df.format(product.getValue().getPrice());
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+					return new SimpleStringProperty("R$ "+price);
+				}
+			});
+			columnFour.setCellValueFactory(new PropertyValueFactory<>("description"));
 			updateTable(list);
 		}catch (Exception e) {
 			LogTools.logError(e);

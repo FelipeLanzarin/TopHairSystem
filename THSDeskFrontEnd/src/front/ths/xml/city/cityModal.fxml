@@ -47,7 +47,7 @@
                      </graphic>
                   </Button>
                   <TextField fx:id="textName" layoutX="119.0" layoutY="33.0" onKeyPressed="#actionName" prefHeight="34.0" prefWidth="391.0" promptText="Nome" />
-                  <ComboBox fx:id="comboStates" layoutX="119.0" layoutY="103.0" opacity="0.78" prefHeight="34.0" prefWidth="391.0" promptText="Selecione o estado" />
+                  <ComboBox fx:id="comboStates" layoutX="119.0" layoutY="103.0" opacity="0.78" prefHeight="34.0" prefWidth="391.0" />
                   <Label layoutX="42.0" layoutY="189.0" text="Pais*">
                      <font>
                         <Font name="System Bold" size="14.0" />

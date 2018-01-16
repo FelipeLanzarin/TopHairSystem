@@ -28,6 +28,9 @@ public class GenericController implements Initializable{
 	
 	public void selectProfileToOrder(Object obj) {
 	}
+	
+	public void updateTable(){
+	}
 
 	public Stage getStage() {
 		return stage;

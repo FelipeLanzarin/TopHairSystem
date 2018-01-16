@@ -24,8 +24,8 @@ public class Order {
 	private Date scheduler;
 	private Double amount;
 	private Double discount;
-	@Column(name="final_amount")
-	private Double finalAmount;
+	@Column(name="sub_total_amount")
+	private Double subTotalAmount;
 	@Column(length=9999)
 	private String description;
 	@Column(name="creation_date")
@@ -45,7 +45,7 @@ public class Order {
 	public Order(){
 		this.status = OrderStatus.OPEN;
 		this.amount = 0.0d;
-		this.finalAmount = 0.0d;
+		this.subTotalAmount = 0.0d;
 		this.discount = 0.0d;
 		this.creationDate = new Date();
 	}
@@ -74,11 +74,11 @@ public class Order {
 	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
-	public Double getFinalAmount() {
-		return finalAmount;
+	public Double getSubTotalAmount() {
+		return subTotalAmount;
 	}
-	public void setFinalAmount(Double finalAmount) {
-		this.finalAmount = finalAmount;
+	public void setSubTotalAmount(Double subTotalAmount) {
+		this.subTotalAmount = subTotalAmount;
 	}
 	public String getDescription() {
 		return description;

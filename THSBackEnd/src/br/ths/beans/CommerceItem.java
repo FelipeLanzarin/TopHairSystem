@@ -29,7 +29,6 @@ public class CommerceItem {
 	private String note;
 	@Column(name="creation_date")
 	private Date creationDate;
-	private String status;
 	@ManyToOne
 	@JoinColumn(name="product_id", referencedColumnName="id")
 	private Product product;
@@ -77,12 +76,6 @@ public class CommerceItem {
 	}
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	public Product getProduct() {
 		return product;

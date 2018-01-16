@@ -14,7 +14,8 @@ import javafx.stage.Stage;
 
 public class ScreenProductDetail extends Application {
 	
-	public Product product;
+	private Product product;
+	private Stage stageCatalog;
 	
 	@Override
 	public void start(Stage stage) {
@@ -29,10 +30,19 @@ public class ScreenProductDetail extends Application {
 			ControllerProductDetail controllerProductDetail = (ControllerProductDetail) loader.getController();
 			controllerProductDetail.setProduct(product);
 			controllerProductDetail.setStage(stage);
+			controllerProductDetail.setStageCatalog(stageCatalog);
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);
 		}
+	}
+
+	public Stage getStageCatalog() {
+		return stageCatalog;
+	}
+
+	public void setStageCatalog(Stage stageCatalog) {
+		this.stageCatalog = stageCatalog;
 	}
 
 	public Product getProduct() {
@@ -43,6 +53,4 @@ public class ScreenProductDetail extends Application {
 		this.product = product;
 	}
 
-
-	
 }

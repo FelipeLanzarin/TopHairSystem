@@ -86,7 +86,7 @@
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font></TextArea>
-                  <Button layoutX="529.0" layoutY="582.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Comprar" textFill="WHITE">
+                  <Button layoutX="529.0" layoutY="582.0" mnemonicParsing="false" onMouseClicked="#buyProduct" prefHeight="34.0" prefWidth="119.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="Comprar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

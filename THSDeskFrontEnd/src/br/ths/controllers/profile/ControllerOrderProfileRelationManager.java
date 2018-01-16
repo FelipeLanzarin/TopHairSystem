@@ -65,6 +65,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 			Order order = OrderManager.createForProfile(profile);
 			ScreenOrderModal screen = new ScreenOrderModal();
 			screen.setOrder(order);
+			screen.setLastController(this);
 			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -164,6 +165,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 					if(order != null){
 						ScreenOrderModal orderModal = new ScreenOrderModal();
 						orderModal.setOrder(order);
+						orderModal.setLastController(this);
 						orderModal.start(new Stage());
 					}
 		        }
@@ -172,6 +174,12 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 			LogTools.logError(e);
 		}
 	}
+	
+	@Override
+	public void updateTable() {
+		updateTable(null);
+	}
+	
 	
 	public void updateTable(List<Order> listOrder){
 		try {
@@ -210,7 +218,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 			columnFive.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
-					return new SimpleStringProperty(OrderManager.getAmountAsString(order.getValue()));
+					return new SimpleStringProperty(OrderManager.getSubTotalAmountAsString(order.getValue()));
 				}
 			});
 			columnSix.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
@@ -222,7 +230,7 @@ public class ControllerOrderProfileRelationManager extends GenericController{
 			columnSeven.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
-					return new SimpleStringProperty(OrderManager.getFinalAmountAsString(order.getValue()));
+					return new SimpleStringProperty(OrderManager.getAmountAsString(order.getValue()));
 				}
 			});
 			updateTable(list);

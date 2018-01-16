@@ -84,6 +84,7 @@ public class ControllerOrderRelation extends GenericController{
 				Order order = OrderManager.createForProfile(profile);
 				ScreenOrderModal screen = new ScreenOrderModal();
 				screen.setOrder(order);
+				screen.setLastController(this);
 				screen.start(new Stage());
 			}catch (Exception e) {
 				LogTools.logError(e);
@@ -239,6 +240,7 @@ public class ControllerOrderRelation extends GenericController{
 					Order order = table.getSelectionModel().getSelectedItem();
 					if(order != null){
 						ScreenOrderModal orderModal = new ScreenOrderModal();
+						orderModal.setLastController(this);
 						orderModal.setOrder(order);
 						orderModal.start(new Stage());
 					}
@@ -247,6 +249,11 @@ public class ControllerOrderRelation extends GenericController{
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
+	}
+	
+	@Override
+	public void updateTable() {
+		updateTable(null);
 	}
 	
 	public void updateTable(List<Order> listOrder){
@@ -292,7 +299,7 @@ public class ControllerOrderRelation extends GenericController{
 			columnSix.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Order, String> order) {
-					return new SimpleStringProperty(OrderManager.getFinalAmountAsString(order.getValue()));
+					return new SimpleStringProperty(OrderManager.getAmountAsString(order.getValue()));
 				}
 			});
 		

@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.ths.beans.Product;
+import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
 import br.ths.tools.log.LogTools;
+import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
 import fx.tools.mask.MaskMoney;
 import fx.tools.mask.MaskTextField;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -34,6 +37,7 @@ public class ControllerProductDetail extends GenericController{
 	@FXML private TextArea textDescription;
 	
 	private Stage stage;
+	private Stage stageCatalog;
 	private Product product;
 	private List<String> states;
 	
@@ -76,6 +80,32 @@ public class ControllerProductDetail extends GenericController{
 			}
 			
 		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void buyProduct(){
+		try {
+			if(product != null){
+				if (THSFrontUtils.getOrderSession() == null) {
+					Alert dialog = new Alert(Alert.AlertType.WARNING);
+					dialog.setTitle("Atenção!");
+					dialog.setHeaderText("Nenhum pedido aberto!");
+					dialog.setContentText("Abra um pedido para adicionar esse item à compra");
+					dialog.showAndWait();
+					return;
+				}
+				ScreenCommerceItemModal screen = new ScreenCommerceItemModal();
+				screen.setOrder(THSFrontUtils.getOrderSession());
+				screen.setOrderModal(THSFrontUtils.getControllerOrderModalSession());
+				screen.setProdutc(product);
+				screen.setNewCommerceItem(true);
+				screen.setStageCatalog(stageCatalog);
+				screen.start(new Stage());
+				stage.close();
+			}
+			
+		} catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
@@ -125,6 +155,14 @@ public class ControllerProductDetail extends GenericController{
 
 	public void setStates(List<String> states) {
 		this.states = states;
+	}
+
+	public Stage getStageCatalog() {
+		return stageCatalog;
+	}
+
+	public void setStageCatalog(Stage stageCatalog) {
+		this.stageCatalog = stageCatalog;
 	}
 	
 }

@@ -1,4 +1,4 @@
-DROP TABLE user_branch;
+﻿DROP TABLE user_branch;
 DROP TABLE balance;
 DROP TABLE commerce_item;
 DROP TABLE image;
@@ -83,8 +83,11 @@ WITH (
 );
 ALTER TABLE branch_company
   OWNER TO thsadmin;
+
+
+
   
- CREATE TABLE account
+CREATE TABLE account
 (
   id integer NOT NULL,
   amount double precision,
@@ -103,6 +106,7 @@ WITH (
 ALTER TABLE account
   OWNER TO thsadmin;
 
+  
 CREATE TABLE cashier
 (
   id integer NOT NULL,
@@ -119,7 +123,8 @@ WITH (
 );
 ALTER TABLE cashier
   OWNER TO thsadmin;
- 
+
+  
 
 CREATE TABLE category
 (
@@ -138,6 +143,9 @@ WITH (
 ALTER TABLE category
   OWNER TO thsadmin;
 
+
+
+
 CREATE TABLE sub_category
 (
   id integer NOT NULL,
@@ -154,10 +162,16 @@ WITH (
 );
 ALTER TABLE sub_category
   OWNER TO thsadmin;
+
+
+
+
+  
   
  CREATE TABLE employee
 (
   id integer NOT NULL,
+  active boolean,
   address character varying(255),
   cep character varying(255),
   color character varying(255),
@@ -187,7 +201,9 @@ WITH (
 );
 ALTER TABLE employee
   OWNER TO thsadmin;
+
   
+
 CREATE TABLE profile
 (
   id integer NOT NULL,
@@ -212,18 +228,25 @@ WITH (
 );
 ALTER TABLE profile
   OWNER TO thsadmin;
-  
- CREATE TABLE ths_order
+
+
+
+
+
+
+
+CREATE TABLE ths_order
 (
   id integer NOT NULL,
   amount double precision,
   creation_date timestamp without time zone,
   description character varying(9999),
   discount double precision,
-  final_amount double precision,
+  is_attendance boolean,
   payment_status character varying(255),
   scheduler timestamp without time zone,
   status character varying(255),
+  sub_total_amount double precision,
   employee_id integer,
   profile_id integer,
   CONSTRAINT ths_order_pkey PRIMARY KEY (id),
@@ -239,8 +262,13 @@ WITH (
 );
 ALTER TABLE ths_order
   OWNER TO thsadmin;
-  
- CREATE TABLE payment
+
+
+
+
+
+ 
+CREATE TABLE payment
 (
   id integer NOT NULL,
   amount double precision,
@@ -259,8 +287,10 @@ WITH (
 );
 ALTER TABLE payment
   OWNER TO thsadmin;
-  
- CREATE TABLE installment
+
+
+
+CREATE TABLE installment
 (
   id integer NOT NULL,
   amount double precision,
@@ -279,8 +309,11 @@ WITH (
 );
 ALTER TABLE installment
   OWNER TO thsadmin;
+  
 
-  CREATE TABLE transaction
+
+
+CREATE TABLE transaction
 (
   id integer NOT NULL,
   amount double precision,
@@ -306,8 +339,10 @@ WITH (
 );
 ALTER TABLE transaction
   OWNER TO thsadmin;
-  
- CREATE TABLE product
+
+
+
+CREATE TABLE product
 (
   id integer NOT NULL,
   cost_price double precision,
@@ -316,7 +351,7 @@ ALTER TABLE transaction
   name character varying(255),
   price double precision,
   type character varying(255),
-  un character varying(255),
+  un integer,
   untype character varying(255),
   sub_category_id integer,
   CONSTRAINT product_pkey PRIMARY KEY (id),
@@ -329,6 +364,11 @@ WITH (
 );
 ALTER TABLE product
   OWNER TO thsadmin;
+
+
+
+
+
  
 CREATE TABLE image
 (
@@ -348,15 +388,16 @@ WITH (
 ALTER TABLE image
   OWNER TO thsadmin;
 
-  CREATE TABLE commerce_item
+
+CREATE TABLE commerce_item
 (
   id integer NOT NULL,
   amount double precision,
+  cost_price double precision,
   creation_date timestamp without time zone,
   discount double precision,
   note character varying(255),
   quantity integer,
-  status character varying(255),
   unit_price double precision,
   order_id integer,
   product_id integer,
@@ -368,11 +409,17 @@ ALTER TABLE image
       REFERENCES ths_order (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
+
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE commerce_item
   OWNER TO thsadmin;
+
+
+
+
+  
 
  CREATE TABLE balance
 (
@@ -393,6 +440,9 @@ WITH (
 );
 ALTER TABLE balance
   OWNER TO thsadmin;
+
+
+
 
   CREATE TABLE user_branch
 (

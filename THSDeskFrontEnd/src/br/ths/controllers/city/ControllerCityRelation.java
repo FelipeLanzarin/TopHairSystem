@@ -17,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 public class ControllerCityRelation extends GenericController{
 	
@@ -50,12 +52,22 @@ public class ControllerCityRelation extends GenericController{
 			LogTools.logError(e);
 		}
 	}
-	
-	public void clickTableItem(){
+	@FXML
+	public void clickTableItem(MouseEvent mouseEvent){
 		try {
-			citySelected = table.getSelectionModel().getSelectedItem();
-			if(citySelected != null){
-				itemSelected.setText(citySelected.getName());
+			if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+				if(mouseEvent.getClickCount() == 2){
+					citySelected = table.getSelectionModel().getSelectedItem();
+					if(citySelected != null){
+						lastController.selectCity(citySelected);
+						this.getStage().close();
+					}
+		        }else{
+		        	citySelected = table.getSelectionModel().getSelectedItem();
+					if(citySelected != null){
+						itemSelected.setText(citySelected.getName());
+					}
+		        }
 			}
 		}catch (Exception e) {
 			LogTools.logError(e);

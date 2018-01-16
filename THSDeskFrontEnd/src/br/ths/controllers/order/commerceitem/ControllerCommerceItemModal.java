@@ -82,7 +82,7 @@ public class ControllerCommerceItemModal extends GenericController{
 							stageCatalog.close();
 						}
 						stage.close();
-						orderModal.createTable();
+						orderModal.updateTable(null,true);
 					}else{
 						Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 						dialogoInfo.setTitle("Erro!");
@@ -103,7 +103,7 @@ public class ControllerCommerceItemModal extends GenericController{
 							stageCatalog.close();
 						}
 						stage.close();
-						orderModal.createTable();
+						orderModal.updateTable(null,true);
 					}else{
 						Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 						dialogoInfo.setTitle("Erro!");
@@ -151,7 +151,7 @@ public class ControllerCommerceItemModal extends GenericController{
 			textUn.setText(product.getUnType());
 			textType.setText(product.getType());
 			textPrice.setText(CommerceItemManager.getUnitPriceAsString(commerceItem));
-			textAmount.setText(CommerceItemManager.getFinalAmountAsString(commerceItem));
+			textAmount.setText(CommerceItemManager.getAmountAsString(commerceItem));
 			textDiscount.setText(CommerceItemManager.getDiscountAsString(commerceItem));
 			textQuantity.setText(commerceItem.getQuantity()+"");
 			textDescription.setText(commerceItem.getNote());
@@ -380,6 +380,8 @@ public class ControllerCommerceItemModal extends GenericController{
 		if(cis != null){
 			for (CommerceItem ci : CommerceItemManager.getCommerceItemsByOrder(order)) {
 				if(ci.getProduct().getId().equals(product.getId())){
+					ci.setCostPrice(product.getCostPrice());
+					ci.setUnitPrice(product.getPrice());
 					setCommerceItem(CommerceItemManager.addQuantityOnCommerceItem(ci, 1));
 					setNewCommerceItem(false);
 					return true;

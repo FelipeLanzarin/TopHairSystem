@@ -30,4 +30,5 @@ public class XmlPathUtils {
 	public static final String ORDER_MODAL = "/front/ths/xml/order/orderModal.fxml";
 	public static final String ORDER_RELATION = "/front/ths/xml/order/orderRelation.fxml";
 	public static final String COMMERCE_ITEM_MODAL = "/front/ths/xml/order/commerceitem/commerceitemModal.fxml";
+	public static final String IMAGE_RELATION = "/front/ths/xml/order/image/imageRelation.fxml";
 }

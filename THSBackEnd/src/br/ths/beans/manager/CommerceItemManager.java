@@ -1,5 +1,6 @@
 package br.ths.beans.manager;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class CommerceItemManager {
 		return "";
 	}
 	
-	public static String getFinalAmountAsString(CommerceItem commerceItem){
+	public static String getAmountAsString(CommerceItem commerceItem){
 		if(commerceItem == null){
 			return "0,00";
 		}
@@ -148,14 +149,14 @@ public class CommerceItemManager {
 			return null;
 		}
 		Integer newQuantity = quantity + ci.getQuantity();
-		Double finalValue = (ci.getUnitPrice() * newQuantity) - ci.getDiscount();
+		Double finalValue = arroudValue((ci.getUnitPrice() * newQuantity) - ci.getDiscount());
 		ci.setQuantity(newQuantity);
 		ci.setAmount(finalValue);
 		return ci;
 	}
 	
 	private static void validateValues(CommerceItem ci) throws ManagersExceptions{
-		Double finalValue = (ci.getUnitPrice()*ci.getQuantity()) - ci.getDiscount();
+		Double finalValue = arroudValue((ci.getUnitPrice()*ci.getQuantity()) - ci.getDiscount());
 		int i2 = finalValue.compareTo(ci.getAmount());
 		if(i2 != 0){
 			ManagersExceptions me = new ManagersExceptions();
@@ -163,6 +164,14 @@ public class CommerceItemManager {
 			me.setExcepetionMessage("Valor de desconto e valor final não estão fechando!");
 			throw me;
 		}
+	}
+	
+	public static Double arroudValue(Double value){
+		if(value == null){
+			return 0.0d;
+		}
+		BigDecimal vb = new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		return vb.doubleValue();
 	}
 
 	private static CommerceItemDao getCommerceItemDao(){

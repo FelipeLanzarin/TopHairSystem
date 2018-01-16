@@ -1,10 +1,12 @@
 package br.ths.beans.manager;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import br.ths.beans.CommerceItem;
 import br.ths.beans.Order;
 import br.ths.beans.Profile;
 import br.ths.database.OrderDao;
@@ -27,7 +29,8 @@ public class OrderManager {
 	private  static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private static OrderDao cd;
 	
-	public static Boolean update(Order order) {
+	public static Boolean update(Order order) throws ManagersExceptions {
+		validateValues(order);
 		return Boolean.valueOf(getOrderDao().updateOrder(order));
 	}
 	
@@ -66,6 +69,26 @@ public class OrderManager {
 			return null;
 		}
 		return getOrderDao().getOrdersByProfileId(profile.getId());
+	}
+	
+	public static Order recalculateOrder(Order order) throws ManagersExceptions{
+		order.setSubTotalAmount(getSubTotal(order));
+		Double amount = roundValue(order.getSubTotalAmount() - order.getDiscount());
+		order.setAmount(amount);
+		update(order);
+		return order;
+	}
+	
+	private static Double getSubTotal(Order order){
+		List<CommerceItem> listCommerceItemns = CommerceItemManager.getCommerceItemsByOrder(order);
+		Double value =  0.0D;
+		if(listCommerceItemns != null){
+			for (CommerceItem commerceItem : listCommerceItemns) {
+				value+=commerceItem.getAmount();
+				value = roundValue(value);
+			}
+		}
+		return value;
 	}
 	
 	public static String getStatusAsString(Order order){
@@ -124,12 +147,12 @@ public class OrderManager {
 		return date;
 	}
 	
-	public static String getAmountAsString(Order order){
+	public static String getSubTotalAmountAsString(Order order){
 		if(order == null){
 			return "0,00";
 		}
-		if(order.getAmount() != null){
-			return df.format(order.getAmount());
+		if(order.getSubTotalAmount() != null){
+			return df.format(order.getSubTotalAmount());
 		}
 		return "0,00";
 	}
@@ -144,21 +167,89 @@ public class OrderManager {
 		return "0,00";
 	}
 	
-	public static String getFinalAmountAsString(Order order){
+	public static String getAmountAsString(Order order){
 		if(order == null){
 			return "0,00";
 		}
-		if(order.getFinalAmount() != null){
-			return df.format(order.getFinalAmount());
+		if(order.getAmount() != null){
+			return df.format(order.getAmount());
 		}
 		return "0,00";
 	}
-
+	
+	public static Double getValuePriceAsDouble(String value){
+		if(value == null){
+			return 0.0D;
+		}
+		try{
+			return df.parse(value).doubleValue();
+		}catch (Exception e) {
+		}
+		return 0.0D;
+	}
+	
+	public static String getValuePriceAsString(Double value){
+		if(value == null){
+			return "0,00";
+		}
+		try{
+			return df.format(value);
+		}catch (Exception e) {
+		}
+		return "0,00";
+	}
+	
+	private static void validateValues(Order order) throws ManagersExceptions{
+		if(order == null){
+			return;
+		}
+		Double subTotal = getSumAllCommerceItems(order);
+		int c1 = subTotal.compareTo(order.getSubTotalAmount());
+		if(c1 != 0){
+			ManagersExceptions me = new ManagersExceptions();
+			me.setId(10);
+			me.setExcepetionMessage("Somatória dos produtos não fecha com o subtotal!");
+			throw me;
+		}
+		Double finalValue = roundValue(subTotal - order.getDiscount());
+		int i2 = finalValue.compareTo(order.getAmount());
+		if(i2 != 0){
+			ManagersExceptions me = new ManagersExceptions();
+			me.setId(10);
+			me.setExcepetionMessage("Valor de desconto e valor final não estão fechando!");
+			throw me;
+		}
+	}
+	
+	private static Double getSumAllCommerceItems(Order order){
+		Double sum = 0.0D;
+		if(order == null){
+			return sum;
+		}
+		
+		List<CommerceItem> list = CommerceItemManager.getCommerceItemsByOrder(order);
+		for (CommerceItem commerceItem : list) {
+			sum += commerceItem.getAmount();
+			sum = roundValue(sum);
+		}
+		return sum;
+	}
+	
+	public static Double roundValue(Double value){
+		if(value == null){
+			return 0.0d;
+		}
+		BigDecimal vb = new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		return vb.doubleValue();
+	}
+	
 	private static OrderDao getOrderDao(){
 		if(cd == null){
 			cd = new OrderDao();
 		}
 		return cd;
 	}
+	
+	
 
 }

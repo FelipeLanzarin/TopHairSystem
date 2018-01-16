@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import br.ths.beans.Order;
 import br.ths.beans.Profile;
 import br.ths.beans.manager.CommerceItemManager;
 import br.ths.beans.manager.OrderManager;
+import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.branch.catalog.ScreenCatalogCategory;
 import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
 import br.ths.tools.log.LogTools;
@@ -74,6 +76,8 @@ public class ControllerOrderModal extends GenericController{
 	private Profile profile;
 	private Employee employee;
 	private Order order;
+	private Date scheduler;
+	private GenericController lastController;
 	
 	private SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
 	private SimpleDateFormat sdfMin = new SimpleDateFormat("mm");
@@ -117,17 +121,26 @@ public class ControllerOrderModal extends GenericController{
 			columnSix.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CommerceItem,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CommerceItem, String> param) {
-					return new SimpleStringProperty(CommerceItemManager.getFinalAmountAsString(param.getValue()));
+					return new SimpleStringProperty(CommerceItemManager.getAmountAsString(param.getValue()));
 				}
 			});
-			updateTable(list);
+			updateTable(list, false);
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	
-	public void updateTable(List<CommerceItem> list){
+	public void updateTable(List<CommerceItem> list, Boolean populateOrderFields){
 		try {
+			if(list == null){
+				list = CommerceItemManager.getCommerceItemsByOrder(order);
+			}
+			if(populateOrderFields){
+				populateTextFields(OrderManager.recalculateOrder(order));
+				if(lastController != null){
+					lastController.updateTable();
+				}
+			}
 			if(list!= null){
 				table.setItems(FXCollections.observableArrayList(list));
 			}
@@ -144,15 +157,17 @@ public class ControllerOrderModal extends GenericController{
 			}
 			if(order.getProfile() != null){
 				textName.setText(order.getProfile().getName());
+				profile = order.getProfile();
 			}
 			if(order.getEmployee() != null){
 				textEmployee.setText(order.getEmployee().getName());
+				employee = order.getEmployee();
 			}
 			textStatus.setText(OrderManager.getStatusAsString(order));
 			textDescriptions.setText(order.getDescription());
-			textSubTotal.setText(OrderManager.getAmountAsString(order));
+			textSubTotal.setText(OrderManager.getSubTotalAmountAsString(order));
 			textDiscounts.setText(OrderManager.getDiscountAsString(order));
-			textAmountFinal.setText(OrderManager.getFinalAmountAsString(order));
+			textAmountFinal.setText(OrderManager.getAmountAsString(order));
 			if(order.getScheduler() != null){
 				Instant instant = Instant.ofEpochMilli(order.getScheduler().getTime());
 			    LocalDate localDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
@@ -171,6 +186,69 @@ public class ControllerOrderModal extends GenericController{
 		textName.setStyle("");
 	}
 	
+	public void actionSchedulable(){
+		textSchedulable.setStyle("");
+	}
+	
+	public void actionHour(){
+		textHour.setStyle("");
+	}
+	
+	public void actionMin(){
+		textMin.setStyle("");
+	}
+	
+	public void actionDiscount(){
+		try{
+			textDiscounts.setStyle("");
+			String discount = textDiscounts.getText();
+			if(discount.isEmpty()){
+				textAmountFinal.setText(textSubTotal.getText());
+				return;
+			}else{
+				Double discountAmount = OrderManager.getValuePriceAsDouble(discount);
+				Double subTotal = 0.0D;
+				if(order.getAmount() != null){
+					subTotal = order.getSubTotalAmount();
+				}
+				
+				Double finalPrice = OrderManager.roundValue(subTotal - discountAmount);
+				if(finalPrice>=0){
+					textAmountFinal.setText(OrderManager.getValuePriceAsString(finalPrice));
+				}else{
+					textAmountFinal.setText("0,00");
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
+	public void actionValueFinal(){
+		try{
+			textAmountFinal.setStyle("");
+			String amount = textAmountFinal.getText();
+			if(amount.isEmpty()){
+				textDiscounts.setText("0,00");
+				return;
+			}else{
+				Double finalPrice = OrderManager.getValuePriceAsDouble(amount);
+				Double subTotal = 0.0D;
+				if(order.getAmount() != null){
+					subTotal = order.getSubTotalAmount();
+				}
+	
+				Double discount = OrderManager.roundValue(subTotal - finalPrice);
+				if(discount>=0){
+					textDiscounts.setText(OrderManager.getValuePriceAsString(discount));
+				}else{
+					textDiscounts.setText("0,00");
+				}
+			}
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
 	public boolean validateFiedls(){
 		Boolean valid = true;
 		try {
@@ -178,25 +256,103 @@ public class ControllerOrderModal extends GenericController{
 				textName.setStyle(STYLE_ERROR);
 				valid = false;
 			}
+			if(textDiscounts.getText().isEmpty()){
+				textDiscounts.setStyle(STYLE_ERROR);
+				valid = false;
+			}
+			if(textAmountFinal.getText().isEmpty()){
+				textAmountFinal.setStyle(STYLE_ERROR);
+				valid = false;
+			}
+			
+			Date date = getDate(textSchedulable);
+			String min = textMin.getText();
+			String hour = textHour.getText();
+			
+			if(date!= null || !min.isEmpty() || !hour.isEmpty()){
+				if(date == null){
+					textSchedulable.setStyle(STYLE_ERROR);
+					valid = false;
+				}
+				
+				if(min.isEmpty()){
+					textMin.setStyle(STYLE_ERROR);
+					valid = false;
+				}
+				
+				if(hour.isEmpty()){
+					textHour.setStyle(STYLE_ERROR);
+					valid = false;
+				}
+				if(valid){
+					Integer h =Integer.parseInt(textHour.getText());
+					Integer m = Integer.parseInt(textMin.getText());
+					if(h>24 || h<0){
+						textHour.setStyle(STYLE_ERROR);
+						valid = false;
+					}
+					
+					if(m<0 || m>59){
+						textMin.setStyle(STYLE_ERROR);
+						valid = false;
+					}
+					if(valid){
+						setSchedulerDate(date, h, m);
+					}
+				}
+				
+			}
+			
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 		return valid;
 	}
 	
+	private void setSchedulerDate(Date date, Integer h, Integer m){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date); //colocando o objeto Date no Calendar
+		calendar.set(Calendar.HOUR_OF_DAY, h); //zerando as horas, minuots e segundos..
+		calendar.set(Calendar.MINUTE, m);
+		scheduler = calendar.getTime();
+	}
+	
+	private Date getDate(DatePicker datePicker){
+		if(datePicker.getValue() != null){
+			LocalDate ld = datePicker.getValue();
+			Calendar c =  Calendar.getInstance();
+			c.set(ld.getYear(), ld.getMonthValue()-1, ld.getDayOfMonth());
+			return c.getTime();
+		}
+		return null;
+	}
 	//metodo chamado no botao salvar
 	public void save(){
 		try {
 			if(!validateFiedls()){
 				return;
 			}
-			OrderManager.update(order);
-//		}catch (ManagersExceptions me) {
-//			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
-//			dialogoInfo.setTitle("Erro!");
-//			dialogoInfo.setHeaderText("Erro ao executar operação!");
-//			dialogoInfo.setContentText(me.getExcepetionMessage());
-//			dialogoInfo.showAndWait();
+			order.setDiscount(OrderManager.getValuePriceAsDouble(textDiscounts.getText()));
+			order.setAmount(OrderManager.getValuePriceAsDouble(textAmountFinal.getText()));
+			order.setDescription(textDescriptions.getText());
+			order.setProfile(profile);
+			order.setEmployee(employee);
+			order.setScheduler(scheduler);
+			if(OrderManager.update(order)){
+				Alert dialogoInfo = new Alert(Alert.AlertType.CONFIRMATION);
+				dialogoInfo.setTitle("Sucesso!");
+				dialogoInfo.setHeaderText("O pedido foi salvo com sucesso!");
+				dialogoInfo.showAndWait();
+				if(lastController != null){
+					lastController.updateTable();
+				}
+			}
+		}catch (ManagersExceptions me) {
+			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+			dialogoInfo.setTitle("Erro!");
+			dialogoInfo.setHeaderText("Erro salvar pedido!");
+			dialogoInfo.setContentText(me.getExcepetionMessage());
+			dialogoInfo.showAndWait();
 		}catch (Exception e) {
 			LogTools.logError(e);
 			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
@@ -271,7 +427,7 @@ public class ControllerOrderModal extends GenericController{
 //						dialog.setTitle("Sucesso!");
 //						dialog.setHeaderText("Produto removido com sucesso");
 //						dialog.showAndWait();
-						createTable();
+						updateTable(null,true);
 					}else{
 						Alert dialog = new Alert(Alert.AlertType.ERROR);
 						dialog.setTitle("Erro!");
@@ -331,6 +487,16 @@ public class ControllerOrderModal extends GenericController{
 		}
 	}
 	
+	public void openImages(){
+		try{
+//			ScreenImageRelationManager screen = new ScreenImageRelationManager();
+//			screen.setOrder(order);
+//			screen.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
+		}
+	}
+	
 	public void manageButtons(){
 		if(!"open".equals(order.getStatus())){
 			buttonDeleteOrder.setDisable(true);
@@ -369,5 +535,11 @@ public class ControllerOrderModal extends GenericController{
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+	public GenericController getLastController() {
+		return lastController;
+	}
+	public void setLastController(GenericController lastController) {
+		this.lastController = lastController;
 	}
 }

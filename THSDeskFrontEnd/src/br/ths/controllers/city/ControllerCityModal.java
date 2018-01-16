@@ -168,6 +168,7 @@ public class ControllerCityModal implements Initializable{
 	public void setRelation(ControllerCityRelationManager relation) {
 		this.relation = relation;
 		states = new ArrayList<>();
+		states.add("Rio Grande do Sul - RS");
 		states.add("Sem estado");
 		states.add("Acre - AC");
 		states.add("Alagoas - AL");
@@ -189,7 +190,6 @@ public class ControllerCityModal implements Initializable{
 		states.add("Piauí - PI");
 		states.add("Rio de Janeiro - RJ");
 		states.add("Rio Grande do Norte - RN");
-		states.add("Rio Grande do Sul - RS");
 		states.add("Rondônia - RO");
 		states.add("Roraima - RR");
 		states.add("Santa Catarina - SC");
@@ -198,6 +198,7 @@ public class ControllerCityModal implements Initializable{
 		states.add("Tocantins - TO");
 		
 		comboStates.getItems().addAll(states);
+		comboStates.getSelectionModel().select("Rio Grande do Sul - RS");
 	}
 	
 }
