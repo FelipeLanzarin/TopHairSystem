@@ -31,6 +31,9 @@ public class GenericController implements Initializable{
 	
 	public void updateTable(){
 	}
+	
+	public void selectEmployeeToOrder(Object obj){
+	}
 
 	public Stage getStage() {
 		return stage;

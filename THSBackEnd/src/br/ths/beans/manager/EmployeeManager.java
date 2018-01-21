@@ -70,6 +70,15 @@ public class EmployeeManager {
 		
 	}
 	
+	public static List<Employee> getEmployeesActives() {
+		return getEmployeeDao().getEmployeesActives();
+		
+	}
+	
+	public static Employee getTheFirstEmployee(){
+		return getEmployeeDao().getEmployee(10000);
+	}
+	
 	public static Employee getEmployeeByCpf(String cpf){
 		return getEmployeeDao().getEmployeeByCpf(cpf);
 	}

@@ -99,6 +99,21 @@ public class EmployeeDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Employee> getEmployeesActives (){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Employee> employee = null;
+		try{
+			Query query = em.createQuery("FROM Employee where active = true ORDER BY name");
+			employee = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter employees no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return employee;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public Employee getEmployeeByCpf(String cpf){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Employee> profile = null;

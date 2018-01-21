@@ -19,7 +19,9 @@ import br.ths.beans.manager.CommerceItemManager;
 import br.ths.beans.manager.OrderManager;
 import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.branch.catalog.ScreenCatalogCategory;
+import br.ths.screens.branch.employee.ScreenEmployeeSelection;
 import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
+import br.ths.screens.profile.ScreenProfileSelection;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
@@ -41,6 +43,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -53,6 +56,10 @@ public class ControllerOrderModal extends GenericController{
 	@FXML private Button buttonEditCi;
 	@FXML private Button buttonDeleteCi;
 	@FXML private Button buttonNew;
+	@FXML private Button buttonSetAtended;
+	@FXML private Button buttonSave;
+	@FXML private ImageView imageFindEmployee;
+	@FXML private ImageView imageUpdateProfile;
 	@FXML private Label labelTitle;
 	@FXML private TextField textName;
 	@FXML private TextField textEmployee;
@@ -338,6 +345,11 @@ public class ControllerOrderModal extends GenericController{
 			order.setProfile(profile);
 			order.setEmployee(employee);
 			order.setScheduler(scheduler);
+			if(scheduler != null){
+				order.setIsAttendance(true);
+			}else{
+				order.setIsAttendance(false);
+			}
 			if(OrderManager.update(order)){
 				Alert dialogoInfo = new Alert(Alert.AlertType.CONFIRMATION);
 				dialogoInfo.setTitle("Sucesso!");
@@ -368,9 +380,19 @@ public class ControllerOrderModal extends GenericController{
 		 textHour.selectNextWord();
 	}
 	
-	public void setAtendedt(){
+	public void setAtended(){
 		try{
-			
+			order.setStatus("attended");
+			if(OrderManager.update(order)){
+				manageButtons();
+				Alert dialogoInfo = new Alert(Alert.AlertType.CONFIRMATION);
+				dialogoInfo.setTitle("Sucesso!");
+				dialogoInfo.setHeaderText("O pedido marcado como atendido!");
+				dialogoInfo.showAndWait();
+				if(lastController != null){
+					lastController.updateTable();
+				}
+			}
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -378,20 +400,43 @@ public class ControllerOrderModal extends GenericController{
 	
 	public void updateProfile(){
 		try{
-			
+			ScreenProfileSelection screen = new ScreenProfileSelection();
+			screen.setController(this);
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
+		}
+	}
+	
+	@Override
+	public void selectProfileToOrder(Object obj) {
+		if(obj instanceof Profile){
+			profile = (Profile)obj;
+			if(profile != null){
+				textName.setText(profile.getName());
+			}
 		}
 	}
 	
 	public void updateEmployee(){
 		try{
-			
+			ScreenEmployeeSelection screen = new ScreenEmployeeSelection();
+			screen.setController(this);
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
 	}
 	
+	@Override
+	public void selectEmployeeToOrder(Object obj) {
+		if(obj instanceof Employee){
+			employee = (Employee)obj;
+			if(employee != null){
+				textEmployee.setText(employee.getName());
+			}
+		}
+	}
 	public void deleteOrder(){
 		try{
 			
@@ -478,9 +523,11 @@ public class ControllerOrderModal extends GenericController{
 	
 	public void clickTable(){
 		try{
-			CommerceItem commerceItem = table.getSelectionModel().getSelectedItem();
-			if(commerceItem != null){
-				disableButtons(false);
+			if(OrderManager.orderIsOpen(order)){
+				CommerceItem commerceItem = table.getSelectionModel().getSelectedItem();
+				if(commerceItem != null){
+					disableButtons(false);
+				}
 			}
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -498,8 +545,23 @@ public class ControllerOrderModal extends GenericController{
 	}
 	
 	public void manageButtons(){
-		if(!"open".equals(order.getStatus())){
+		if(!OrderManager.orderIsOpen(order)){
 			buttonDeleteOrder.setDisable(true);
+			buttonDeleteCi.setDisable(true);
+			buttonNew.setDisable(true);
+			buttonEditCi.setDisable(true);
+			buttonSetAtended.setDisable(true);
+			buttonSave.setDisable(true);
+			textAmountFinal.setEditable(false);
+			textDescriptions.setEditable(false);
+			textDiscounts.setEditable(false);
+			textHour.setEditable(false);
+			textMin.setEditable(false);
+			textSchedulable.setDisable(true);
+			textSchedulable.setStyle("-fx-opacity: 1");
+			textSchedulable.getEditor().setStyle("-fx-opacity: 1");
+			imageFindEmployee.setDisable(true);
+			imageUpdateProfile.setDisable(true);
 		}
 	}
 	

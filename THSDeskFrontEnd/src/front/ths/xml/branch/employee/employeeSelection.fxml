@@ -10,11 +10,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="737.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.profile.ControllerProfileSelection">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="737.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.branch.employee.ControllerEmployeeSelection">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="670.0" prefWidth="709.0" style="-fx-background-color: #d9edf7; -fx-border-color: #bce8f1; -fx-border-radius: 4; -fx-background-radius: 4;">
          <children>
-            <Label fx:id="labelTitle" layoutX="22.0" layoutY="14.0" prefHeight="23.0" prefWidth="353.0" text="Selecione um cliente" textFill="#31708f">
+            <Label fx:id="labelTitle" layoutX="22.0" layoutY="14.0" prefHeight="23.0" prefWidth="353.0" text="Selecione um Funcionario" textFill="#31708f">
                <font>
                   <Font name="SansSerif Regular" size="16.0" />
                </font>
@@ -27,7 +27,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="textNameFilter" layoutX="88.0" layoutY="69.0" onKeyReleased="#filterByName" prefHeight="30.0" prefWidth="586.0" promptText="Nome" />
-                  <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="109.0" maxWidth="661.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="505.0" prefWidth="645.0" stylesheets="@../../css/cityRelation.css">
+                  <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="109.0" maxWidth="661.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="505.0" prefWidth="645.0" stylesheets="@../../../css/cityRelation.css">
                     <columns>
                       <TableColumn fx:id="columnOne" editable="false" maxWidth="168.0" minWidth="168.0" prefWidth="168.0" resizable="false" text="CPF" />
                       <TableColumn fx:id="columnTwo" editable="false" maxWidth="472.0" minWidth="472.0" prefWidth="472.0" resizable="false" text="Nome" />
@@ -38,32 +38,17 @@
                   </TableView>
                   <Pane layoutX="34.0" layoutY="110.0" prefHeight="4.0" prefWidth="640.0" style="-fx-background-color: #fff;" />
                   <Pane layoutX="33.0" layoutY="110.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #fff;" />
-                  <Label layoutX="31.0" layoutY="31.0" text="Cliente Selecionado:">
+                  <Label layoutX="31.0" layoutY="31.0" text="Funcionario Selecionado:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="itemSelected" layoutX="175.0" layoutY="31.0" prefHeight="20.0" prefWidth="380.0" text="Nenhum Cliente Selecionado">
+                  <Label fx:id="itemSelected" layoutX="202.0" layoutY="31.0" prefHeight="20.0" prefWidth="353.0" text="Nenhum Funcionario Selecionado">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <Pane layoutX="664.0" layoutY="110.0" prefHeight="30.0" prefWidth="11.0" style="-fx-background-color: #fff;" />
-                  <Button layoutX="562.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#viewItem" prefHeight="30.0" prefWidth="112.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Visualizar" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #50af49;">
-                           <image>
-                              <Image url="@../../images/profile/user-search.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font name="SansSerif Bold" size="12.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
                </children>
             </Pane>
             <Pane layoutX="1.0" layoutY="46.0" prefHeight="4.0" prefWidth="709.0" style="-fx-background-color: #d9edf7;" />

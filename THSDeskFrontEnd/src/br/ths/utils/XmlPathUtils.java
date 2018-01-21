@@ -5,6 +5,7 @@ public class XmlPathUtils {
 	public static final String MAIN = "/front/ths/xml/main/main.fxml";
 	public static final String LOAD_BD = "/front/ths/xml/main/loadBd.fxml";
 	public static final String EMPLOYEE_MODAL = "/front/ths/xml/branch/employee/employeeModal.fxml";
+	public static final String EMPLOYEE_SELECTION = "/front/ths/xml/branch/employee/employeeSelection.fxml";
 	public static final String EMPLOYEE_MANAGER = "/front/ths/xml/branch/employee/employeeRelationManager.fxml";
 	public static final String CATEGORY_MODAL = "/front/ths/xml/catalog/category/categoryModal.fxml";
 	public static final String CATEGORY_MANAGER = "/front/ths/xml/catalog/category/categoryRelationManager.fxml";

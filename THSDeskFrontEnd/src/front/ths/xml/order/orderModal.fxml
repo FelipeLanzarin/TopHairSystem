@@ -74,7 +74,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="252.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#setAtendedt" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #337ab7; -fx-background-color: #2e6da4; -fx-border-radius: 2; -fx-background-radius: 2;" text="Marcar como Atendido" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonSetAtended" alignment="CENTER" contentDisplay="CENTER" layoutX="252.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#setAtended" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #337ab7; -fx-background-color: #2e6da4; -fx-border-radius: 2; -fx-background-radius: 2;" text="Marcar como Atendido" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -122,7 +122,7 @@
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
                   </MaskMoney>
-                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="483.0" layoutY="2.0" onMouseClicked="#updateProfile" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageUpdateProfile" fitHeight="34.0" fitWidth="34.0" layoutX="483.0" layoutY="2.0" onMouseClicked="#updateProfile" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/order/progress-arrows2.png" />
                      </image>
@@ -168,7 +168,7 @@
                      </font>
                   </Label>
                   <DatePicker fx:id="textSchedulable" layoutX="343.0" layoutY="368.0" onAction="#actionSchedulable" prefHeight="35.0" prefWidth="208.0" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#save" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Salvar" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonSave" alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#save" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Salvar" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -186,7 +186,7 @@
                         <Font name="SansSerif Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="483.0" layoutY="49.0" onMouseClicked="#updateEmployee" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageFindEmployee" fitHeight="30.0" fitWidth="23.0" layoutX="483.0" layoutY="49.0" onMouseClicked="#updateEmployee" pickOnBounds="true" preserveRatio="true">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -232,12 +232,12 @@
                         <Font name="SansSerif Bold" size="13.0" />
                      </font>
                   </Button>
-                  <MaskTextField fx:id="textMin" alignment="CENTER_RIGHT" layoutX="506.0" layoutY="416.0" mask="NN" onKeyReleased="#actionMin" prefHeight="35.0" prefWidth="46.0" promptText="00">
+                  <MaskTextField fx:id="textHour" alignment="CENTER_RIGHT" layoutX="437.0" layoutY="416.0" mask="NN" onKeyReleased="#actionHour" onMouseClicked="#hClick" prefHeight="35.0" prefWidth="46.0" promptText="00">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>
                   </MaskTextField>
-                  <MaskTextField fx:id="textHour" alignment="CENTER_RIGHT" layoutX="437.0" layoutY="416.0" mask="NN" onKeyReleased="#actionHour" onMouseClicked="#hClick" prefHeight="35.0" prefWidth="46.0" promptText="00">
+                  <MaskTextField fx:id="textMin" alignment="CENTER_RIGHT" layoutX="506.0" layoutY="416.0" mask="NN" onKeyReleased="#actionMin" prefHeight="35.0" prefWidth="46.0" promptText="00">
                      <font>
                         <Font name="SansSerif Regular" size="14.0" />
                      </font>

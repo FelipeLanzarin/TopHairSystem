@@ -51,7 +51,7 @@ public class OrderManager {
 	
 	public static Boolean create(Order order) throws ManagersExceptions {
 		if(order.getEmployee() == null){
-			//TODO get the first employee
+			order.setEmployee(EmployeeManager.getTheFirstEmployee());
 		}
 		return Boolean.valueOf(getOrderDao().createOrder(order));
 	}
@@ -241,6 +241,13 @@ public class OrderManager {
 		}
 		BigDecimal vb = new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 		return vb.doubleValue();
+	}
+	
+	public static Boolean orderIsOpen(Order order){
+		if("open".equals(order.getStatus())){
+			return true;
+		}
+		return false;
 	}
 	
 	private static OrderDao getOrderDao(){
