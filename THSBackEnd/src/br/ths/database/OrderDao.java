@@ -1,5 +1,6 @@
 package br.ths.database;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -108,6 +109,23 @@ public class OrderDao {
 		List<Order> order = null;
 		try{
 			Query query = em.createQuery("FROM Order ORDER BY id desc");
+			order = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return order;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Order> getOrdersByDate (Date init, Date finalDate){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Order> order = null;
+		try{
+			Query query = em.createQuery("FROM Order where scheduler > :init and scheduler < :finalDate and isAttendance = true ORDER BY scheduler");
+			query.setParameter("init", init);
+			query.setParameter("finalDate", finalDate);
 			order = query.getResultList();
 		}catch (Exception e) {
 			LogTools.logError("erro ao obter orders no banco: "+ e.toString());

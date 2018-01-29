@@ -2,7 +2,8 @@ package br.ths.screens.main;
 	
 import java.io.IOException;
 import java.net.URL;
-import javafx.stage.WindowEvent;
+
+import br.ths.controllers.main.ControllerMain;
 import br.ths.database.EntityManagerUtil;
 import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
@@ -11,9 +12,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class Main extends Application {
@@ -38,6 +40,8 @@ public class Main extends Application {
 					System.exit(0);
 				}
 			});
+			ControllerMain controller = (ControllerMain) loader.getController();
+			controller.setStage(stage);
 			stage.show();
 			stageMain = stage;
 		} catch(Exception e) {

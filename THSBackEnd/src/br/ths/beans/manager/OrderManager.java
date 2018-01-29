@@ -3,6 +3,7 @@ package br.ths.beans.manager;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import br.ths.exceptions.ManagersExceptions;
 public class OrderManager {
 	
 	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
-	private  static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	private  static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	private static OrderDao cd;
 	
 	public static Boolean update(Order order) throws ManagersExceptions {
@@ -62,6 +63,19 @@ public class OrderManager {
 	
 	public static List<Order> getOrders() {
 		return getOrderDao().getOrders();
+	}
+	
+	public static List<Order> getOrdersByDate(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.MILLISECOND, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    Date init = calendar.getTime();
+	    calendar.add(Calendar.DAY_OF_MONTH, 1);
+	    Date finalDate = calendar.getTime();
+		return getOrderDao().getOrdersByDate(init,finalDate);
 	}
 	
 	public static List<Order> getOrdersByProfile(Profile profile) {
@@ -257,6 +271,4 @@ public class OrderManager {
 		return cd;
 	}
 	
-	
-
 }
