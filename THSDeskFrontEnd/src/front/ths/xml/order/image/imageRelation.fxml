@@ -15,7 +15,7 @@
 
 <Pane maxHeight="700.0" maxWidth="1300.0" minHeight="700.0" minWidth="1287.0" prefHeight="700.0" prefWidth="1287.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ths.controllers.order.image.ControllerImageRelationManager">
    <children>
-      <Pane prefHeight="71.0" prefWidth="1300.0">
+      <Pane onMouseClicked="#anchorPaneMouseClicked" prefHeight="71.0" prefWidth="1300.0">
          <children>
             <Label fx:id="labelTitle" layoutX="471.0" layoutY="14.0" prefHeight="42.0" prefWidth="358.0" text="Imagens Pedido 00000000">
                <font>
@@ -36,7 +36,7 @@
                <children>
                   <ScrollPane prefHeight="510.0" prefWidth="1248.0">
                      <content>
-                        <AnchorPane fx:id="anchorPane" prefHeight="510.0" prefWidth="1235.0" />
+                        <AnchorPane fx:id="anchorPane" prefHeight="510.0" prefWidth="1235.0" style="-fx-border-width: 10;" />
                      </content>
                   </ScrollPane>
                   <Button fx:id="buttonNew" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="520.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNewBefore" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
@@ -84,7 +84,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="buttonNew1" alignment="CENTER" contentDisplay="CENTER" layoutX="895.0" layoutY="517.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNewAfter" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="buttonNew1" alignment="CENTER" contentDisplay="CENTER" layoutX="896.0" layoutY="520.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickButtonNewAfter" prefHeight="30.0" prefWidth="140.0" style="-fx-border-color: #50af49; -fx-background-color: #58b551; -fx-border-radius: 2; -fx-background-radius: 2;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

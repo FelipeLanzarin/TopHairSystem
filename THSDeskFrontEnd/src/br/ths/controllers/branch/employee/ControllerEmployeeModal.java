@@ -101,7 +101,11 @@ public class ControllerEmployeeModal extends GenericController{
 			employee.setNeighborhood(textNeighborhood.getText());
 			employee.setCep(textCep.getText());
 			employee.setCity(city);
-			employee.setColor("#"+ Integer.toHexString(color.getValue().hashCode()));
+			String colorString= Integer.toHexString(color.getValue().hashCode());
+			if(colorString.equals("ff")){//testa para ver se eh preto para ajustar
+				colorString = "000000";
+			}
+			employee.setColor("#"+ colorString);
 			RadioButton radioSelect = (RadioButton) groupActive.getSelectedToggle();
 			if("true".equals(radioSelect.getId())){
 				employee.setActive(true);

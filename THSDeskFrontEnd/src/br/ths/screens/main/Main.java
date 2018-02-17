@@ -7,6 +7,7 @@ import br.ths.controllers.main.ControllerMain;
 import br.ths.database.EntityManagerUtil;
 import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
+import br.ths.utils.THSFrontUtils;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -42,6 +43,7 @@ public class Main extends Application {
 			});
 			ControllerMain controller = (ControllerMain) loader.getController();
 			controller.setStage(stage);
+			THSFrontUtils.setControllerMain(controller);
 			stage.show();
 			stageMain = stage;
 		} catch(Exception e) {

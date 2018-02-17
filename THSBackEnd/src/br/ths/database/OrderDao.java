@@ -123,7 +123,10 @@ public class OrderDao {
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Order> order = null;
 		try{
-			Query query = em.createQuery("FROM Order where scheduler > :init and scheduler < :finalDate and isAttendance = true ORDER BY scheduler");
+			Query query = em.createQuery("FROM Order "
+					+ "where scheduler > :init and scheduler < :finalDate "
+					+ "and isAttendance = true "
+					+ "ORDER BY scheduler");
 			query.setParameter("init", init);
 			query.setParameter("finalDate", finalDate);
 			order = query.getResultList();

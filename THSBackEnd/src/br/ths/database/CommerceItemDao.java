@@ -119,7 +119,6 @@ public class CommerceItemDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<CommerceItem> getCommerceItemsByOrderId (Integer id){
-		//TODO adjust the commerceItem
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<CommerceItem> commerceItems = null;
 		String sql = "select * from commerce_item ci "

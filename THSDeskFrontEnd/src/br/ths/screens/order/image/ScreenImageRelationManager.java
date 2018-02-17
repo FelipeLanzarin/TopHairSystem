@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class ScreenImageRelationManager extends Application {
 	
 	private Order order;
-	
+		
 	@Override
 	public void start(Stage stage) {
 		try {
@@ -29,6 +29,7 @@ public class ScreenImageRelationManager extends Application {
 			ControllerImageRelationManager control = (ControllerImageRelationManager) loader.getController();
 			control.setOrder(order);
 			control.setStage(stage);
+//			control.showImage();
 			control.createTable();
 			stage.show();
 		} catch(Exception e) {

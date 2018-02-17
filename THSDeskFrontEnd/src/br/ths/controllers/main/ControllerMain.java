@@ -61,6 +61,8 @@ public class ControllerMain extends GenericController{
 		populateScheduler(date);
 	}
 	
+	
+	
 	private void populateScheduler(Date date){
 		Instant instant = Instant.ofEpochMilli(date.getTime());
 	    LocalDate localDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
@@ -111,7 +113,7 @@ public class ControllerMain extends GenericController{
 					System.out.println("scene null");
 				}
 			}
-	});
+		});
 		
 		String style = STYLE_COLOR+order.getEmployee().getColor()+";"+STYLE_BORER;
 		pane.setStyle(style);
@@ -160,6 +162,9 @@ public class ControllerMain extends GenericController{
 		return f;
 	}
 	
+	/**
+	 * Metodo para atualizar a agenda de acordo com a data que está selecionada
+	 */
 	public void selectDate(){
 		if(textDate.getValue() != null){
 			LocalDate ld = textDate.getValue();

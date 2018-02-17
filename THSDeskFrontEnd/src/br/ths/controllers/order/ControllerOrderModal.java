@@ -21,6 +21,7 @@ import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.branch.catalog.ScreenCatalogCategory;
 import br.ths.screens.branch.employee.ScreenEmployeeSelection;
 import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
+import br.ths.screens.order.image.ScreenImageRelationManager;
 import br.ths.screens.profile.ScreenProfileSelection;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
@@ -359,6 +360,7 @@ public class ControllerOrderModal extends GenericController{
 					lastController.updateTable();
 				}
 			}
+			THSFrontUtils.getControllerMain().selectDate();
 		}catch (ManagersExceptions me) {
 			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 			dialogoInfo.setTitle("Erro!");
@@ -536,9 +538,9 @@ public class ControllerOrderModal extends GenericController{
 	
 	public void openImages(){
 		try{
-//			ScreenImageRelationManager screen = new ScreenImageRelationManager();
-//			screen.setOrder(order);
-//			screen.start(new Stage());
+			ScreenImageRelationManager screen = new ScreenImageRelationManager();
+			screen.setOrder(order);
+			screen.start(new Stage());
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}

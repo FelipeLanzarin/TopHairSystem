@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import br.ths.beans.CommerceItem;
 import br.ths.beans.Image;
 import br.ths.exceptions.ManagersExceptions;
 import br.ths.tools.log.LogTools;
@@ -15,7 +16,6 @@ public class ImageDao {
 	
 	public boolean createImage (Image image){
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		
 		try{
 			em.getTransaction().begin();
 			em.persist(image);
@@ -95,20 +95,45 @@ public class ImageDao {
 		return image;
 	}
 	@SuppressWarnings("unchecked")
-	public List<Image> getImages (Integer orderId){
+	public List<Image> getImagesBefore (Integer orderId){
 		EntityManager em = EntityManagerUtil.getEntityManager();
-		List<Image> image = null;
+		List<Image> images = null;
+		String sql = "select * from image "
+				+ "where image.order_id = ? "
+				+ "and image.partofprocess = ?"
+				+ "order by image.id";
 		try{
-			
-			//TODO query para buscar imagens da order
-			Query query = em.createQuery("FROM Image ORDER BY id");
-			image = query.getResultList();
+			Query query = em.createNativeQuery(sql, Image.class);
+			query.setParameter(1, orderId);
+			query.setParameter(2, "before");
+			images = query.getResultList();
 		}catch (Exception e) {
-			LogTools.logError("erro ao obter images no banco: "+ e.toString());
+			LogTools.logError("erro ao obter commerceItems no banco: "+ e.toString());
 		}finally{
 			em.close();
 		}
-		return image;
+		return images;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Image> getImagesAfter (Integer orderId){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Image> images = null;
+		String sql = "select * from image "
+				+ "where image.order_id = ? "
+				+ "and image.partofprocess = ?"
+				+ "order by image.id";
+		try{
+			Query query = em.createNativeQuery(sql, Image.class);
+			query.setParameter(1, orderId);
+			query.setParameter(2, "after");
+			images = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter commerceItems no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return images;
 	}
 
 }
