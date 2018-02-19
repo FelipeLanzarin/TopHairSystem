@@ -1,4 +1,4 @@
-DROP SEQUENCE gen_account_id;
+﻿DROP SEQUENCE gen_account_id;
 DROP SEQUENCE gen_balance_id;
 DROP SEQUENCE gen_branch_company_id;
 DROP SEQUENCE gen_cashier_id;
@@ -145,6 +145,15 @@ CREATE SEQUENCE gen_payment_id
   START 10000
   CACHE 1;
 ALTER TABLE gen_payment_id
+  OWNER TO thsadmin;
+
+CREATE SEQUENCE gen_payment_method_id
+  INCREMENT 1
+  MINVALUE 10000
+  MAXVALUE 9223372036854775807
+  START 10000
+  CACHE 1;
+ALTER TABLE gen_payment_method_id
   OWNER TO thsadmin;
 
 CREATE SEQUENCE gen_sub_category_id
