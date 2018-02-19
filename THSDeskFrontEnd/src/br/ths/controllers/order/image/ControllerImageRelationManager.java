@@ -3,8 +3,6 @@ package br.ths.controllers.order.image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -307,9 +305,8 @@ public class ControllerImageRelationManager extends GenericController{
 			File newFile = new File(path);
 			
 			if (!newFile.exists()) {
-				if (newFile.mkdirs()) {
-					System.out.println("create folder " + newFile.getAbsolutePath());
-				} else {
+				if (!newFile.mkdirs()) {
+					//System.out.println("create folder " + newFile.getAbsolutePath());
 					LogTools.logError("Erro ao criar diretorio para relizar backup");
 				}
 			}

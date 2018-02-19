@@ -26,7 +26,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			//TODO implementar conexão com o banco
 			EntityManagerUtil.initEntityManager();
 			THSTools.setConfSession();
 			URL arquivoFXML = getClass().getResource(XmlPathUtils.MAIN);

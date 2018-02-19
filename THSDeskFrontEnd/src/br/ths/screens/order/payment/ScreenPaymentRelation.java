@@ -1,49 +1,47 @@
-package br.ths.screens.order;
+package br.ths.screens.order.payment;
 
 import java.net.URL;
 
 import br.ths.beans.Order;
-import br.ths.controllers.order.ControllerOrderModal;
+import br.ths.controllers.order.payment.ControllerPaymentRelation;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.XmlPathUtils;
-import fx.tools.controller.GenericController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreenOrderModal extends Application {
+public class ScreenPaymentRelation extends Application {
+	
 	private Order order;
-	private GenericController lastController;
+	
 	@Override
 	public void start(Stage stage) {
 		try {
-			URL arquivoFXML = getClass().getResource(XmlPathUtils.ORDER_MODAL);
+			URL arquivoFXML = getClass().getResource(XmlPathUtils.PAYMENT_RELATION_MANAGER);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
+			ControllerPaymentRelation control = (ControllerPaymentRelation) loader.getController();
+			control.setOrder(order);
+			control.setStage(stage);
+			control.createTable();
 			stage.setResizable(false);
-			stage.setTitle("Pedido");
-			ControllerOrderModal controller = (ControllerOrderModal) loader.getController();
-			controller.setOrder(order);
-			controller.setStage(stage);
-			controller.setLastController(lastController);
+			stage.setTitle("Metodo de Pagamento");
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);
 		}
 	}
+
 	public Order getOrder() {
 		return order;
 	}
+
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	public GenericController getLastController() {
-		return lastController;
-	}
-	public void setLastController(GenericController lastController) {
-		this.lastController = lastController;
-	}
+	
+	
 }

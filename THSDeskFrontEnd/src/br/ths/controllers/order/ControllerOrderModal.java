@@ -22,6 +22,7 @@ import br.ths.screens.branch.catalog.ScreenCatalogCategory;
 import br.ths.screens.branch.employee.ScreenEmployeeSelection;
 import br.ths.screens.order.commerceitem.ScreenCommerceItemModal;
 import br.ths.screens.order.image.ScreenImageRelationManager;
+import br.ths.screens.order.payment.ScreenPaymentRelation;
 import br.ths.screens.profile.ScreenProfileSelection;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
@@ -384,6 +385,14 @@ public class ControllerOrderModal extends GenericController{
 	
 	public void setAtended(){
 		try{
+			List<CommerceItem> cis = CommerceItemManager.getCommerceItemsByOrder(order);
+			if(cis == null || cis.isEmpty()){
+				Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+				dialog.setTitle("Info!");
+				dialog.setHeaderText("Nenhum produto adicionado para fazer pagamento");
+				dialog.showAndWait();
+				return;
+			}
 			order.setStatus("attended");
 			if(OrderManager.update(order)){
 				manageButtons();
@@ -447,9 +456,18 @@ public class ControllerOrderModal extends GenericController{
 		}
 	}
 	
-	public void finishOrder(){
+	public void finishOrder(){//botao pagamentos
 		try{
-			
+			if(order.getAmount() != null && order.getAmount()>0){
+				ScreenPaymentRelation screen = new ScreenPaymentRelation();
+				screen.setOrder(order);
+				screen.start(new Stage());
+			}else{
+				Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+				dialog.setTitle("Info!");
+				dialog.setHeaderText("Nenhum produto adicionado para fazer pagamento");
+				dialog.showAndWait();
+			}
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -564,6 +582,7 @@ public class ControllerOrderModal extends GenericController{
 			textSchedulable.getEditor().setStyle("-fx-opacity: 1");
 			imageFindEmployee.setDisable(true);
 			imageUpdateProfile.setDisable(true);
+			buttonFinishOrder.setDisable(false);
 		}
 	}
 	

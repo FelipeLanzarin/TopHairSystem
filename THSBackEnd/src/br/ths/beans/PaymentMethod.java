@@ -13,19 +13,19 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="installment")
-public class Installment {
+@Table(name="payment_method")
+public class PaymentMethod {
 	@Id
-    @SequenceGenerator(name="SEQ_INSTALLMENT_ID", sequenceName="GEN_INSTALLMENT_ID", allocationSize=1, initialValue=1000)
-    @GeneratedValue(generator="SEQ_INSTALLMENT_ID",strategy= GenerationType.SEQUENCE)
+    @SequenceGenerator(name="SEQ_PAYMENT_METHOD_ID", sequenceName="GEN_PAYMENT_METHOD_ID", allocationSize=1, initialValue=1000)
+    @GeneratedValue(generator="SEQ_PAYMENT_METHOD_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Double amount;
-	@Column(name="amount_payed")
-	private Double amountPayed;
-	@Column(name="payment_date")
-	private Date paymentDate;
-	@Column(name="pay_date")
-	private Date payDate;
+	@Column(name="creation_date")
+	private Date creationDate;
+	private String type;
+	@ManyToOne
+	@JoinColumn(name="installment_id", referencedColumnName="id")
+	private Installment installment;
 	@ManyToOne
 	@JoinColumn(name="payment_id", referencedColumnName="id")
 	private Payment payment;
@@ -45,29 +45,23 @@ public class Installment {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	public Double getAmountPayed() {
-		return amountPayed;
+	public Date getCreationDate() {
+		return creationDate;
 	}
-	public void setAmountPayed(Double amountPayed) {
-		this.amountPayed = amountPayed;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
-	public Date getPaymentDate() {
-		return paymentDate;
+	public String getType() {
+		return type;
 	}
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
+	public void setType(String type) {
+		this.type = type;
 	}
-	public Date getPayDate() {
-		return payDate;
+	public Installment getInstallment() {
+		return installment;
 	}
-	public void setPayDate(Date payDate) {
-		this.payDate = payDate;
-	}
-	public Order getOrder() {
-		return order;
-	}
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setInstallment(Installment installment) {
+		this.installment = installment;
 	}
 	public Payment getPayment() {
 		return payment;
@@ -75,4 +69,11 @@ public class Installment {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+	
 }

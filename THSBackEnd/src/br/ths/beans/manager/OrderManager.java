@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.ths.beans.CommerceItem;
 import br.ths.beans.Order;
+import br.ths.beans.PaymentMethod;
 import br.ths.beans.Profile;
 import br.ths.database.OrderDao;
 import br.ths.exceptions.ManagersExceptions;
@@ -105,6 +106,30 @@ public class OrderManager {
 		return value;
 	}
 	
+	public static Boolean finishOrder(Order order) throws ManagersExceptions{
+		if(order == null){
+			return false;
+		}
+		if(canFinish(order)){
+			order.setStatus("closed");
+			return update(order);
+		}
+		return false;
+	}
+	
+	private static Boolean canFinish(Order order){
+		if(order == null){
+			return false;
+		}
+		Double valuePayed = 0.0d;
+		for (PaymentMethod paymentMethod : PaymentManager.getPaymentMethodsByOrder(order)) {
+			valuePayed +=paymentMethod.getAmount();
+		}
+		if(valuePayed.equals(order.getAmount())){
+			return true;
+		}
+		return false;
+	}
 	public static String getStatusAsString(Order order){
 		if(order == null){
 			return "";
@@ -207,7 +232,8 @@ public class OrderManager {
 			return "0,00";
 		}
 		try{
-			return df.format(value);
+			String a = df.format(value);
+			return a;
 		}catch (Exception e) {
 		}
 		return "0,00";
@@ -259,6 +285,13 @@ public class OrderManager {
 	
 	public static Boolean orderIsOpen(Order order){
 		if("open".equals(order.getStatus())){
+			return true;
+		}
+		return false;
+	}
+	
+	public static Boolean orderIsClose(Order order){
+		if("closed".equals(order.getStatus())){
 			return true;
 		}
 		return false;
