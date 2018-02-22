@@ -121,7 +121,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="583.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#plusQuantity" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="+" textFill="WHITE">
+                  <Button fx:id="buttonPlus" layoutX="583.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#plusQuantity" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #5cb85c; -fx-border-color: #4cae4c; -fx-background-radius: 4; -fx-border-radius: 4;" text="+" textFill="WHITE">
                      <font>
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
@@ -129,7 +129,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="536.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#lessQuantity" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #d9534f; -fx-border-color: #cd4b47; -fx-background-radius: 4; -fx-border-radius: 4;" text="-" textFill="WHITE">
+                  <Button fx:id="buttonLess" layoutX="536.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#lessQuantity" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #d9534f; -fx-border-color: #cd4b47; -fx-background-radius: 4; -fx-border-radius: 4;" text="-" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

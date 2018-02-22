@@ -174,8 +174,6 @@ public class ControllerImageRelationManager extends GenericController{
 		for (Pane pane : panelistIVAfter) {
 			pane.setLayoutY(nextLaoutY);
 			pane.setLayoutX(1230-pane.getPrefWidth());// para alinhar a direita
-//			System.out.println("w image "+ listIVAfter.get(count).getFitWidth() );
-//			System.out.println("w pane "+ pane.getPrefWidth());
 		    anchorPane.getChildren().add(pane);
 		    if(panelistIVBefore.size()>count){
 		    	Pane maior = pane;
@@ -232,10 +230,6 @@ public class ControllerImageRelationManager extends GenericController{
 					dialog.setHeaderText("Imagem excluída com sucesso");
 					dialog.showAndWait();
 					anchorPane.getChildren().clear();
-					File file = new File(image.getPath());
-		    		if(!file.delete()){
-		    			LogTools.logError("Não foi possivel deletar o arquivo "+ image.getPath());
-		    		}
 					updateTable(null, null);
 				}else{
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
@@ -301,7 +295,6 @@ public class ControllerImageRelationManager extends GenericController{
 		String path = ImageManager.setImagePath(image);
 		if(path != null){
 			String currentDir = System.getProperty("user.dir")+"/";
-			System.out.println(currentDir);
 			File newFile = new File(path);
 			
 			if (!newFile.exists()) {
@@ -329,13 +322,10 @@ public class ControllerImageRelationManager extends GenericController{
 		String path = ImageManager.setImagePath(image);
 		if(path != null){
 			String currentDir = System.getProperty("user.dir")+"/";
-			System.out.println(currentDir);
 			File newFile = new File(path);
 			
 			if (!newFile.exists()) {
-				if (newFile.mkdirs()) {
-					System.out.println("create folder " + newFile.getAbsolutePath());
-				} else {
+				if (!newFile.mkdirs()) {
 					LogTools.logError("Erro ao criar diretorio para relizar backup");
 				}
 			}

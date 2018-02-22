@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import br.ths.beans.BranchCompany;
+import br.ths.beans.Cashier;
 import br.ths.beans.Installment;
 import br.ths.beans.Order;
 import br.ths.beans.Payment;
 import br.ths.beans.PaymentMethod;
+import br.ths.beans.Transaction;
 import br.ths.database.InstallmentDao;
 import br.ths.database.PaymentDao;
 import br.ths.database.PaymentMethodDao;
@@ -102,17 +105,19 @@ public class PaymentManager {
 			if(Boolean.valueOf(getPaymentMethodDao().updatePaymentMethod(paymentMethod))){
 				Installment installment = paymentMethod.getInstallment();
 				Double newAmountInstallmentPayed = installment.getAmountPayed() + diff;
+				newAmountInstallmentPayed = roundValue(newAmountInstallmentPayed);
 				installment.setAmountPayed(newAmountInstallmentPayed);
 				if(installment.getAmount().equals(installment.getAmountPayed())){
 					installment.setPayDate(new Date());
 				}
 				Payment payment = paymentMethod.getPayment();
 				Double newAmountPaymentPayed = payment.getAmountReceived() + diff;
+				newAmountPaymentPayed = roundValue(newAmountPaymentPayed);
 				payment.setAmountReceived(newAmountPaymentPayed);
 				payment.setLastPaymentDate(new Date());
 				update(installment);
 				update(payment);
-				//TODO ajustar transacao no caixa
+				updateTransaction(paymentMethod);
 				return true;
 			}
 		}
@@ -133,17 +138,19 @@ public class PaymentManager {
 			if(getPaymentMethodDao().createPaymentMethod(paymentMethod)){
 				Installment installment = paymentMethod.getInstallment();
 				Double newAmountInstallmentPayed = installment.getAmountPayed() + paymentMethod.getAmount();
+				newAmountInstallmentPayed = roundValue(newAmountInstallmentPayed);
 				installment.setAmountPayed(newAmountInstallmentPayed);
 				if(installment.getAmount().equals(installment.getAmountPayed())){
 					installment.setPayDate(new Date());
 				}
 				Payment payment = paymentMethod.getPayment();
 				Double newAmountPaymentPayed = payment.getAmountReceived() + paymentMethod.getAmount();
+				newAmountPaymentPayed = roundValue(newAmountInstallmentPayed);
 				payment.setAmountReceived(newAmountPaymentPayed);
 				payment.setLastPaymentDate(new Date());
 				update(installment);
 				update(payment);
-				//TODO ajustar transacao no caixa
+				createTransaction(paymentMethod);
 				return true;
 			}
 		}
@@ -152,20 +159,25 @@ public class PaymentManager {
 
 	public static Boolean delete(PaymentMethod paymentMethod) throws ManagersExceptions {
 		Double amountDelete=paymentMethod.getAmount();
-		if(getPaymentMethodDao().deletePaymentMethod(paymentMethod.getId())){
-			Installment installment = paymentMethod.getInstallment();
-			Double newAmountInstallmentPayed = installment.getAmountPayed() - amountDelete;
-			installment.setAmountPayed(newAmountInstallmentPayed);
-			if(installment.getAmount().equals(installment.getAmountPayed())){
-				installment.setPayDate(new Date());
+		if(deleteTransaction(paymentMethod)){
+			if(getPaymentMethodDao().deletePaymentMethod(paymentMethod.getId())){
+				Installment installment = paymentMethod.getInstallment();
+				Double newAmountInstallmentPayed = installment.getAmountPayed() - amountDelete;
+				newAmountInstallmentPayed = roundValue(newAmountInstallmentPayed);
+				installment.setAmountPayed(newAmountInstallmentPayed);
+				if(installment.getAmount().equals(installment.getAmountPayed())){
+					installment.setPayDate(new Date());
+				}
+				Payment payment = paymentMethod.getPayment();
+				Double newAmountPaymentPayed = payment.getAmountReceived() - amountDelete;
+				newAmountPaymentPayed = roundValue(newAmountPaymentPayed);
+				payment.setAmountReceived(newAmountPaymentPayed);
+				payment.setLastPaymentDate(new Date());
+				update(installment);
+				update(payment);
+				
+				return true;
 			}
-			Payment payment = paymentMethod.getPayment();
-			Double newAmountPaymentPayed = payment.getAmountReceived() - amountDelete;
-			payment.setAmountReceived(newAmountPaymentPayed);
-			payment.setLastPaymentDate(new Date());
-			update(installment);
-			update(payment);
-			return true;
 		}
 		return false;
 	}
@@ -194,13 +206,57 @@ public class PaymentManager {
 		}
 		Double valuePayed = valuePayedByOrder(paymentMethod.getOrder());
 		Double nextAmout = valuePayed + value;
-		if(nextAmout <= paymentMethod.getOrder().getAmount()){
-			return true;
-		}
+		int i2 = nextAmout.compareTo(paymentMethod.getOrder().getAmount());
+
+	    if(i2 <= 0) {
+	    	return true;
+	    } 
+	    
 		ManagersExceptions me = new ManagersExceptions();
 		me.setId(17);
 		me.setExcepetionMessage("Valor do pagamento irá ultrapassar o valor do pedido");
 		throw me;
+	}
+	
+	private static Boolean createTransaction(PaymentMethod paymentMethod) throws ManagersExceptions{
+		Transaction t = new Transaction();
+		t.setAmount(paymentMethod.getAmount());
+		t.setType("input");
+		t.setCashier(getCashierByPaymentMethod(paymentMethod));
+		t.setPaymentMethod(paymentMethod);
+		TransactionManager.create(t);
+		return true;
+	}
+	
+	private static Boolean updateTransaction(PaymentMethod paymentMethod) throws ManagersExceptions{
+		Transaction t = getTransactionByPaymentMethod(paymentMethod);
+		if(t == null){
+			return false;
+		}
+		Double lastValue = t.getAmount();
+		t.setAmount(paymentMethod.getAmount());
+		t.setType("input");
+		t.setCashier(getCashierByPaymentMethod(paymentMethod));
+		t.setPaymentMethod(paymentMethod);
+		TransactionManager.update(t, lastValue);
+		return true;
+	}
+	
+	private static Boolean deleteTransaction(PaymentMethod paymentMethod) throws ManagersExceptions{
+		Transaction t = getTransactionByPaymentMethod(paymentMethod);
+		if(t == null){
+			return false;
+		}
+		return TransactionManager.delete(t);
+	}
+	
+	private static Cashier getCashierByPaymentMethod(PaymentMethod paymentMethod) throws ManagersExceptions{
+		BranchCompany bc = paymentMethod.getOrder().getEmployee().getBranchCompany();
+		return CashierManager.getCashierByBranch(bc);
+	}
+	
+	private static Transaction getTransactionByPaymentMethod(PaymentMethod paymentMethod){
+		return TransactionManager.getTransactionByPaymentMethod(paymentMethod);
 	}
 	
 	public static Double valuePayedByOrder(Order order){
@@ -219,6 +275,68 @@ public class PaymentManager {
 		return vb.doubleValue();
 	}
 	
+	public static String getTypePaymentMethod(String type){
+		String paymentType = "";
+		switch (type) {
+		case "Cartão de Crédito":
+			paymentType = "creditCard";
+			break;
+		case "Dinheiro":
+			paymentType = "cash";
+			break;
+		case "Cheque":
+			paymentType = "bankCheck";
+			break;
+			
+		default:
+			paymentType = "other";
+			break;
+		
+		}
+		return paymentType;
+	}
+	
+	public static String getDescriptionPaymentMethod(String type){
+		String paymentType = "";
+		switch (type) {
+		case "creditCard":
+			paymentType = "Cartão de Crédito";
+			break;
+		case "cash":
+			paymentType = "Dinheiro";
+			break;
+		case "bankCheck":
+			paymentType = "Cheque";
+			break;
+			
+		default:
+			paymentType = "Outro";
+			break;
+		
+		}
+		return paymentType;
+	}
+	
+	public static String getDescriptionByPaymentMethod(PaymentMethod paymentMethod){
+		String paymentType = "";
+		switch (paymentMethod.getType()) {
+		case "creditCard":
+			paymentType = "Cartão de Crédito";
+			break;
+		case "cash":
+			paymentType = "Dinheiro";
+			break;
+		case "bankCheck":
+			paymentType = "Cheque";
+			break;
+		default:
+			paymentType = "Outro";
+			break;
+		}
+		
+		String description = "Pagemento do pedido "+paymentMethod.getOrder().getId()+" com "+ paymentType;
+		return description;
+	}
 	
 	private static PaymentDao getPaymentDao(){
 		if(pd == null){

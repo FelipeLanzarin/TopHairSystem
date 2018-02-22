@@ -48,6 +48,10 @@ public class UserBranchManager {
 		return getUserBranchDao().getUserBranchs();
 	}
 	
+	public static UserBranch getUserBranch(String user) {
+		return getUserBranchDao().getUserBranch(user);
+	}
+	
 	private static UserBranchDao getUserBranchDao(){
 		if(cd == null){
 			cd = new UserBranchDao();

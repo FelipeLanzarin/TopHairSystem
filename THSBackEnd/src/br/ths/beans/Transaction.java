@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @Table(name="transaction")
 public class Transaction {
 	@Id
-    @SequenceGenerator(name="SEQ_CASHIER_ID", sequenceName="GEN_CASHIER_ID", allocationSize=1, initialValue=1000)
-    @GeneratedValue(generator="SEQ_CASHIER_ID",strategy= GenerationType.SEQUENCE)
+    @SequenceGenerator(name="SEQ_TRANSACTION_ID", sequenceName="GEN_TRANSACTION_ID", allocationSize=1, initialValue=1000)
+    @GeneratedValue(generator="SEQ_TRANSACTION_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Double amount;
 	@Column(length=9999)
@@ -28,8 +28,8 @@ public class Transaction {
 	@JoinColumn(name="cashier_id", referencedColumnName="id")
 	private Cashier cashier;
 	@ManyToOne
-	@JoinColumn(name="installment_id", referencedColumnName="id")
-	private Installment installment;
+	@JoinColumn(name="payment_method_id", referencedColumnName="id")
+	private PaymentMethod paymentMethod;
 	@ManyToOne
 	@JoinColumn(name="account_id", referencedColumnName="id")
 	private Account account;
@@ -70,11 +70,11 @@ public class Transaction {
 	public void setCashier(Cashier cashier) {
 		this.cashier = cashier;
 	}
-	public Installment getInstallment() {
-		return installment;
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
 	}
-	public void setInstallment(Installment installment) {
-		this.installment = installment;
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 	public Account getAccount() {
 		return account;

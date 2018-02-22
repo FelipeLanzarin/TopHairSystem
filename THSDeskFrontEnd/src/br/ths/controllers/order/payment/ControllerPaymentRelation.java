@@ -11,6 +11,7 @@ import br.ths.beans.manager.PaymentManager;
 import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.order.payment.ScreenPaymentMethodModal;
 import br.ths.tools.log.LogTools;
+import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -94,15 +95,11 @@ public class ControllerPaymentRelation extends GenericController{
 				paymentMethodSelect.setPayment(payment);
 				paymentMethodSelect.setInstallment(installment);
 				if(PaymentManager.delete(paymentMethodSelect)){
-//					Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-//					dialog.setTitle("Sucesso!");
-//					dialog.setHeaderText("Produto removido com sucesso");
-//					dialog.showAndWait();
 					updateTable(null);
 				}else{
 					Alert dialog = new Alert(Alert.AlertType.ERROR);
 					dialog.setTitle("Erro!");
-					dialog.setHeaderText("Erro ao remover produto!");
+					dialog.setHeaderText("Erro ao remover pagamento!");
 					dialog.showAndWait();
 				}
 			}
@@ -142,6 +139,7 @@ public class ControllerPaymentRelation extends GenericController{
 			dialogoInfo.setHeaderText("Pedido finalizado");
 			dialogoInfo.showAndWait();
 			getStage().close();
+			THSFrontUtils.updateOrder();
 		} catch (ManagersExceptions e) {
 			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 			dialogoInfo.setTitle("Erro!");
@@ -159,10 +157,14 @@ public class ControllerPaymentRelation extends GenericController{
 				if(mouseEvent.getClickCount() == 2){
 					PaymentMethod paymentMethod = table.getSelectionModel().getSelectedItem();
 					if(paymentMethod != null){
-//						ScreenOrderModal orderModal = new ScreenOrderModal();
-//						orderModal.setLastController(this);
-//						orderModal.setOrder(order);
-//						orderModal.start(new Stage());
+						ScreenPaymentMethodModal screen = new ScreenPaymentMethodModal();
+						screen.setController(this);
+						screen.setOrder(order);
+						screen.setPayment(payment);
+						screen.setInstallment(installment);
+						screen.setNewPaymentMethod(false);
+						screen.setPaymentMethod(paymentMethodSelect);
+						screen.start(new Stage());
 					}
 				}else{
 					paymentMethodSelect = table.getSelectionModel().getSelectedItem();
@@ -199,7 +201,7 @@ public class ControllerPaymentRelation extends GenericController{
 			}else{
 				if(payment != null){
 					labelValuePayed.setText(OrderManager.getValuePriceAsString(payment.getAmountReceived()));
-					if(payment.getAmount().equals(payment.getAmountReceived())){
+					if(payment.getAmount().compareTo(payment.getAmountReceived()) == 0){
 						buttonNew.setDisable(true);
 						buttonFinishOrder.setDisable(false);
 					}else{
@@ -218,7 +220,13 @@ public class ControllerPaymentRelation extends GenericController{
 		try {
 			paymentMethods = PaymentManager.getPaymentMethodsByOrder(order);
 			columnOne.setCellValueFactory(new PropertyValueFactory<>("id"));
-			columnTwo.setCellValueFactory(new PropertyValueFactory<>("type"));
+//			columnTwo.setCellValueFactory(new PropertyValueFactory<>("type"));
+			columnTwo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PaymentMethod,String>, ObservableValue<String>>(){
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<PaymentMethod, String> paymentMethod) {
+					return new SimpleStringProperty(PaymentManager.getDescriptionPaymentMethod(paymentMethod.getValue().getType()));
+				}
+			});
 			columnThree.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PaymentMethod,String>, ObservableValue<String>>(){
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PaymentMethod, String> paymentMethod) {

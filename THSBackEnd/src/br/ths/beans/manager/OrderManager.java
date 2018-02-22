@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.ths.beans.CommerceItem;
+import br.ths.beans.Image;
 import br.ths.beans.Order;
 import br.ths.beans.PaymentMethod;
 import br.ths.beans.Profile;
@@ -29,6 +30,7 @@ public class OrderManager {
 	
 	private static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 	private  static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private  static final SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
 	private static OrderDao cd;
 	
 	public static Boolean update(Order order) throws ManagersExceptions {
@@ -58,8 +60,28 @@ public class OrderManager {
 		return Boolean.valueOf(getOrderDao().createOrder(order));
 	}
 
-	public static Boolean delete(Order order) {
-		return Boolean.valueOf(getOrderDao().deleteOrder(order.getId()));
+	public static Boolean delete(Order order) throws ManagersExceptions {
+		if(orderIsOpen(order)){
+			List<CommerceItem> cisOrder = CommerceItemManager.getCommerceItemsByOrder(order);//pega todos os commerceItens da order para deletar
+			if(CommerceItemManager.delete(cisOrder)){
+				List<Image> images = ImageManager.getImages(order);
+				if(ImageManager.delete(images)){
+					return Boolean.valueOf(getOrderDao().deleteOrder(order.getId()));
+				}
+				ManagersExceptions me = new ManagersExceptions();
+				me.setId(18);
+				me.setExcepetionMessage("Erro ao deletar imagens do pedido");
+				throw me;
+			}
+			ManagersExceptions me = new ManagersExceptions();
+			me.setId(18);
+			me.setExcepetionMessage("Erro ao deletar os itens do pedido");
+			throw me;
+		}
+		ManagersExceptions me = new ManagersExceptions();
+		me.setId(18);
+		me.setExcepetionMessage("Pedido não está mais aberto. Só é possível excluir pedidos abertos.");
+		throw me;
 	}
 	
 	public static List<Order> getOrders() {
@@ -184,6 +206,15 @@ public class OrderManager {
 			date=sdf.format(scheduler);
 		}
 		return date;
+	}
+	
+	public static String getTimeAsString(Date date){
+		String dateString = "";
+		if(date == null){
+			return null;
+		}
+		dateString=sdfTime.format(date);
+		return dateString;
 	}
 	
 	public static String getSubTotalAmountAsString(Order order){

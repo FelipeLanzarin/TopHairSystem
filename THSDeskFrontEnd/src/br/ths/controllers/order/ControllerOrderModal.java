@@ -46,6 +46,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -361,7 +363,7 @@ public class ControllerOrderModal extends GenericController{
 					lastController.updateTable();
 				}
 			}
-			THSFrontUtils.getControllerMain().selectDate();
+			THSFrontUtils.updateOrder();
 		}catch (ManagersExceptions me) {
 			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 			dialogoInfo.setTitle("Erro!");
@@ -403,6 +405,7 @@ public class ControllerOrderModal extends GenericController{
 				if(lastController != null){
 					lastController.updateTable();
 				}
+				THSFrontUtils.updateOrder();
 			}
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -450,7 +453,28 @@ public class ControllerOrderModal extends GenericController{
 	}
 	public void deleteOrder(){
 		try{
+			final ButtonType btnSim = new ButtonType("Sim");
+			final ButtonType btnNao = new ButtonType("Não");
 			
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja excluir o Pedido "+ order.getId()+"?", btnSim, btnNao);
+			alert.showAndWait();
+
+			if (alert.getResult() == btnSim) {
+				if(OrderManager.delete(order)){
+					getStage().close();
+					Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
+					dialog.setTitle("Sucesso!");
+					dialog.setHeaderText("Pedido excluído com sucesso");
+					dialog.showAndWait();
+					THSFrontUtils.updateOrder();
+				}
+			}
+		}catch (ManagersExceptions e) {
+			Alert dialog = new Alert(Alert.AlertType.ERROR);
+			dialog.setTitle("Erro!");
+			dialog.setHeaderText("Erro ao excluir pedido");
+			dialog.setContentText(e.getExcepetionMessage());
+			dialog.showAndWait();
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -488,10 +512,7 @@ public class ControllerOrderModal extends GenericController{
 
 				if (alert.getResult() == btnSim) {
 					if(CommerceItemManager.delete(ci)){
-//						Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-//						dialog.setTitle("Sucesso!");
-//						dialog.setHeaderText("Produto removido com sucesso");
-//						dialog.showAndWait();
+
 						updateTable(null,true);
 					}else{
 						Alert dialog = new Alert(Alert.AlertType.ERROR);
@@ -540,13 +561,29 @@ public class ControllerOrderModal extends GenericController{
 			LogTools.logError(e);
 		}
 	}
-	
-	public void clickTable(){
+	@FXML
+	public void clickTable(MouseEvent mouseEvent){
 		try{
-			if(OrderManager.orderIsOpen(order)){
-				CommerceItem commerceItem = table.getSelectionModel().getSelectedItem();
-				if(commerceItem != null){
-					disableButtons(false);
+			if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+				if(mouseEvent.getClickCount() == 2){
+					CommerceItem commerceItem = table.getSelectionModel().getSelectedItem();
+					if(commerceItem != null){
+						ScreenCommerceItemModal screen = new ScreenCommerceItemModal();
+						screen.setOrder(order);
+						screen.setOrderModal(this);
+						screen.setNewCommerceItem(false);
+						screen.setCommerceItem(commerceItem);
+						screen.setStageCatalog(null);
+						screen.setOnlySee(true);
+						screen.start(new Stage());
+					}
+				}else{
+					if(OrderManager.orderIsOpen(order)){
+						CommerceItem commerceItem = table.getSelectionModel().getSelectedItem();
+						if(commerceItem != null){
+							disableButtons(false);
+						}
+					}
 				}
 			}
 		}catch (Exception e) {

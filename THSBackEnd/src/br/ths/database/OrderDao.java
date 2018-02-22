@@ -140,7 +140,6 @@ public class OrderDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Order> getOrdersByProfileId (Integer id){
-		//TODO adjust the order
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		List<Order> orders = null;
 		String sql = "select * from ths_order o "

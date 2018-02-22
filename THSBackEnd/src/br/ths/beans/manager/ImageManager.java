@@ -1,17 +1,13 @@
 package br.ths.beans.manager;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import br.ths.beans.Image;
 import br.ths.beans.Order;
 import br.ths.database.ImageDao;
 import br.ths.exceptions.ManagersExceptions;
+import br.ths.tools.log.LogTools;
 
 public class ImageManager {
 	
@@ -28,7 +24,57 @@ public class ImageManager {
 	}
 
 	public static Boolean delete(Image image) throws ManagersExceptions {
-		return Boolean.valueOf(getImageDao().deleteImage(image.getId()));
+		if(Boolean.valueOf(getImageDao().deleteImage(image.getId()))){
+			File file = new File(image.getPath());
+    		if(!file.delete()){
+    			LogTools.logError("Não foi possivel deletar o arquivo "+ image.getPath());
+    		}
+    		return true;
+		}
+		return false;
+	}
+	
+	public static Boolean delete(List<Image> images) throws ManagersExceptions {
+		if(Boolean.valueOf(getImageDao().deleteImage(images))){
+			String path = "";
+			for (Image image : images) {
+				path = image.getPath();
+				File file = new File(image.getPath());
+				if(!file.delete()){
+					LogTools.logError("Não foi possivel deletar o arquivo "+ image.getPath());
+				}
+			}
+			if(path.equals("")){
+				return true;
+			}
+			//remove o diretorio
+			String[] split = path.split("/");
+			int count = 0;
+			String pathDelete = "";
+			for (String string : split) {
+				count++;
+				if(count == 2){
+					pathDelete+=string;
+					break;
+				}else{
+					pathDelete+=string+"/";
+				}
+			}
+			File file = new File(pathDelete);
+			if (file.isDirectory()) {
+				File[] sun = file.listFiles();
+				for (File toDelete : sun) {
+					if(!toDelete.delete()){
+						LogTools.logError("Não foi possivel deletar o diretorio");
+					}
+				}
+			}
+			if(!file.delete()){
+				LogTools.logError("Não foi possivel deletar o diretorio");
+			}
+    		return true;
+		}
+		return false;
 	}
 	
 	public static List<Image> getImagesAfter(Order order) {
@@ -37,6 +83,10 @@ public class ImageManager {
 	
 	public static List<Image> getImagesBefore(Order order) {
 		return getImageDao().getImagesBefore(order.getId());
+	}
+	
+	public static List<Image> getImages(Order order) {
+		return getImageDao().getImages(order.getId());
 	}
 	
 	public static String setImagePath(Image image){

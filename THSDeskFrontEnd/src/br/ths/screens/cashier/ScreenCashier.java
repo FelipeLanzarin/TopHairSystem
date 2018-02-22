@@ -1,10 +1,10 @@
-package br.ths.screens.order;
-
+package br.ths.screens.cashier;
+	
 import java.net.URL;
 
-import br.ths.controllers.order.ControllerOrderRelation;
+import br.ths.beans.manager.CashierManager;
+import br.ths.controllers.cashier.ControllerCashierRelationManager;
 import br.ths.tools.log.LogTools;
-import br.ths.utils.THSFrontUtils;
 import br.ths.utils.XmlPathUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,21 +12,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ScreenOrderRelation extends Application {
+
+public class ScreenCashier extends Application {
+	
 	
 	@Override
 	public void start(Stage stage) {
 		try {
-			URL arquivoFXML = getClass().getResource(XmlPathUtils.ORDER_RELATION);
+			URL arquivoFXML = getClass().getResource(XmlPathUtils.CASHIER);
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));
-			ControllerOrderRelation control = (ControllerOrderRelation) loader.getController();
-			THSFrontUtils.setControllerOrderRelationSession(control);
-			control.setStage(stage);
-			control.createTable();
 			stage.setResizable(false);
-			stage.setTitle("Top Hair System");
+			stage.setTitle("Caixa");
+			ControllerCashierRelationManager controller = (ControllerCashierRelationManager) loader.getController();
+			controller.setCashier(CashierManager.getCashier(1));
+			controller.createTable();
+			controller.setStage(stage);
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);

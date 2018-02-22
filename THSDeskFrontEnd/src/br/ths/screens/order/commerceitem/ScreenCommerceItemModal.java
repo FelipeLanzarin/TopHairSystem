@@ -23,6 +23,7 @@ public class ScreenCommerceItemModal extends Application {
 	private CommerceItem commerceItem;
 	private Order order;
 	private Stage stageCatalog;
+	private Boolean onlySee;
 	
 	@Override
 	public void start(Stage stage) {
@@ -42,6 +43,7 @@ public class ScreenCommerceItemModal extends Application {
 			controllerCommerceItemModal.setProduct(produtc);
 			controllerCommerceItemModal.setStage(stage);
 			controllerCommerceItemModal.setStageCatalog(stageCatalog);
+			controllerCommerceItemModal.setOnlySee(onlySee);
 			stage.show();
 		} catch(Exception e) {
 			LogTools.logError(e);
@@ -95,4 +97,13 @@ public class ScreenCommerceItemModal extends Application {
 	public void setStageCatalog(Stage stageCatalog) {
 		this.stageCatalog = stageCatalog;
 	}
+
+	public Boolean getOnlySee() {
+		return onlySee;
+	}
+
+	public void setOnlySee(Boolean onlySee) {
+		this.onlySee = onlySee;
+	}
+	
 }

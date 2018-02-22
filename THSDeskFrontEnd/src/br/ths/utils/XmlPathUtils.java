@@ -2,6 +2,7 @@ package br.ths.utils;
 
 public class XmlPathUtils {
 	
+	public static final String LOGIN = "/front/ths/xml/main/login.fxml";
 	public static final String MAIN = "/front/ths/xml/main/main.fxml";
 	public static final String LOAD_BD = "/front/ths/xml/main/loadBd.fxml";
 	public static final String EMPLOYEE_MODAL = "/front/ths/xml/branch/employee/employeeModal.fxml";
@@ -34,4 +35,6 @@ public class XmlPathUtils {
 	public static final String PAYMENT_METHOD_MODAL = "/front/ths/xml/order/payment/paymentMethodModal.fxml";
 	public static final String COMMERCE_ITEM_MODAL = "/front/ths/xml/order/commerceitem/commerceitemModal.fxml";
 	public static final String IMAGE_RELATION = "/front/ths/xml/order/image/imageRelation.fxml";
+	public static final String CASHIER = "/front/ths/xml/cashier/cashierRelationManager.fxml";
+	public static final String TRANSACTION_MODAL = "/front/ths/xml/cashier/transactionModal.fxml";
 }

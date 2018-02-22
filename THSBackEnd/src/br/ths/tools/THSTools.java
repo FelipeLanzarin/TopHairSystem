@@ -30,11 +30,12 @@ public class THSTools {
 	public static void setUserBranchSession(UserBranch userBranchSession) {
 		THSTools.userBranchSession = userBranchSession;
 	}
-	public static void setConfSession(){
+	public static void setConfSession(UserBranch userBranch){
 		CompanyDao cd = new CompanyDao();
 		setCompanySession(cd.getCompany(1));
 		BranchCompanyDao cbd = new BranchCompanyDao();
 		setBranchCompanySession(cbd.getBranchCompany(1));
+		setUserBranchSession(userBranch);
 	}
 	
 }

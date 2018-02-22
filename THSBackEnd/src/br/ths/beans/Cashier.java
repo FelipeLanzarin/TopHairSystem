@@ -18,6 +18,8 @@ public class Cashier {
     @GeneratedValue(generator="SEQ_CASHIER_ID",strategy= GenerationType.SEQUENCE)
 	private Integer id;
 	private Double balance;
+	@Column(name="amout_in_cashier")
+	private Double amountInCashier;
 	@Column(length=9999)
 	private String description;
 	@ManyToOne
@@ -46,6 +48,12 @@ public class Cashier {
 	}
 	public void setBranchCompany(BranchCompany branchCompany) {
 		this.branchCompany = branchCompany;
+	}
+	public Double getAmountInCashier() {
+		return amountInCashier;
+	}
+	public void setAmountInCashier(Double amountInCashier) {
+		this.amountInCashier = amountInCashier;
 	}
 	
 }

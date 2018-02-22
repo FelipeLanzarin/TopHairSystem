@@ -14,10 +14,12 @@ import java.util.ResourceBundle;
 
 import br.ths.beans.Order;
 import br.ths.beans.Profile;
+import br.ths.beans.UserBranch;
 import br.ths.beans.manager.OrderManager;
 import br.ths.screens.branch.catalog.ScreenCatalogCategory;
 import br.ths.screens.branch.catalog.product.ScreenProductRelationManager;
 import br.ths.screens.branch.employee.ScreenEmployeeRelationManager;
+import br.ths.screens.cashier.ScreenCashier;
 import br.ths.screens.catalog.category.ScreenCategoryRelationManager;
 import br.ths.screens.catalog.subcategory.ScreenSubCategoryRelationManager;
 import br.ths.screens.city.ScreenCityRelationManager;
@@ -27,6 +29,7 @@ import br.ths.screens.profile.ScreenProfileRelation;
 import br.ths.screens.profile.ScreenProfileRelationManager;
 import br.ths.screens.profile.ScreenProfileSelection;
 import br.ths.screens.user.ScreenUserRelationManager;
+import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
@@ -37,6 +40,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -51,6 +55,7 @@ public class ControllerMain extends GenericController{
 	@FXML private AnchorPane anchorPaneLeft;
 	@FXML private AnchorPane anchorPaneCenter;
 	@FXML private AnchorPane anchorPaneRight;
+	@FXML private Menu configuration;
 		
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -59,8 +64,16 @@ public class ControllerMain extends GenericController{
 		calendar.setTime(date);
 		date = calendar.getTime();    
 		populateScheduler(date);
+		blockFeatures();
 	}
 	
+	private void blockFeatures() {
+		UserBranch user = THSTools.getUserBranchSession();
+		if(!user.getType().equals("admin")){
+			configuration.setDisable(true);
+		}
+
+	}
 	
 	
 	private void populateScheduler(Date date){
@@ -191,6 +204,15 @@ public class ControllerMain extends GenericController{
 			c.set(ld.getYear(), ld.getMonthValue()-1, ld.getDayOfMonth());
 			c.add(Calendar.DAY_OF_MONTH, -1);
 			populateScheduler(c.getTime());
+		}
+	}
+	
+	public void openCashier(){
+		try{
+			ScreenCashier screen = new ScreenCashier();
+			screen.start(new Stage());
+		}catch (Exception e) {
+			LogTools.logError(e);
 		}
 	}
 	

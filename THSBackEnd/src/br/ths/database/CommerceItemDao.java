@@ -89,6 +89,32 @@ public class CommerceItemDao {
 		return true;
 	}
 	
+	public boolean deleteCommerceItem(List<CommerceItem> cis){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		try{
+			if(cis == null){
+				return false;
+			}
+			em.getTransaction().begin();
+			for (CommerceItem commerceItem : cis) {
+				commerceItem = em.merge(commerceItem);
+				em.remove(commerceItem);
+			}
+			em.getTransaction().commit();
+		}catch (Exception e) {
+			LogTools.logError("erro ao excluir : "+ e.toString());
+			try{
+				em.getTransaction().rollback();
+			}catch (Exception ex) {
+				LogTools.logError("erro ao  dar roolback: "+ e.toString());
+			}
+			return false;
+		}finally{
+			em.close();
+		}
+		return true;
+	}
+	
 	public CommerceItem getCommerceItem(Integer id){
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		CommerceItem commerceItem = null;

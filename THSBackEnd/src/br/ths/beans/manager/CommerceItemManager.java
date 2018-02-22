@@ -50,6 +50,10 @@ public class CommerceItemManager {
 		return Boolean.valueOf(getCommerceItemDao().deleteCommerceItem(commerceItem.getId()));
 	}
 	
+	public static Boolean delete(List<CommerceItem> commerceItems) {
+		return Boolean.valueOf(getCommerceItemDao().deleteCommerceItem(commerceItems));
+	}
+	
 	public static List<CommerceItem> getCommerceItems() {
 		return getCommerceItemDao().getCommerceItems();
 	}

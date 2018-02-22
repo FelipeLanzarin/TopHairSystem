@@ -20,7 +20,7 @@
               <menus>
                   <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Caixa">
                      <items>
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: SansSerif Regular;" text="Visualizar" />
+                        <MenuItem mnemonicParsing="false" onAction="#openCashier" style="-fx-font-family: SansSerif Regular;" text="Visualizar" />
                      </items>
                   </Menu>
                 <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Pedidos">
@@ -49,7 +49,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#openSubCategoryManager" style="-fx-font-family: SansSerif Regular;" text="Subcategoria" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Configurações">
+                  <Menu fx:id="configuration" mnemonicParsing="false" style="-fx-font-family: SansSerif Regular; -fx-font-size: 14;" text="Configurações">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#openUserRelationManager" style="-fx-font-family: SansSerif Regular;" text="Usuários" />
                      </items>

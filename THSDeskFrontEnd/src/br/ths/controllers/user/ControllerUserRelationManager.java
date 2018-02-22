@@ -6,6 +6,7 @@ import java.util.List;
 import br.ths.beans.UserBranch;
 import br.ths.beans.manager.UserBranchManager;
 import br.ths.screens.user.ScreenUserModal;
+import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
 import fx.tools.controller.GenericController;
 import javafx.beans.property.SimpleStringProperty;
@@ -53,6 +54,13 @@ public class ControllerUserRelationManager extends GenericController{
 			if(user == null){
 				return;
 			}
+			if(user.getLogin().equals("admin")){
+				Alert dialog = new Alert(Alert.AlertType.ERROR);
+				dialog.setTitle("Erro!");
+				dialog.setHeaderText("Você não tem permissão para editar o usuário admin!");
+				dialog.showAndWait();
+				return;
+			}
 			ScreenUserModal scream = new ScreenUserModal();
 			scream.setNewUser(false);
 			scream.setRelation(this);
@@ -67,6 +75,20 @@ public class ControllerUserRelationManager extends GenericController{
 		try {
 			UserBranch user = table.getSelectionModel().getSelectedItem();
 			if(user == null){
+				return;
+			}
+			if(user.getLogin().equals("admin")){
+				Alert dialog = new Alert(Alert.AlertType.ERROR);
+				dialog.setTitle("Erro!");
+				dialog.setHeaderText("Você não tem permissão para excluir o usuário admin!");
+				dialog.showAndWait();
+				return;
+			}
+			if(user.getLogin().equals(THSTools.getUserBranchSession().getLogin())){
+				Alert dialog = new Alert(Alert.AlertType.ERROR);
+				dialog.setTitle("Erro!");
+				dialog.setHeaderText("Você não pode excluir o usuário que está logado nessa sessão!");
+				dialog.showAndWait();
 				return;
 			}
 			final ButtonType btnSim = new ButtonType("Sim");

@@ -51,7 +51,7 @@ public class ControllerPaymentMethodModal implements Initializable{
 			if(paymentMethod == null){
 				paymentMethod = new PaymentMethod();
 			}
-			paymentMethod.setType(comboType.getSelectionModel().getSelectedItem());
+			paymentMethod.setType(PaymentManager.getTypePaymentMethod(comboType.getSelectionModel().getSelectedItem()));
 			paymentMethod.setAmount(OrderManager.getValuePriceAsDouble(textValue.getText()));
 			paymentMethod.setOrder(order);
 			paymentMethod.setPayment(payment);
@@ -105,6 +105,12 @@ public class ControllerPaymentMethodModal implements Initializable{
 				textValue.setStyle(STYLE_ERROR);
 				valid = false;
 			}
+			Double value = OrderManager.getValuePriceAsDouble(textValue.getText());
+			int compare = value.compareTo(0.0d);
+			if(compare == 0){
+				textValue.setStyle(STYLE_ERROR);
+				valid = false;
+			}
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
@@ -124,11 +130,7 @@ public class ControllerPaymentMethodModal implements Initializable{
 	
 	private String getType(String statePaymentMethod){
 		try {
-			for (String string : types) {
-				if(statePaymentMethod.equalsIgnoreCase(string)){
-					return string;
-				}
-			}
+			return PaymentManager.getDescriptionPaymentMethod(statePaymentMethod);
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}

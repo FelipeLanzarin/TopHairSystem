@@ -40,6 +40,8 @@ public class ControllerCommerceItemModal extends GenericController{
 	@FXML private MaskMoney textAmount;
 	@FXML private TextArea textDescription;
 	@FXML private Button buttonAdd;
+	@FXML private Button buttonLess;
+	@FXML private Button buttonPlus;
 	
 	private Stage stage;
 	private Stage stageCatalog;
@@ -49,6 +51,7 @@ public class ControllerCommerceItemModal extends GenericController{
 	private ControllerOrderModal orderModal;
 	private Product product;
 	private Order order;
+	private Boolean onlySee;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -411,9 +414,25 @@ public class ControllerCommerceItemModal extends GenericController{
 		return stageCatalog;
 	}
 
-
 	public void setStageCatalog(Stage stageCatalog) {
 		this.stageCatalog = stageCatalog;
+	}
+
+	public Boolean getOnlySee() {
+		return onlySee;
+	}
+
+	public void setOnlySee(Boolean onlySee) {
+		this.onlySee = onlySee;
+		if(onlySee != null && onlySee){
+			buttonAdd.setVisible(false);
+			buttonLess.setVisible(false);
+			buttonPlus.setVisible(false);
+			textAmount.setEditable(false);
+			textDescription.setEditable(false);
+			textDiscount.setEditable(false);
+			textQuantity.setEditable(false);
+		}
 	}
 	
 }

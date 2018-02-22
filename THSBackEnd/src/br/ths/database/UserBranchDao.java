@@ -100,7 +100,6 @@ public class UserBranchDao {
 			em.close();
 		}
 		return userBranch;
-	}
-	
+	}	
 	
 }
