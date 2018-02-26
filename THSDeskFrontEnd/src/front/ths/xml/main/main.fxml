@@ -63,7 +63,7 @@
             </MenuBar>
             <Pane layoutX="-1.0" layoutY="32.0" prefHeight="65.0" prefWidth="1300.0">
                <children>
-                  <Text fontSmoothingType="LCD" layoutX="476.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mari Ruas Cabeleireira" textOrigin="TOP" wrappingWidth="336.13671875">
+                  <Text fx:id="labelTitle" fontSmoothingType="LCD" layoutX="476.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mari Ruas Cabeleireira" textOrigin="TOP" wrappingWidth="336.13671875">
                      <font>
                         <Font name="SansSerif Regular" size="30.0" />
                      </font>

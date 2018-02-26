@@ -9,7 +9,6 @@
 		<class> br.ths.beans.Cashier</class>
 		<class> br.ths.beans.Category</class>
 		<class> br.ths.beans.City</class>
-		<class> br.ths.beans.Client</class>
 		<class> br.ths.beans.CommerceItem</class>
 		<class> br.ths.beans.Company</class>
 		<class> br.ths.beans.Employee</class>
@@ -17,7 +16,9 @@
 		<class> br.ths.beans.Installment</class>
 		<class> br.ths.beans.Order</class>
 		<class> br.ths.beans.Payment</class>
+		<class> br.ths.beans.PaymentMethod</class>
 		<class> br.ths.beans.Product</class>
+		<class> br.ths.beans.Profile</class>
 		<class> br.ths.beans.SubCategory</class>
 		<class> br.ths.beans.Transaction</class>
 		<class> br.ths.beans.UserBranch</class>

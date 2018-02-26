@@ -3,6 +3,7 @@ package br.ths.screens.main;
 import java.io.IOException;
 import java.net.URL;
 
+import br.ths.controllers.main.ControllerLogin;
 import br.ths.controllers.main.ControllerMain;
 import br.ths.database.EntityManagerUtil;
 import br.ths.tools.log.LogTools;
@@ -38,9 +39,8 @@ public class Main extends Application {
 					System.exit(0);
 				}
 			});
-//			 controller = (ControllerMain) loader.getController();
-//			controller.setStage(stage);
-//			THSFrontUtils.setControllerMain(controller);
+			ControllerLogin controller = (ControllerLogin) loader.getController();
+			controller.setStage(stage);
 			stage.show();
 			stageMain = stage;
 		} catch(Exception e) {

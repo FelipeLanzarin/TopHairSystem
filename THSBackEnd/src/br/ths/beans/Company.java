@@ -22,6 +22,7 @@ public class Company {
 	@Column(name="creation_date")
 	private Date creationDate;
 	private String name;
+	private String description;
 	private String cnpj;
 	private String address;
 	private String number;
@@ -98,4 +99,11 @@ public class Company {
 	public void setCity(City city) {
 		this.city = city;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

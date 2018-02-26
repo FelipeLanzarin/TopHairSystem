@@ -3,8 +3,10 @@ package br.ths.controllers.main;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import br.ths.database.EntityManagerUtil;
 import br.ths.exceptions.ManagersExceptions;
 import br.ths.screens.main.ManagerInitBD;
+import br.ths.tools.THSTools;
 import br.ths.tools.log.LogTools;
 import br.ths.utils.THSFrontUtils;
 import fx.tools.controller.GenericController;
@@ -64,7 +66,34 @@ public class ControllerLogin extends GenericController{
 			@Override
 			public void run() {
 				try {
-					THSFrontUtils.login(textUser.getText(), textPassword.getText());
+					if(THSFrontUtils.login(textUser.getText(), textPassword.getText())){
+						try {
+							if(THSTools.verifyStatusCompany(THSTools.getCompanySession())){
+								THSFrontUtils.getMain().openMain();
+							}else{
+								Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+								dialogoInfo.setTitle("Erro!");
+								dialogoInfo.setHeaderText("Encontramos um pagamento pendente na sua conta!");
+								dialogoInfo.setContentText("Entre em contato com o administrador.");
+								dialogoInfo.showAndWait();
+								getStage().close();
+								EntityManagerUtil.finalizefinalize();
+								Platform.exit();
+								System.exit(0);
+							}
+						} catch (Exception e) {
+							Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+							dialogoInfo.setTitle("Erro!");
+							dialogoInfo.setHeaderText("Erro de conexão!");
+							dialogoInfo.setContentText("Verifique a sua conxão com a internet. Se o erro persistir entre em contato com o administrador.");
+							dialogoInfo.showAndWait();
+							e.printStackTrace();
+							getStage().close();
+							EntityManagerUtil.finalizefinalize();
+							Platform.exit();
+							System.exit(0);
+						}
+					}
 				} catch (ManagersExceptions e) {
 					gif.setVisible(false);
 					labelConect.setVisible(false);

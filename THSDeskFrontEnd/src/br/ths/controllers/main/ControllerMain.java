@@ -44,6 +44,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ControllerMain extends GenericController{
@@ -56,6 +57,7 @@ public class ControllerMain extends GenericController{
 	@FXML private AnchorPane anchorPaneCenter;
 	@FXML private AnchorPane anchorPaneRight;
 	@FXML private Menu configuration;
+	@FXML private Text labelTitle;
 		
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -65,6 +67,7 @@ public class ControllerMain extends GenericController{
 		date = calendar.getTime();    
 		populateScheduler(date);
 		blockFeatures();
+		labelTitle.setText(THSTools.getCompanySession().getDescription());
 	}
 	
 	private void blockFeatures() {
@@ -75,6 +78,15 @@ public class ControllerMain extends GenericController{
 
 	}
 	
+	@Override
+	public void updateTable() {
+		if(textDate.getValue() != null){
+			LocalDate ld = textDate.getValue();
+			Calendar c =  Calendar.getInstance();
+			c.set(ld.getYear(), ld.getMonthValue()-1, ld.getDayOfMonth());
+			populateScheduler(c.getTime());
+		}
+	}
 	
 	private void populateScheduler(Date date){
 		Instant instant = Instant.ofEpochMilli(date.getTime());

@@ -39,7 +39,6 @@ public class THSFrontUtils {
 			String encryptyPassword = UserBranchManager.getPasswordEncrypted(password);
 			if(userBranch.getPassword().equals(encryptyPassword)){
 				THSTools.setConfSession(userBranch);
-				getMain().openMain();
 				return true;
 			}
 		}

@@ -3,6 +3,7 @@ package br.ths.tools;
 import br.ths.beans.BranchCompany;
 import br.ths.beans.Company;
 import br.ths.beans.UserBranch;
+import br.ths.configuration.StatusCompanyDao;
 import br.ths.database.BranchCompanyDao;
 import br.ths.database.CompanyDao;
 
@@ -36,6 +37,13 @@ public class THSTools {
 		BranchCompanyDao cbd = new BranchCompanyDao();
 		setBranchCompanySession(cbd.getBranchCompany(1));
 		setUserBranchSession(userBranch);
+	}
+	public static Boolean verifyStatusCompany(Company company) throws Exception{
+		Boolean status = StatusCompanyDao.getStatus(company.getName());
+		if(status == null){
+			status = false;
+		}
+		return status;
 	}
 	
 }

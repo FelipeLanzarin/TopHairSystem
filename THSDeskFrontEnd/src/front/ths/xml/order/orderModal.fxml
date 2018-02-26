@@ -224,7 +224,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="764.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#openImages" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #ea6f03; -fx-background-color: #f17704; -fx-border-radius: 2; -fx-background-radius: 2;" text="Imagems" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="764.0" layoutY="488.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#openImages" prefHeight="42.0" prefWidth="228.0" style="-fx-border-color: #ea6f03; -fx-background-color: #f17704; -fx-border-radius: 2; -fx-background-radius: 2;" text="Imagens" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
