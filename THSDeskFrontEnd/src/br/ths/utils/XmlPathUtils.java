@@ -33,7 +33,7 @@ public class XmlPathUtils {
 	public static final String ORDER_RELATION = "/front/ths/xml/order/orderRelation.fxml";
 	public static final String PAYMENT_RELATION_MANAGER = "/front/ths/xml/order/payment/paymentRelationManager.fxml";
 	public static final String PAYMENT_METHOD_MODAL = "/front/ths/xml/order/payment/paymentMethodModal.fxml";
-	public static final String COMMERCE_ITEM_MODAL = "/front/ths/xml/order/commerceitem/commerceitemModal.fxml";
+	public static final String COMMERCE_ITEM_MODAL = "/front/ths/xml/order/commerceitem/commerceItemModal.fxml";
 	public static final String IMAGE_RELATION = "/front/ths/xml/order/image/imageRelation.fxml";
 	public static final String CASHIER = "/front/ths/xml/cashier/cashierRelationManager.fxml";
 	public static final String TRANSACTION_MODAL = "/front/ths/xml/cashier/transactionModal.fxml";

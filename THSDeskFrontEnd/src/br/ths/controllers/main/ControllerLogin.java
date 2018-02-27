@@ -30,8 +30,8 @@ public class ControllerLogin extends GenericController{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		textUser.setText("admin");
-		textPassword.setText("C0nnect123");
+//		textUser.setText("admin");
+//		textPassword.setText("C0nnect123");
 	}
 	public void login() {
 		if(validateFiedls()){

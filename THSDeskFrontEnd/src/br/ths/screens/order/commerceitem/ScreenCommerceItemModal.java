@@ -28,8 +28,9 @@ public class ScreenCommerceItemModal extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			//TODO implementar conexão com o banco
+//			LogTools.logDebug("arquivo = "+ XmlPathUtils.COMMERCE_ITEM_MODAL);
 			URL arquivoFXML = getClass().getResource(XmlPathUtils.COMMERCE_ITEM_MODAL);
+//			LogTools.logDebug(arquivoFXML.toString());
 			FXMLLoader loader = new FXMLLoader(arquivoFXML);
 			Parent fxmlParent = (Parent) loader.load();
 			stage.setScene(new Scene(fxmlParent));

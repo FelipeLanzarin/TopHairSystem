@@ -395,17 +395,25 @@ public class ControllerOrderModal extends GenericController{
 				dialog.showAndWait();
 				return;
 			}
-			order.setStatus("attended");
-			if(OrderManager.update(order)){
-				manageButtons();
-				Alert dialogoInfo = new Alert(Alert.AlertType.CONFIRMATION);
-				dialogoInfo.setTitle("Sucesso!");
-				dialogoInfo.setHeaderText("O pedido marcado como atendido!");
-				dialogoInfo.showAndWait();
-				if(lastController != null){
-					lastController.updateTable();
+			final ButtonType btnSim = new ButtonType("Sim");
+			final ButtonType btnNao = new ButtonType("Não");
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Você deseja marcar como atendido o Pedido "+ order.getId()+"?", btnSim, btnNao);
+			alert.showAndWait();
+
+			if (alert.getResult() == btnSim) {
+				order.setStatus("attended");
+				if(OrderManager.update(order)){
+					manageButtons();
+					Alert dialogoInfo = new Alert(Alert.AlertType.CONFIRMATION);
+					dialogoInfo.setTitle("Sucesso!");
+					dialogoInfo.setHeaderText("O pedido marcado como atendido!");
+					dialogoInfo.showAndWait();
+					if(lastController != null){
+						lastController.updateTable();
+					}
+					THSFrontUtils.updateOrder();
 				}
-				THSFrontUtils.updateOrder();
 			}
 		}catch (Exception e) {
 			LogTools.logError(e);

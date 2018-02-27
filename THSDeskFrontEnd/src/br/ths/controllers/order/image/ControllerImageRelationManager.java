@@ -294,9 +294,7 @@ public class ControllerImageRelationManager extends GenericController{
 		image.setPartOfProcess("before");
 		String path = ImageManager.setImagePath(image);
 		if(path != null){
-			String currentDir = System.getProperty("user.dir")+"/";
 			File newFile = new File(path);
-			
 			if (!newFile.exists()) {
 				if (!newFile.mkdirs()) {
 					//System.out.println("create folder " + newFile.getAbsolutePath());
@@ -321,9 +319,7 @@ public class ControllerImageRelationManager extends GenericController{
 		image.setPartOfProcess("after");
 		String path = ImageManager.setImagePath(image);
 		if(path != null){
-			String currentDir = System.getProperty("user.dir")+"/";
 			File newFile = new File(path);
-			
 			if (!newFile.exists()) {
 				if (!newFile.mkdirs()) {
 					LogTools.logError("Erro ao criar diretorio para relizar backup");

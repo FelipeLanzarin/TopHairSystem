@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import br.ths.beans.Category;
-import br.ths.beans.Order;
 import br.ths.beans.Product;
 import br.ths.beans.SubCategory;
 import br.ths.database.ProductDao;

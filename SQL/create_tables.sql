@@ -1,4 +1,4 @@
-﻿DROP TABLE user_branch;
+DROP TABLE user_branch;
 DROP TABLE balance;
 DROP TABLE commerce_item;
 DROP TABLE image;
@@ -16,6 +16,19 @@ DROP TABLE account;
 DROP TABLE branch_company;
 DROP TABLE company;
 DROP TABLE city;
+
+
+CREATE ROLE thsadmin LOGIN
+  ENCRYPTED PASSWORD 'md54aef4065e1b5e8d5993a19052a4291ce'
+  NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+
+CREATE DATABASE thsbd
+  WITH OWNER = thsadmin
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Portuguese_Brazil.1252'
+       LC_CTYPE = 'Portuguese_Brazil.1252'
+       CONNECTION LIMIT = -1;
 
 CREATE TABLE city
 (
