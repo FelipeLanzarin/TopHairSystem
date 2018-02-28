@@ -155,7 +155,12 @@ public class ControllerMain extends GenericController{
 		scheduler.setFont(getFont());
 		pane.getChildren().add(scheduler);
 		Label name = new Label();
-		name.setText(order.getProfile().getName());
+		String profileName = order.getProfile().getName();
+		String slipt[] = profileName.split(" ");
+		if(slipt.length > 0 ){
+			profileName = slipt[0];
+		}
+		name.setText(profileName);
 		name.setLayoutX(6);
 		name.setLayoutY(24);
 		name.setFont(getFont());

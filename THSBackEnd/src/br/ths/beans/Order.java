@@ -48,6 +48,7 @@ public class Order {
 		this.subTotalAmount = 0.0d;
 		this.discount = 0.0d;
 		this.creationDate = new Date();
+		this.paymentStatus = OrderStatus.WAITING_PAYMENT;
 	}
 	
 	public Integer getId() {

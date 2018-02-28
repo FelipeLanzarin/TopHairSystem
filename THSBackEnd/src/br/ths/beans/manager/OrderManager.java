@@ -14,6 +14,7 @@ import br.ths.beans.PaymentMethod;
 import br.ths.beans.Profile;
 import br.ths.database.OrderDao;
 import br.ths.exceptions.ManagersExceptions;
+import br.ths.utils.OrderStatus;
 
 
 /**
@@ -133,7 +134,8 @@ public class OrderManager {
 			return false;
 		}
 		if(canFinish(order)){
-			order.setStatus("closed");
+			order.setStatus(OrderStatus.CLOSED);
+			order.setPaymentStatus(OrderStatus.PAYED);
 			return update(order);
 		}
 		return false;
