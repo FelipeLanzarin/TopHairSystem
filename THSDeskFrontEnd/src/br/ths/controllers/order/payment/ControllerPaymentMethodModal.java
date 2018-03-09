@@ -185,6 +185,7 @@ public class ControllerPaymentMethodModal implements Initializable{
 		types = new ArrayList<>();
 		types.add("Dinheiro");
 		types.add("Cartão de Crédito");
+		types.add("Cartão de Débito");
 		types.add("Cheque");
 		types.add("Outro");
 		

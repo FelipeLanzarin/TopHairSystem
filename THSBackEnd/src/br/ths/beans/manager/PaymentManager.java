@@ -281,6 +281,9 @@ public class PaymentManager {
 		case "Cartão de Crédito":
 			paymentType = "creditCard";
 			break;
+		case "Cartão de Débito":
+			paymentType = "debit";
+			break;
 		case "Dinheiro":
 			paymentType = "cash";
 			break;
@@ -301,6 +304,9 @@ public class PaymentManager {
 		switch (type) {
 		case "creditCard":
 			paymentType = "Cartão de Crédito";
+			break;
+		case "debit":
+			paymentType = "Cartão de Débito";
 			break;
 		case "cash":
 			paymentType = "Dinheiro";
@@ -325,6 +331,9 @@ public class PaymentManager {
 			break;
 		case "cash":
 			paymentType = "Dinheiro";
+			break;
+		case "debit":
+			paymentType = "Cartão de Débito";
 			break;
 		case "bankCheck":
 			paymentType = "Cheque";

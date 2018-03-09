@@ -1,8 +1,10 @@
 package br.ths.controllers.order;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +40,8 @@ import javafx.util.Callback;
 public class ControllerOrderRelation extends GenericController{
 	
 	@FXML private Label labelTitle;
+	@FXML private Label labelValue;
+	@FXML private Label labelValuePaied;
 	@FXML private TableView<Order> table;
 	@FXML private TableColumn<Order, String> columnOne;
 	@FXML private TableColumn<Order, String> columnTwo;
@@ -96,12 +100,18 @@ public class ControllerOrderRelation extends GenericController{
 		try{
 			String id =  textId.getText();
 			List<Order> listFilter = new ArrayList<>();
+			List<Integer> ids = new ArrayList<>();
 			for (Order order : list) {
 				String orderId = order.getId()+"";
 				if(orderId.contains(id)){
 					listFilter.add(order);
+					ids.add(order.getId());
 				}
 			}
+			Double sumOrders = OrderManager.getSumOrderByIds(ids);
+			Double sumPaied = OrderManager.getSumOrderPaiedByIds(ids);
+			labelValue.setText(OrderManager.getValuePriceAsString(sumOrders));
+			labelValuePaied.setText(OrderManager.getValuePriceAsString(sumPaied));
 			updateTable(listFilter);
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -112,13 +122,19 @@ public class ControllerOrderRelation extends GenericController{
 		try{
 			String name =  textName.getText();
 			List<Order> listFilter = new ArrayList<>();
+			List<Integer> ids = new ArrayList<>();
 			for (Order order : list) {
 				if(order.getProfile() != null){
 					if(order.getProfile().getName().toLowerCase().contains(name.toLowerCase())){
 						listFilter.add(order);
+						ids.add(order.getId());
 					}
 				}
 			}
+			Double sumOrders = OrderManager.getSumOrderByIds(ids);
+			Double sumPaied = OrderManager.getSumOrderPaiedByIds(ids);
+			labelValue.setText(OrderManager.getValuePriceAsString(sumOrders));
+			labelValuePaied.setText(OrderManager.getValuePriceAsString(sumPaied));
 			updateTable(listFilter);
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -168,12 +184,18 @@ public class ControllerOrderRelation extends GenericController{
 				return;
 			}
 			List<Order> listFilter = new ArrayList<>();
+			List<Integer> ids = new ArrayList<>();
 			for (Order order : list) {
 				String statusOrder = OrderManager.getStatusAsString(order);
 				if(statusOrder.equals(status)){
 					listFilter.add(order);
+					ids.add(order.getId());
 				}
 			}
+			Double sumOrders = OrderManager.getSumOrderByIds(ids);
+			Double sumPaied = OrderManager.getSumOrderPaiedByIds(ids);
+			labelValue.setText(OrderManager.getValuePriceAsString(sumOrders));
+			labelValuePaied.setText(OrderManager.getValuePriceAsString(sumPaied));
 			updateTable(listFilter);
 		}catch (Exception e) {
 			LogTools.logError(e);
@@ -182,42 +204,54 @@ public class ControllerOrderRelation extends GenericController{
 	
 	private void filterByDate(){
 		if(initialDate != null && finalDate != null){
-			List<Order> listFilter = new ArrayList<>();
-			for (Order order : list) {
-				if(order.getCreationDate() != null){
-					Date orderDate = order.getCreationDate();
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					String initialDateString = sdf.format(initialDate);
-					String finalDateString = sdf.format(finalDate);
-					String orderDateString = sdf.format(orderDate);
-					Boolean equalsInitial =  initialDateString.equals(orderDateString);
-					Boolean equalsFinalDate = finalDateString.equals(orderDateString);
-					if((initialDate.before(orderDate)|| equalsInitial) && (finalDate.after(orderDate) ||equalsFinalDate)){
-						listFilter.add(order);
-					}
-				}
-			}
+//			List<Order> listFilter = new ArrayList<>();
+//			for (Order order : list) {
+//				if(order.getCreationDate() != null){
+//					Date orderDate = order.getCreationDate();
+//					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//					String initialDateString = sdf.format(initialDate);
+//					String finalDateString = sdf.format(finalDate);
+//					String orderDateString = sdf.format(orderDate);
+//					Boolean equalsInitial =  initialDateString.equals(orderDateString);
+//					Boolean equalsFinalDate = finalDateString.equals(orderDateString);
+//					if((initialDate.before(orderDate)|| equalsInitial) && (finalDate.after(orderDate) ||equalsFinalDate)){
+//						listFilter.add(order);
+//					}
+//				}
+//			}
+			//TODO fazer duas consultas que retornam os valores
+			List<Order> listFilter = OrderManager.getOrdersByCreationDate(initialDate, finalDate);
+			Double sumOrders = OrderManager.getSumOrderByDate(initialDate, finalDate);
+			Double sumPaied = OrderManager.getSumOrderPaiedByDate(initialDate, finalDate);
+			labelValue.setText(OrderManager.getValuePriceAsString(sumOrders));
+			labelValuePaied.setText(OrderManager.getValuePriceAsString(sumPaied));
 			updateTable(listFilter);
 		}
 	}
 	
 	private void filterByDateAt(){
 		if(initialDateAt != null && finalDateAt != null){
-			List<Order> listFilter = new ArrayList<>();
-			for (Order order : list) {
-				if(order.getScheduler() != null){
-					Date orderDate = order.getScheduler();
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					String initialDateString = sdf.format(initialDateAt);
-					String finalDateString = sdf.format(finalDateAt);
-					String orderDateString = sdf.format(orderDate);
-					Boolean equalsInitial =  initialDateString.equals(orderDateString);
-					Boolean equalsFinalDate = finalDateString.equals(orderDateString);
-					if((initialDateAt.before(orderDate)|| equalsInitial) && (finalDateAt.after(orderDate) ||equalsFinalDate)){
-						listFilter.add(order);
-					}
-				}
-			}
+//			List<Order> listFilter = new ArrayList<>();
+//			for (Order order : list) {
+//				if(order.getScheduler() != null){
+//					Date orderDate = order.getScheduler();
+//					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//					String initialDateString = sdf.format(initialDateAt);
+//					String finalDateString = sdf.format(finalDateAt);
+//					String orderDateString = sdf.format(orderDate);
+//					Boolean equalsInitial =  initialDateString.equals(orderDateString);
+//					Boolean equalsFinalDate = finalDateString.equals(orderDateString);
+//					if((initialDateAt.before(orderDate)|| equalsInitial) && (finalDateAt.after(orderDate) ||equalsFinalDate)){
+//						listFilter.add(order);
+//					}
+//				}
+//			}
+			//TODO fazer duas consultas que retornam os valores
+			List<Order> listFilter = OrderManager.getOrdersByDate(initialDateAt, finalDateAt);
+			Double sumOrders = OrderManager.getSumOrderByDateAt(initialDateAt, finalDateAt);
+			Double sumPaied = OrderManager.getSumOrderPaiedByDateAt(initialDateAt, finalDateAt);
+			labelValue.setText(OrderManager.getValuePriceAsString(sumOrders));
+			labelValuePaied.setText(OrderManager.getValuePriceAsString(sumPaied));
 			updateTable(listFilter);
 		}
 	}
@@ -270,7 +304,19 @@ public class ControllerOrderRelation extends GenericController{
 	
 	public void createTable(){
 		try {
-			list = OrderManager.getOrders();
+			initialDate = getThirtyDateBefore(new Date());
+			finalDate = new Date();
+			Instant instant = Instant.ofEpochMilli(initialDate.getTime());
+		    LocalDate localDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+		    textInitialDate.setValue(localDate);
+		    instant = Instant.ofEpochMilli(finalDate.getTime());
+		    localDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+		    textFinalDate.setValue(localDate);
+			list = OrderManager.getOrdersByCreationDate(initialDate, finalDate);
+			Double sumOrders = OrderManager.getSumOrderByDate(initialDate, finalDate);
+			Double sumPaied = OrderManager.getSumOrderPaiedByDate(initialDate, finalDate);
+			labelValue.setText(OrderManager.getValuePriceAsString(sumOrders));
+			labelValuePaied.setText(OrderManager.getValuePriceAsString(sumPaied));
 			columnOne.setCellValueFactory(new PropertyValueFactory<>("id"));
 			columnTwo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>, ObservableValue<String>>(){
 				@Override
@@ -304,9 +350,21 @@ public class ControllerOrderRelation extends GenericController{
 			});
 		
 			updateTable(list);
+			list = OrderManager.getOrders();
 		}catch (Exception e) {
 			LogTools.logError(e);
 		}
+	}
+	
+	private Date getThirtyDateBefore(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.MILLISECOND, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.add(Calendar.DAY_OF_MONTH, -30);
+	    return calendar.getTime();
 	}
 	
 	public void messageSucess(String message){

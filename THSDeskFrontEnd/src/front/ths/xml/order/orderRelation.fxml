@@ -74,6 +74,26 @@
                   </Text>
                   <DatePicker fx:id="textFinalDateAt" layoutX="638.0" layoutY="50.0" onHiding="#filterByFinalDateAt" prefHeight="31.0" prefWidth="174.0" promptText="Data Final" />
                   <DatePicker fx:id="textInitialDateAt" layoutX="447.0" layoutY="50.0" onHiding="#filterByInitialDateAt" prefHeight="31.0" prefWidth="174.0" promptText="Data Inicial" />
+                  <Label fx:id="labelValuePaied" layoutX="1166.0" layoutY="4.0" prefHeight="42.0" prefWidth="96.0" text="0,00" textFill="GREEN">
+                     <font>
+                        <Font name="SansSerif Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1051.0" layoutY="4.0" prefHeight="42.0" prefWidth="115.0" text="Valor Pago:">
+                     <font>
+                        <Font name="SansSerif Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelValue" layoutX="952.0" layoutY="6.0" prefHeight="42.0" prefWidth="96.0" text="0,00" textFill="GREEN">
+                     <font>
+                        <Font name="SansSerif Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="835.0" layoutY="6.0" prefHeight="42.0" prefWidth="109.0" text="Valor total:">
+                     <font>
+                        <Font name="SansSerif Bold" size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
             <TableView fx:id="table" focusTraversable="false" layoutX="32.0" layoutY="91.0" maxWidth="1238.0" onMouseClicked="#clickTable" pickOnBounds="false" prefHeight="483.0" prefWidth="1237.0" stylesheets="@../../css/productRelationManager.css">

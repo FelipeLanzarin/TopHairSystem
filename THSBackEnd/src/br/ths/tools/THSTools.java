@@ -39,7 +39,7 @@ public class THSTools {
 		setUserBranchSession(userBranch);
 	}
 	public static Boolean verifyStatusCompany(Company company) throws Exception{
-		Boolean status = StatusCompanyDao.getStatus(company.getName());
+		Boolean status = true; //StatusCompanyDao.getStatus(company.getName());
 		if(status == null){
 			status = false;
 		}

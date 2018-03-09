@@ -126,7 +126,26 @@ public class OrderDao {
 			Query query = em.createQuery("FROM Order "
 					+ "where scheduler > :init and scheduler < :finalDate "
 					+ "and isAttendance = true "
-					+ "ORDER BY scheduler");
+					+ "ORDER BY scheduler desc");
+			query.setParameter("init", init);
+			query.setParameter("finalDate", finalDate);
+			order = query.getResultList();
+		}catch (Exception e) {
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return order;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Order> getOrdersByCreationDate (Date init, Date finalDate){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		List<Order> order = null;
+		try{
+			Query query = em.createQuery("FROM Order "
+					+ "where creationDate > :init and creationDate < :finalDate "
+					+ "ORDER BY creationDate desc");
 			query.setParameter("init", init);
 			query.setParameter("finalDate", finalDate);
 			order = query.getResultList();
@@ -157,5 +176,114 @@ public class OrderDao {
 		return orders;
 	}
 	
+	public  Double getSumOrderByDate(Date init, Date finalDate){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		String sql = "select sum(o.amount) from ths_order o "
+				+ "where o.creation_date BETWEEN  ? and ? ";
+		try{
+			Query query = em.createNativeQuery(sql);
+			query.setParameter(1, init);
+			query.setParameter(2, finalDate);
+			return (Double) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return 0.0d;
+	}
+	
+	public  Double getSumOrderPaiedByDate(Date init, Date finalDate){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		String sql = "select sum(p.amount_received) from ths_order o, payment p "
+				+ "where o.id = p.order_id "
+				+ "and o.creation_date BETWEEN  ? and ? ";
+		try{
+			Query query = em.createNativeQuery(sql);
+			query.setParameter(1, init);
+			query.setParameter(2, finalDate);
+			return (Double) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return 0.0d;
+	}
+	
+	public  Double getSumOrderByDateAt(Date init, Date finalDate){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		String sql = "select sum(o.amount) from ths_order o "
+				+ "where o.scheduler BETWEEN  ? and ? ";
+		try{
+			Query query = em.createNativeQuery(sql);
+			query.setParameter(1, init);
+			query.setParameter(2, finalDate);
+			return (Double) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return 0.0d;
+	}
+	
+	public  Double getSumOrderByIds(List<Integer> ids){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		String sql = "select sum(o.amount) from ths_order o "
+				+ "where o.id in(?1)";
+		try{
+			Query query = em.createNativeQuery(sql);
+			query.setParameter(1, ids);
+			
+			return (Double) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return 0.0d;
+	}
+	
+	public  Double getSumOrderPaiedByIds(List<Integer> ids){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		String sql = "select sum(p.amount_received) from ths_order o, payment p "
+				+ "where o.id in(?1) "
+				+ "and o.id = p.order_id";
+		try{
+			Query query = em.createNativeQuery(sql);
+			query.setParameter(1, ids);
+			return (Double) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return 0.0d;
+	}
+	
+	public  Double getSumOrderPaiedByDateAt(Date init, Date finalDate){
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		String sql = "select sum(p.amount_received) from ths_order o, payment p "
+				+ "where o.id = p.order_id "
+				+ "and o.scheduler BETWEEN  ? and ? ";
+		try{
+			Query query = em.createNativeQuery(sql);
+			query.setParameter(1, init);
+			query.setParameter(2, finalDate);
+			return (Double) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LogTools.logError("erro ao obter orders no banco: "+ e.toString());
+		}finally{
+			em.close();
+		}
+		return 0.0d;
+	}
 
 }

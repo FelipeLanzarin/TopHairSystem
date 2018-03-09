@@ -3,6 +3,7 @@ package br.ths.beans.manager;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -100,6 +101,121 @@ public class OrderManager {
 	    calendar.add(Calendar.DAY_OF_MONTH, 1);
 	    Date finalDate = calendar.getTime();
 		return getOrderDao().getOrdersByDate(init,finalDate);
+	}
+	
+	public static List<Order> getOrdersByDate(Date start, Date finish){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(start);
+		calendar.set(Calendar.MILLISECOND, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    Date init = calendar.getTime();
+	    calendar.setTime(finish);
+		calendar.set(Calendar.MILLISECOND, 9);
+	    calendar.set(Calendar.SECOND, 59);
+	    calendar.set(Calendar.MINUTE, 59);
+	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+	    Date finalDate = calendar.getTime();
+		return getOrderDao().getOrdersByDate(init,finalDate);
+	}
+	
+//	public static void main(String[] args) {
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.setTime(new Date());
+//		calendar.set(Calendar.MILLISECOND, 0);
+//	    calendar.set(Calendar.SECOND, 0);
+//	    calendar.set(Calendar.MINUTE, 0);
+//	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+//	    calendar.add(Calendar.DAY_OF_MONTH, -7);
+//	    Date init = calendar.getTime();
+//	    calendar.setTime(new Date());
+//		calendar.set(Calendar.MILLISECOND, 9);
+//	    calendar.set(Calendar.SECOND, 59);
+//	    calendar.set(Calendar.MINUTE, 59);
+//	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+//	    Date finalDate = calendar.getTime();
+//		System.out.println(getOrderDao().getSumOrderByDate(init, finalDate));
+//		System.out.println(getOrderDao().getSumOrderPaiedByDate(init, finalDate));
+//		List<Integer> ids = new ArrayList<Integer>();
+//		ids.add(10000);
+//		ids.add(10001);
+//		ids.add(10002);
+//		ids.add(10003);
+//		ids.add(10004);
+//		ids.add(10005);
+//		ids.add(10006);
+//		System.out.println(getOrderDao().getSumOrderByIds(ids));
+//	}
+	
+	public static Double getSumOrderByDate(Date start, Date finish){
+		start = adjustmentStartDate(start);
+		finish = adjustmentEndDate(finish);
+		Double sum = getOrderDao().getSumOrderByDate(start, finish);
+		return roundValue(sum);
+	}
+	
+	public static Double getSumOrderByIds(List<Integer> ids){
+		if(ids.isEmpty()){
+			return 0.0d;
+		}
+		Double sum = getOrderDao().getSumOrderByIds(ids);
+		return roundValue(sum);
+	}
+	
+	public static Double getSumOrderPaiedByIds(List<Integer> ids){
+		if(ids.isEmpty()){
+			return 0.0d;
+		}
+		Double sum = getOrderDao().getSumOrderPaiedByIds(ids);
+		return roundValue(sum);
+	}
+	
+	public static Double getSumOrderPaiedByDate(Date start, Date finish){
+		start = adjustmentStartDate(start);
+		finish = adjustmentEndDate(finish);
+		Double sum = getOrderDao().getSumOrderPaiedByDate(start, finish);
+		return roundValue(sum);
+	}
+	
+	public static Double getSumOrderByDateAt(Date start, Date finish){
+		start = adjustmentStartDate(start);
+		finish = adjustmentEndDate(finish);
+		Double sum = getOrderDao().getSumOrderByDateAt(start, finish);
+		return roundValue(sum);
+	}
+	
+	public static Double getSumOrderPaiedByDateAt(Date start, Date finish){
+		start = adjustmentStartDate(start);
+		finish = adjustmentEndDate(finish);
+		Double sum = getOrderDao().getSumOrderPaiedByDateAt(start, finish);
+		return roundValue(sum);
+	}
+	
+	public static List<Order> getOrdersByCreationDate(Date start, Date finish){
+	    Date init = adjustmentStartDate(start);
+	    Date finalDate = adjustmentEndDate(finish);
+		return getOrderDao().getOrdersByCreationDate(init,finalDate);
+	}
+	
+	public static Date adjustmentStartDate(Date start){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(start);
+		calendar.set(Calendar.MILLISECOND, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    return calendar.getTime();
+	}
+	
+	public static Date adjustmentEndDate(Date finish){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(finish);
+		calendar.set(Calendar.MILLISECOND, 9);
+	    calendar.set(Calendar.SECOND, 59);
+	    calendar.set(Calendar.MINUTE, 59);
+	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+	    return calendar.getTime();
 	}
 	
 	public static List<Order> getOrdersByProfile(Profile profile) {
